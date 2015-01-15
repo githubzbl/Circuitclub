@@ -1,0 +1,19 @@
+//- layout.jade
+doctype html
+html
+	meta(charset="utf-8")
+	title #{title}
+	include ./includes/head
+body
+	div.container
+	- if (success)
+			.alert.alert-success(role='alert')= success
+	- if (error)
+			.alert.alert-danger(role='alert')= error
+	include ./includes/header
+	block content
+	footer.footer
+		hr
+		p 电路分析课程 在线考试系统
+		p Copyright © ZBL
+	

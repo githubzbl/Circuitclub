@@ -1,0 +1,31 @@
+//- list.jade
+extends ../layout
+
+block content
+	.container
+		.row
+			table.table.table-hover.table-bordered
+				thead
+					tr
+						th Movie Name
+						th Doctor
+						th Country
+						th Year
+						th Saved Time 
+						th View
+						th Edit
+						th Delete
+				tbody
+					each item in movies
+						tr(class="item-id-#{item._id}")
+							td #{item.title}
+							td #{item.doctor}
+							td #{item.country}
+							td #{item.year}
+							td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
+							td: a(target="_blank", href="../movie/#{item._id}") View
+							td: a(target="_blank", href="../admin/update/#{item._id}") Edit
+							td
+								button.btn.btn-danger.del(type="button",data-id="#{item._id}") Delete
+	script(src="/js/admin.js")
+

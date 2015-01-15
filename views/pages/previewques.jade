@@ -1,0 +1,25 @@
+//- detail.jade
+//- previewques.jade 题目录入预览 
+extends ../layout
+
+block content
+	.container
+		.row
+			//- .col-md-7
+				//- embed(src="#{question.flash}", allowFullScreen="true", quality="high", 
+					width="720", height="600", align="middle", type="application/x-shockwave-flash")
+			.col-md-8
+				dl.dl-horizontal
+					dt 题目编号 
+					dd= question.order
+					dt 题目类型 
+					dd= question.type
+					dt 题目章节
+					dd= question.chapter
+					dt 难度系数
+					dd= question.degree
+					dt 题目内容
+					dd= question.content
+					dt 题目答案
+					dd= question.answer
+					

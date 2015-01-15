@@ -1,0 +1,28 @@
+//- reg.jade
+
+extends ../layout
+
+block content
+	.container
+		h2.page-header 注册
+		.col-md-5
+			form.form-horizontal(method='post')
+				filedset
+					.form-group
+						label.control-label.col-md-4(for='username') 学号
+						.col-sm-6
+							input.form-control#username(type='text' name='username' placeholder='请输入您的学号' )
+					.form-group
+						label.control-label.col-md-4(for='password') 密码
+						.col-sm-6
+							input.form-control#password(type='password' name='password' placeholder='请输入您的密码')
+					.form-group
+						label.control-label.col-md-4(for='password-repeat') 重复输入密码
+						.col-sm-6
+							input.form-control#password-repeat(type='password' name='password-repeat' placeholder='请再次输入您的密码')
+					.form-group
+						.col-sm-offset-2.col-sm-10
+							button.btn.btn-primary(type='submit') 注册
+		.col-md-7
+			img(src='./libs/images/login_welcomeback_happyface.png')
+
