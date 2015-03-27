@@ -6,9 +6,16 @@ var Question = require('../models/question');
 
 router.route('/')
 .get(function (req, res) {
-	return res.render('admin', {
-		title: 'Admin page'
-	})
+	console.log('session:', req.session, 'session.name:', req.session.name);
+	if (res.session.logged_in) {
+
+		return res.render('admin', {
+			title: 'Admin page'
+		});
+	} else {
+		res.writeHead(403),
+		res.end('Not Authoried');
+	}
 })
 router.route('/preview/ques/:id')
 .get(function(req, res) {
