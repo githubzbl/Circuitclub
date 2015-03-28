@@ -1,0 +1,35 @@
+//- admin.jade
+extends ../layout
+
+block content
+	main.container
+		.row
+			.col-sm-6.col-md-4
+				.thumbnail
+					img(data-src='holder.js/300x300' alt='...')
+					.caption
+						h3 学生管理
+						p 请选择
+						p
+							a.btn.btn-primary(href='#', role='button') 成绩分布 
+							| &nbsp
+							a.btn.btn-default(href='#', role='button') 成绩排名
+			.col-sm-6.col-md-4
+				.thumbnail
+					img(data-src='holder.js/300x300' alt='...')
+					.caption
+						h3 习题管理
+						p 请选择
+						p
+							a.btn.btn-primary(href='#', role='button') 题库管理
+							| &nbsp
+							a.btn.btn-default(href='#', role='button') 习题统计
+			.col-sm-6.col-md-4
+				.thumbnail
+					img(src='./libs/images/rengongyuejuan.png' alt='人工阅卷')
+					.caption
+						h3 人工阅卷
+						p 对主观题回答进行手工评卷
+						p
+							a.btn.btn-primary(href='#', role='button') 点击进入
+
