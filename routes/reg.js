@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var crypto = require('crypto');
+var router = require('express').Router(),
+	  crypto = require('crypto');
+
 var User = require('../models/user.js');
 
 // 注册

@@ -1,16 +1,16 @@
 // admin.js
-var express = require('express');
-var router = express.Router();
+var router = require('express').Router();
+
 var Question = require('../models/question');
 
 
 router.route('/')
 .get(function (req, res) {
 	console.log('session:', req.session, 'session.name:', req.session.name);
-	if (res.session.logged_in) {
-
+	if (req.session.logged_in) {
 		return res.render('admin', {
-			title: 'Admin page'
+			title: 'Admin page',
+			user: req.session.name
 		});
 	} else {
 		res.writeHead(403),

@@ -4,9 +4,12 @@ var router = express.Router();
 
 router.route('/')
 .get(function (req, res) {
-	return res.render('std', {
-		title: '我的主页'
-	})
+	if (req.session.logged_in) {
+		return res.render('std', {
+			title: 'My Home',
+			user: req.session.name
+		});
+	}
 })
 router.route('/onlinetest')
 .get(function (req, res) {

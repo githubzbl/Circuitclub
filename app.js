@@ -1,12 +1,13 @@
-var express = require('express'),
-       path = require('path'),
-    favicon = require('serve-favicon'),
-     logger = require('morgan'),
-  cookieParser = require('cookie-parser'),
- bodyParser = require('body-parser'),
-    session = require('express-session');
+var express   = require('express'),
+       path   = require('path'),
+    favicon   = require('serve-favicon'),
+     logger   = require('morgan'),
+ cookieParser = require('cookie-parser'),
+ bodyParser   = require('body-parser'),
+    session   = require('express-session'),
+ RedisStore   = require('connect-redis')(session);
 
-var mongoose = require('mongoose');
+var mongoose  = require('mongoose');
 mongoose.connect('mongodb://localhost/exam'); 
 
 // var routes = require('./routes/index');
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // express-session
 app.use(session({ 
   secret: 'my app secret',
+  store: new RedisStore,
   resave: false,
   saveUninitialized: true
 }));
@@ -58,6 +60,10 @@ if (app.get('env') === 'development') {
             error: err
         });
     });
+} else {
+  console.log('production env.');
+  app.enable('trust proxy');
+  app.enable('view cache');
 }
 
 // production error handler

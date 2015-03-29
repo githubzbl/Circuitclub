@@ -2,5 +2,9 @@
 	"admin": {
 		"password": "uestc",
 		"name": "zbl"
+	},
+	"std":{
+		"password": "std",
+		"name": "student"
 	}
 }

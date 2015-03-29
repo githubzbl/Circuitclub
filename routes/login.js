@@ -1,6 +1,5 @@
 // login.js
-var express = require('express');
-var router = express.Router();
+var router = require('express').Router();
 
 var users = require('./users');
 
@@ -19,10 +18,14 @@ router.route('/')
 		res.end('Bad name/passwd!');
 	} else {
 		req.session.logged_in = true;
-
 		req.session.name = users[req.body.username].name;
 		console.log('session:', req.session, 'session.name:', req.session.name);
-		return res.redirect('/admin');
+		if (req.body.username === 'admin') {
+			return res.redirect('/admin');
+		} else {
+			return res.redirect('/std');
+		}
+
 	}
 
 	// if (req.body.username == 'admin')
