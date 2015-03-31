@@ -70,9 +70,13 @@ router.route('/question/new')
 			chapter: questionObj.chapter,
 			degree: questionObj.degree,
 			content: questionObj.content,
-			answer: questionObj.answer 
+			answer: questionObj.answer,
+			pic: questionObj.pic,
+			order: questionObj.order
 			// summary: questionObj.summary,
 			// flash: questionObj.flash
+
+
 		});
 
 		_question.save(function(err, question) {

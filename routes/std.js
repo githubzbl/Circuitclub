@@ -15,7 +15,12 @@ router.route('/paperinfo')
 .get(function (req, res) {
 	return res.render('paperinfo');
 
-})
+});
+router.route('/a')
+.get(function (req, res) {
+	return res.sendFile('../views/pages/a.html');
+
+});
 router.route('/onlinetest')
 .get(function (req, res) {
 	res.render('onlinetest', {

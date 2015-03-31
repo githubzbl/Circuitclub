@@ -4,8 +4,9 @@ var express   = require('express'),
      logger   = require('morgan'),
  cookieParser = require('cookie-parser'),
  bodyParser   = require('body-parser'),
-    session   = require('express-session'),
+    session   = require('express-session'),   // session 支持
  RedisStore   = require('connect-redis')(session);
+
 
 var mongoose  = require('mongoose');
 mongoose.connect('mongodb://localhost/exam'); 
@@ -75,6 +76,7 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
 
 
 module.exports = app;

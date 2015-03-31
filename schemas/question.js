@@ -2,15 +2,15 @@
 var mongoose = require('mongoose');
 
 var QuestionSchema = new mongoose.Schema({
-	order: Number,
-	title: String,
-	chapter: Number,
-	degree: Number,
-	type: String,
-	content: String,
-	pic: String,
-	answer: String,
-	meta: {
+	order: Number,		// 题目序号
+	chapter: Number,  // 章节
+	degree: Number,		// 题目难度系数
+	type: String,			// 题目类型
+	content: String,	// 题目内容
+	pic: String,			// 题目图片
+	answer: String,		// 题目答案
+  
+  meta: {
 		createAt: {
 			type: Date,
 			default: Date.now()
