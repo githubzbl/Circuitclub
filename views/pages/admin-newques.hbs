@@ -1,0 +1,73 @@
+{{!-- admin-newques.hbs --}}
+{{!< ../layout}}
+<style>
+  /*need to 合并*/
+  .col-sm-2, .col-sm-10, .col-sm-6 {float: none;}
+</style>
+<div class="container">
+   <div class="row">
+     <form action="/admin/question/new"  method="POST",class="form-horizontal", style="font-size:1.2em;">
+       <input type="hidden",name="question[_id]",value="{{question._id}}">
+       <div class="form-group ">
+         <label for="inputOrder" class="col-sm-2 control-label">题目编号</label>
+         <div class="col-sm-10">
+          <input id="inputOrder" type="text",name="question[order]",value="{{question.order}}" class="form-control">
+         </div>
+       </div>
+       <div class="form-group ">
+         <label for="inputType" class="col-sm-2 control-label">类型</label>
+         <div class="col-sm-10">
+            <label class="radio-inline">
+            <input type="radio" name="question[type]" id="multiple-choice" value="选择题"/>选择题
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="question[type]" id="fill-in" value="填空题"/>填空题
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="question[type]" id="calculate" value="计算题"/>计算题
+            </label>
+         </div>
+       </div>
+       <div class="form-group ">
+         <label for="inputChapter" class="col-sm-2 control-label">章节</label>
+         <div class="col-sm-10">
+          <input id="inputChapter" type="text",name="question[chapter]",value="{{question.chapter}}" class="form-control">
+         </div>
+       </div>
+
+       <div class="form-group ">
+         <label for="inputDegree" class="col-sm-2 control-label">难度系数</label>
+         <div id="inputDegree" class="col-sm-10">
+          <input type="text",name="question[degree]",value="{{question.degree}}" class="form-control">
+         </div>
+       </div>
+       <div class="form-group ">
+         <label for="inputContent" class="col-sm-2 control-label">题目内容</label>
+         <div class="col-sm-10">
+          <input id="inputContent"type="text",name="question[content]",value="{{question.content}}" class="form-control">
+         </div>
+       </div>
+       <div class="form-group ">
+        <label for="inputPic" class="col-sm-2 control-label">题目图片 </label>
+        <div class="col-sm-10">
+          <div class="upload-control input-group input-group-sm">
+            <div class="input-group-btn"></div>
+              <span class="btn btn-default btn-sm">选择文件
+              <input id="inputPic" type="file" class="form-control"/></span>
+          </div>
+        </div>
+       </div>
+       <div class="form-group ">
+         <label for="inputAnswer" class="col-sm-2 control-label">答案</label>
+         <div class="col-sm-10">
+          <input id="inputAnswer" type="text",name="question[answer]",value="{{question.answer}}" class="form-control"/>
+          </div>
+       </div>
+       <div class="form-group">
+        <div class="col-sm-6">
+          <button class="btn btn-success" type="submit">录入</button>
+        </div>
+       </div>
+     </form>
+   </div>
+ </div> 

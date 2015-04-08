@@ -16,14 +16,53 @@ router.route('/')
 		res.writeHead(403),
 		res.end('Not Authoried');
 	}
-})
-router.route('/preview/ques/:id')
+});
+// 题库列表查看
+router.route('/question/list')
+.get(function (req, res) {
+	var questions = [];
+	questions.push({
+		_id: "1",
+		order: "1",		// 题目序号
+		chapter: "1",  // 章节
+		degree: "0.3",		// 题目难度系数
+		content: "这是题目1内容",	// 题目内容
+		// pic: String,			// 题目图片
+		answer: "A"		// 题目答案
+	});
+	questions.push({
+		_id: 2,
+		order: 2,		// 题目序号
+		chapter: 1,  // 章节
+		degree: 0.3,		// 题目难度系数
+		content: '这是题目2内容',	// 题目内容
+		// pic: String,			// 题目图片
+		answer: 'B'		// 题目答案
+	});
+	// console.log(questions);
+	res.render('question-list',{
+		title: '题目列表',
+		questions: questions
+	});
+});
+
+router.route('/question/preview/:order')
 .get(function(req, res) {
-	var id = req.params.id;  // why?
+	// var question = {
+	// 	_id: 2,
+	// 	order: 2,		// 题目序号
+	// 	chapter: 1,  // 章节
+	// 	degree: 0.3,		// 题目难度系数
+	// 	content: '这是题目2内容',	// 题目内容
+	// 	// pic: String,			// 题目图片
+	// 	answer: 'B'		// 题目答案
+	// };
+
+	var order = req.params.order; 
 
 	Question.findById(id, function(err, question) {
-		res.render('previewques', {
-			title: question.id + '  题目预览页',
+		res.render('quespreview', {
+			title: question.order + '  题目预览页',
 			question: question
 		});
 	});
@@ -59,7 +98,7 @@ router.route('/question/new')
 				if(err) {
 					console.log(err);
 				}
-				res.redirect('/admin/preview/ques/' + question.id);
+				res.redirect('/admin/question/preview/' + question.id);
 			});
 		});
 	}

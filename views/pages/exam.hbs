@@ -1,0 +1,84 @@
+{{!-- exam.hbs --}}
+{{!< ../layout}}
+<style>
+  #paperInfo ul{ font-size: 1.1em;    margin-left: 40px;}
+  #paperInfo h2 {text-align:center;}
+   ul.warning {
+    color: #38B5E8;
+  }
+  #paperInfo .row.col-md-12 {
+    margin: 30px auto;
+    text-align:center;
+  }
+  #start-exam {
+    font-size: 1.2em;
+  }
+</style>
+<script>
+  $(document).ready(function() {
+    $('#start-exam').click(function(event) {
+      console.log('it works');
+      // $.ajax({
+      //   url: 'exam/start',
+      //   type: 'GET',
+      //   dataType: 'json'
+      //   // data: {param1: 'value1'},
+      // })
+      // .done(function(response) {
+      //   data = response.data;
+      //   console.log("success");
+      //   $('#examing').html(data);
+      // })
+      // .fail(function() {
+      //   console.log("error");
+      // })
+      // .always(function() {
+      //   console.log("complete");
+      // });
+      $.get('start', function(data) {
+        console.log(data);
+        console.log("success");
+        $('#examing').html(data);
+      });
+    });
+});
+</script>
+<div id="paperInfo">
+  <div class="container-fluid">
+    <h2>考试须知</h2>
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <h3>即将作答</h3>
+        <hr>
+        <div class="panel panel-primary">
+        <div class="panel-heading">电路分析期末考试A卷<span>（共X道，120分钟）</span></div>
+        <div class="panel-body">
+          <ul class="paperlist">
+            <li>第一部分 <span>选择题：X道</span></li>
+            <li>第二部分 <span>填空题：X道</span></li>
+          </ul>
+        </div>
+      </div>
+      </div>
+    </div>    
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <h3>注意事项</h3>
+        <hr>
+        <ul class="warning">
+          <li>答题过程中系统自动计时，请注意是按整个试卷计时，掌握好作答速度；</li>
+          <li>正常答题过程中请不要刷新页面，这可能会导致提交答案异常；</li>
+          <li>为避免影响测试，测试之前请关闭弹出窗口应用如QQ，360安全助手，屏保等可能干扰考试过程的应用；</li>
+          <li>如果答题过程中因电源、网络故障等造成中断，请退出并在几分钟之内再次按照相同的步骤进入考试，从中断处继续答题</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row col-md-12">
+     
+     <button id="start-exam" class="btn btn-danger">
+      确认，开始考试</button>
+     
+    </div>
+  </div>
+</div>
+<div id="examing"></div>

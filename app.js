@@ -7,6 +7,8 @@ var express   = require('express'),
     session   = require('express-session'),   // session 支持
  RedisStore   = require('connect-redis')(session);
 
+ var hbs = require('express-hbs');
+
 
 var mongoose  = require('mongoose');
 mongoose.connect('mongodb://localhost/exam'); 
@@ -18,8 +20,17 @@ var app = express();
 
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views/pages'));
-app.set('view engine', 'jade');
+// app.set('views', path.join(__dirname, 'views/pages'));
+// app.set('view engine', 'jade');
+
+// express-hbs
+// Use `.hbs` for extensions and find partials in `views/partials`.
+app.engine('hbs', hbs.express4({
+  partialsDir: __dirname + '/views/partials'
+}));
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, '/views/pages'));
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));

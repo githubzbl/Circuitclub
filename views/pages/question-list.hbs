@@ -1,0 +1,35 @@
+{{!-- question-list.hbs --}}
+{{!< ../layout}}
+
+<div class="container">
+  <div class="row">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th>题目序号</th>
+          <th>章节</th>
+          <th>类型</th>
+          {{!-- <th>保存时间</th> --}}
+          <th>查看详细</th>
+          <th>编辑</th>
+          <th>删除</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {{#each questions}}
+        <tr class="ques-id-{{_id}}">
+          <td>{{this.order}}</td>
+          <td>{{this.chapter}}</td>
+          <td>{{this.type}}</td>
+          {{!--           <td>{{moment(this.meta.updateAt).format('MM/DD/YYYY')}}</td> --}}
+          <td><a href="preview/{{_id}}">点击查看</a> </td>
+          <td><a href="update/{{_id}}">编辑</a> </td>
+          <td><button class="btn btn-danger del" data-id="{{_id}}">删除</button></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="/js/admin.js"></script>

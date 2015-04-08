@@ -7,8 +7,8 @@
 body {
 	/*margin-top: 50px;*/
 }
-body > .container {
-	margin-top: 50px;
+#wrapper {
+	margin-top: 80px;
 }
 div.main-container {
 	width: 100%;
