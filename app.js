@@ -30,15 +30,23 @@ app.engine('hbs', hbs.express4({
 }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, '/views/pages'));
-
+ hbs.registerHelper("debug", function(optionalValue) { 
+  console.log("Current Context"); 
+  console.log("====================");
+  console.log(this);
+  if (optionalValue) { 
+    console.log("Value"); 
+    console.log("===================="); 
+    console.log(optionalValue);
+} });
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '1mb'}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.multipart());
 
 // express-session
 app.use(session({ 
@@ -52,6 +60,9 @@ app.use(session({
 // app.use('/', routes(app));
 // app.use('/users', users);
 require('./routes')(app);
+
+app.locals.moment = require('moment');
+app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

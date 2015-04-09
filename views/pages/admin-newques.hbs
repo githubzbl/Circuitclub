@@ -6,25 +6,29 @@
 </style>
 <div class="container">
    <div class="row">
-     <form action="/admin/question/new"  method="POST",class="form-horizontal", style="font-size:1.2em;">
+    
+     <form action="/admin/question/new", method="post",class="form-horizontal", style="font-size:1.2em;">
+     {{#if question._id}}
        <input type="hidden",name="question[_id]",value="{{question._id}}">
+     {{/if}}
        <div class="form-group ">
          <label for="inputOrder" class="col-sm-2 control-label">题目编号</label>
          <div class="col-sm-10">
-          <input id="inputOrder" type="text",name="question[order]",value="{{question.order}}" class="form-control">
+          <input id="inputOrder" type="text",name="question[order]",
+          placeholder="只能数字",value="{{question.order}}" class="form-control">
          </div>
        </div>
        <div class="form-group ">
          <label for="inputType" class="col-sm-2 control-label">类型</label>
          <div class="col-sm-10">
             <label class="radio-inline">
-            <input type="radio" name="question[type]" id="multiple-choice" value="选择题"/>选择题
+            <input type="radio" name="question[type]" id="multiple-choice" value="multiple-choice"/>选择题
             </label>
             <label class="radio-inline">
-            <input type="radio" name="question[type]" id="fill-in" value="填空题"/>填空题
+            <input type="radio" name="question[type]" id="fill-in" value="fill-in"/>填空题
             </label>
             <label class="radio-inline">
-            <input type="radio" name="question[type]" id="calculate" value="计算题"/>计算题
+            <input type="radio" name="question[type]" id="calculate" value="calculate"/>计算题
             </label>
          </div>
        </div>
@@ -68,6 +72,7 @@
           <button class="btn btn-success" type="submit">录入</button>
         </div>
        </div>
+       {{!-- {{debug question}} --}}
      </form>
    </div>
  </div> 

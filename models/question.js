@@ -22,7 +22,7 @@ var QuestionSchema = new mongoose.Schema({
     }
   }
 });
-
+// 保存之前查询是否为新加题目
 QuestionSchema.pre('save', function(next) {
   if(this.isNew) {
     this.meta.createAt = this.meta.updateAt = Date.now();
@@ -33,14 +33,16 @@ QuestionSchema.pre('save', function(next) {
 
   next();
 });
-
+// 静态方法
 QuestionSchema.statics = {
-  fetch: function (cb) {
+  // 取出数据库中所有数据
+  fetch: function (cb) {   
     return this
       .find({})
-      .sort('meta.updateAt')
+      .sort('meta.updateAt') // 按更新数据时间排序
       .exec(cb);
   },
+  // 查询单条数据
   findById: function (id, cb) {
     return this
       .findOne({_id: id})

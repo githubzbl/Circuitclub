@@ -1,6 +1,6 @@
 // admin.js
 var router = require('express').Router();
-
+var _ = require('underscore');
 var Question = require('../models/question');
 
 
@@ -70,9 +70,8 @@ router.route('/question/preview/:order')
 
 router.route('/question/new')
 .get(function (req, res) {
-	return res.render('admin-newques', {
-		title: '习题录入',
-		question: {
+	var question = {
+			// _id:1,
 			order: '',   // 题目序号
 			type: '',			// 题目类型
 			chapter:'',		// 题目章节
@@ -80,15 +79,24 @@ router.route('/question/new')
 			content: '',  // 题目内容
 			pic:'',
 			answer: ''    // 题目答案
-		}
-	})
+		};
+
+	res.render('admin-newques', {
+		title: '题目录入',
+		question: question
+	});
 })
 .post(function (req, res) {
+	// res.send(req.body);
+	console.log(req.body);
+	console.log(req.body.question);
 	var id = req.body.question._id;
+	console.log("id",id);
 	var questionObj = req.body.question;
 	var _question;
+	console.log("questionObj",questionObj);
 
-	if (id !== 'undefined') {
+	if (id) {
 		Question.findById(id, function(err, question) {
 			if(err) {
 				console.log(err);
