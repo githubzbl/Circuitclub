@@ -1,27 +1,29 @@
 {{!-- admin-newques.hbs --}}
 {{!< ../layout}}
 <style>
-  /*need to 合并*/
-  .col-sm-2, .col-sm-10, .col-sm-6 {float: none;}
+.form-group .col-sm-2, .col-sm-10, .col-sm-12 {
+  margin-bottom: 20px;
+}
 </style>
 <div class="container">
-   <div class="row">
-    
+  <div class="row">    
      <form action="/admin/question/new", method="post",class="form-horizontal", style="font-size:1.2em;">
-     {{#if question._id}}
-       <input type="hidden",name="question[_id]",value="{{question._id}}">
-     {{/if}}
+       {{#if question._id}}
+         <input type="hidden",name="question[_id]",value="{{question._id}}">
+       {{/if}}
+
        <div class="form-group ">
          <label for="inputOrder" class="col-sm-2 control-label">题目编号</label>
          <div class="col-sm-10">
-          <input id="inputOrder" type="text",name="question[order]",
-          placeholder="只能数字",value="{{question.order}}" class="form-control">
+          <input id="inputOrder" class="form-control" type="text" placeholder="{{question.order}}" name="question[order]"
+          value={{question.order}}>
          </div>
        </div>
-       <div class="form-group ">
-         <label for="inputType" class="col-sm-2 control-label">类型</label>
-         <div class="col-sm-10">
-            <label class="radio-inline">
+
+         <div class="form-group ">
+         <label for="inputType" class="col-md-2 control-label">题目类型</label>
+         <div class="col-md-12">
+            <label class="radio-inline control-label">
             <input type="radio" name="question[type]" id="multiple-choice" value="multiple-choice"/>选择题
             </label>
             <label class="radio-inline">
@@ -35,22 +37,29 @@
        <div class="form-group ">
          <label for="inputChapter" class="col-sm-2 control-label">章节</label>
          <div class="col-sm-10">
-          <input id="inputChapter" type="text",name="question[chapter]",value="{{question.chapter}}" class="form-control">
+          <input id="inputChapter" class="form-control" type="text"name="question[chapter]" placeholder="{{question.chapter}}" value={{question.chapter}}>
          </div>
        </div>
 
        <div class="form-group ">
          <label for="inputDegree" class="col-sm-2 control-label">难度系数</label>
-         <div id="inputDegree" class="col-sm-10">
-          <input type="text",name="question[degree]",value="{{question.degree}}" class="form-control">
+         <div class="col-sm-10">
+          <input  id="inputDegree"  type="text"  class="form-control" name="question[degree]" placeholder="{{question.degree}}" value={{question.degree}}>
          </div>
        </div>
-       <div class="form-group ">
+     {{!--   <div class="form-group ">
          <label for="inputContent" class="col-sm-2 control-label">题目内容</label>
          <div class="col-sm-10">
-          <input id="inputContent"type="text",name="question[content]",value="{{question.content}}" class="form-control">
+          <input id="inputContent" class="form-control" type="text" name="question[content]" placeholder="{{question.content}}" value={{question.content}} >
+         </div>
+       </div> --}}
+        <div class="form-group ">
+         <label for="inputContent" class="col-sm-2 control-label">题目内容</label>
+         <div class="col-sm-10">
+          <textarea type="text" class="form-control" name="question[content]" id="inputContent" cols="30" rows="10">{{question.content}} </textarea>
          </div>
        </div>
+
        <div class="form-group ">
         <label for="inputPic" class="col-sm-2 control-label">题目图片 </label>
         <div class="col-sm-10">
@@ -64,7 +73,7 @@
        <div class="form-group ">
          <label for="inputAnswer" class="col-sm-2 control-label">答案</label>
          <div class="col-sm-10">
-          <input id="inputAnswer" type="text",name="question[answer]",value="{{question.answer}}" class="form-control"/>
+          <input id="inputAnswer" class="form-control" type="text" name="question[answer]" placeholder="{{question.answer}}" value={{question.answer}} >
           </div>
        </div>
        <div class="form-group">
@@ -74,5 +83,5 @@
        </div>
        {{!-- {{debug question}} --}}
      </form>
-   </div>
- </div> 
+  </div>
+</div> 

@@ -4,6 +4,7 @@ var express   = require('express'),
      logger   = require('morgan'),
  cookieParser = require('cookie-parser'),
  bodyParser   = require('body-parser'),
+
     session   = require('express-session'),   // session 支持
  RedisStore   = require('connect-redis')(session);
 
@@ -46,6 +47,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json({limit: '1mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+
 // app.use(express.multipart());
 
 // express-session

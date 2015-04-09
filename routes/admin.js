@@ -2,7 +2,8 @@
 var router = require('express').Router();
 var _ = require('underscore');
 var Question = require('../models/question');
-
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
 router.route('/')
 .get(function (req, res) {
@@ -47,7 +48,7 @@ router.route('/question/list')
 });
 
 router.route('/question/preview/:order')
-.get(function(req, res) {
+.get(function (req, res) {
 	// var question = {
 	// 	_id: 2,
 	// 	order: 2,		// 题目序号
@@ -58,7 +59,7 @@ router.route('/question/preview/:order')
 	// 	answer: 'B'		// 题目答案
 	// };
 
-	var order = req.params.order; 
+	var id = req.params.id; 
 
 	Question.findById(id, function(err, question) {
 		res.render('quespreview', {
@@ -71,8 +72,8 @@ router.route('/question/preview/:order')
 router.route('/question/new')
 .get(function (req, res) {
 	var question = {
-			// _id:1,
-			order: '',   // 题目序号
+			_id:'',
+			order: '2',   // 题目序号
 			type: '',			// 题目类型
 			chapter:'',		// 题目章节
 			degree: '',		// 题目难度系数
@@ -86,7 +87,7 @@ router.route('/question/new')
 		question: question
 	});
 })
-.post(function (req, res) {
+.post(multipartMiddleware, function (req, res) {
 	// res.send(req.body);
 	console.log(req.body);
 	console.log(req.body.question);
@@ -111,27 +112,31 @@ router.route('/question/new')
 		});
 	}
 	else {
-		_question = new Question({
-			id: questionObj.id,
-			type: questionObj.type,
-			chapter: questionObj.chapter,
-			degree: questionObj.degree,
-			content: questionObj.content,
-			answer: questionObj.answer,
-			pic: questionObj.pic,
-			order: questionObj.order
+		// _question = new Question({
+		// 	id: questionObj.id,
+		// 	type: questionObj.type,
+		// 	chapter: questionObj.chapter,
+		// 	degree: questionObj.degree,
+		// 	content: questionObj.content,
+		// 	answer: questionObj.answer,
+		// 	pic: questionObj.pic,
+		// 	order: questionObj.order
 			// summary: questionObj.summary,
 			// flash: questionObj.flash
-
-
-		});
+		// });
+		_question = new Question(questionObj);
 
 		_question.save(function(err, question) {
 				if(err) {
 					console.log(err);
 				}
-				res.redirect('/admin/preview/ques/' + question._id);
+			res.render('admin-newques', {
+		title: question._id + '题目录入',
+		question: question
+		});
+				// res.redirect('/admin/preview/ques/' + question._id);
 			});
+
 	}
 })
 
