@@ -1,7 +1,7 @@
 {{!-- admin-newques.hbs --}}
 {{!< ../layout}}
 <style>
-.form-group .col-sm-2, .col-sm-10, .col-sm-12 {
+.form-group .col-sm-10, .col-sm-2 {
   margin-bottom: 20px;
 }
 </style>
@@ -21,16 +21,16 @@
        </div>
 
          <div class="form-group ">
-         <label for="inputType" class="col-md-2 control-label">题目类型</label>
-         <div class="col-md-12">
+         <label for="inputType" class="col-sm-2 control-label">题目类型</label>
+         <div class="col-sm-10 col-sm-offset-2">
             <label class="radio-inline control-label">
-            <input type="radio" name="question[type]" id="multiple-choice" value="multiple-choice"/>选择题
+            <input type="radio" name="question[type]" id="multiple-choice" value="选择题"/>选择题
             </label>
             <label class="radio-inline">
-            <input type="radio" name="question[type]" id="fill-in" value="fill-in"/>填空题
+            <input type="radio" name="question[type]" id="fill-in" value="填空题"/>填空题
             </label>
             <label class="radio-inline">
-            <input type="radio" name="question[type]" id="calculate" value="calculate"/>计算题
+            <input type="radio" name="question[type]" id="calculate" value="计算题"/>计算题
             </label>
          </div>
        </div>
@@ -47,12 +47,6 @@
           <input  id="inputDegree"  type="text"  class="form-control" name="question[degree]" placeholder="{{question.degree}}" value={{question.degree}}>
          </div>
        </div>
-     {{!--   <div class="form-group ">
-         <label for="inputContent" class="col-sm-2 control-label">题目内容</label>
-         <div class="col-sm-10">
-          <input id="inputContent" class="form-control" type="text" name="question[content]" placeholder="{{question.content}}" value={{question.content}} >
-         </div>
-       </div> --}}
         <div class="form-group ">
          <label for="inputContent" class="col-sm-2 control-label">题目内容</label>
          <div class="col-sm-10">
@@ -76,6 +70,13 @@
           <input id="inputAnswer" class="form-control" type="text" name="question[answer]" placeholder="{{question.answer}}" value={{question.answer}} >
           </div>
        </div>
+        <div class="form-group ">
+         <label for="inputAnalysis" class="col-sm-2 control-label">解析</label>
+         <div class="col-sm-10">
+          <textarea type="text" class="form-control" name="question[analysis]" id="inputAnalysis" cols="30" rows="10">{{question.analysis}} </textarea>
+         </div>
+       </div>
+
        <div class="form-group">
         <div class="col-sm-6">
           <button class="btn btn-success" type="submit">录入</button>

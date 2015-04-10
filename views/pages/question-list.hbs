@@ -9,6 +9,7 @@
           <th>题目序号</th>
           <th>章节</th>
           <th>类型</th>
+          <th>题目内容</th>
           {{!-- <th>保存时间</th> --}}
           <th>查看详细</th>
           <th>编辑</th>
@@ -22,7 +23,8 @@
           <td>{{this.order}}</td>
           <td>{{this.chapter}}</td>
           <td>{{this.type}}</td>
-          {{!--           <td>{{moment(this.meta.updateAt).format('MM/DD/YYYY')}}</td> --}}
+          <td>{{this.content}}</td>
+          {{!-- <td>{{moment(this.meta.updateAt).format('MM/DD/YYYY')}}</td> --}}
           <td><a href="preview/{{_id}}">点击查看</a> </td>
           <td><a href="update/{{_id}}">编辑</a> </td>
           <td><button class="btn btn-danger del" data-id="{{_id}}">删除</button></td>

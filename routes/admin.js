@@ -21,51 +21,54 @@ router.route('/')
 // 题库列表查看
 router.route('/question/list')
 .get(function (req, res) {
-	var questions = [];
-	questions.push({
-		_id: "1",
-		order: "1",		// 题目序号
-		chapter: "1",  // 章节
-		degree: "0.3",		// 题目难度系数
-		content: "这是题目1内容",	// 题目内容
-		// pic: String,			// 题目图片
-		answer: "A"		// 题目答案
-	});
-	questions.push({
-		_id: 2,
-		order: 2,		// 题目序号
-		chapter: 1,  // 章节
-		degree: 0.3,		// 题目难度系数
-		content: '这是题目2内容',	// 题目内容
-		// pic: String,			// 题目图片
-		answer: 'B'		// 题目答案
+	Question.find( function (err, questions) {
+		if (err) {
+			console.log(err);
+		}
+		else {
+			res.render('question-list',{
+				title: '题目列表',
+				questions: questions
+			});
+		}
 	});
 	// console.log(questions);
-	res.render('question-list',{
-		title: '题目列表',
-		questions: questions
-	});
-});
+})
+.delete( function (req, res) {
+	var id = req.query.id;
 
-router.route('/question/preview/:order')
+	if (id) {
+		Question.remove({_id: id}, function (err, question) {
+			if (err) {
+				console.log(err);
+			}  else {
+			  res.json({success: 1});
+			}
+		});
+	}
+	// body...
+})
+
+router.route('/question/preview/:id')
 .get(function (req, res) {
-	// var question = {
-	// 	_id: 2,
-	// 	order: 2,		// 题目序号
-	// 	chapter: 1,  // 章节
-	// 	degree: 0.3,		// 题目难度系数
-	// 	content: '这是题目2内容',	// 题目内容
-	// 	// pic: String,			// 题目图片
-	// 	answer: 'B'		// 题目答案
-	// };
 
 	var id = req.params.id; 
-
 	Question.findById(id, function(err, question) {
-		res.render('quespreview', {
-			title: question.order + '  题目预览页',
-			question: question
-		});
+		if (err) {
+			console.log(err);
+			res.render('error', {
+      message: err.message,   
+      error: err
+      });
+		}
+		// if (question) {
+			res.render('quespreview', {
+				title: question.order + '  题目预览页',
+				question: question
+			});
+		// } else {
+		// 	res.redirect('/');
+		// }
 	});
 });
 
@@ -73,7 +76,7 @@ router.route('/question/new')
 .get(function (req, res) {
 	var question = {
 			_id:'',
-			order: '2',   // 题目序号
+			order: '',   // 题目序号
 			type: '',			// 题目类型
 			chapter:'',		// 题目章节
 			degree: '',		// 题目难度系数
@@ -88,20 +91,20 @@ router.route('/question/new')
 	});
 })
 .post(multipartMiddleware, function (req, res) {
-	// res.send(req.body);
-	console.log(req.body);
+
 	console.log(req.body.question);
 	var id = req.body.question._id;
 	console.log("id",id);
 	var questionObj = req.body.question;
 	var _question;
-	console.log("questionObj",questionObj);
-
+	// console.log("questionObj",questionObj);
+	// 更新题目
 	if (id) {
 		Question.findById(id, function(err, question) {
 			if(err) {
 				console.log(err);
 			} 
+			// 将现更新的 questionObj 的属性加到数据库原有的 question 上
 			_question = _.extend(question, questionObj);
 			_question.save(function(err, question) {
 				if(err) {
@@ -112,31 +115,18 @@ router.route('/question/new')
 		});
 	}
 	else {
-		// _question = new Question({
-		// 	id: questionObj.id,
-		// 	type: questionObj.type,
-		// 	chapter: questionObj.chapter,
-		// 	degree: questionObj.degree,
-		// 	content: questionObj.content,
-		// 	answer: questionObj.answer,
-		// 	pic: questionObj.pic,
-		// 	order: questionObj.order
-			// summary: questionObj.summary,
-			// flash: questionObj.flash
-		// });
+	
 		_question = new Question(questionObj);
 
 		_question.save(function(err, question) {
-				if(err) {
-					console.log(err);
-				}
-			res.render('admin-newques', {
-		title: question._id + '题目录入',
-		question: question
+			if(err) {
+				console.log(err);
+			}
+		// 	res.render('admin-newques', {
+		// title: question._id + '题目录入',
+		// question: question
+			res.redirect('/admin/question/preview/' + question._id);
 		});
-				// res.redirect('/admin/preview/ques/' + question._id);
-			});
-
 	}
 })
 

@@ -3,13 +3,17 @@
 {{!< ../layout}}
 <style>
   .dl-horizontal {
-    font-size: 1.4em;
+    font-size: 1.2em;
+  }
+  dd {
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(233, 233, 232, 0.5);
   }
 </style>
 
 <div class="container">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-10 col-md-offset-1">
       <dl class="dl-horizontal">
         <dt>题目编号</dt>
         <dd>{{question.order}}</dd>
@@ -23,7 +27,14 @@
         <dd>{{question.content}}</dd>
         <dt>题目答案</dt>
         <dd>{{question.answer}}</dd>
+        <dt>解析</dt>
+        <dd>{{question.analysis}}</dd>
       </dl>
     </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-2 col-md-offset-5"><button class="btn btn-primary">修改</button></div>
   </div>
 </div>

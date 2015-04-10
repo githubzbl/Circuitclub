@@ -48,8 +48,6 @@ app.use(bodyParser.json({limit: '1mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// app.use(express.multipart());
-
 // express-session
 app.use(session({ 
   secret: 'my app secret',
