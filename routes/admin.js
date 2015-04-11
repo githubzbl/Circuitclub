@@ -1,6 +1,6 @@
 // admin.js
 var router = require('express').Router();
-var _ = require('underscore');
+var _ = require('lodash');
 var Question = require('../models/question');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
