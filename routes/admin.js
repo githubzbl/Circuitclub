@@ -19,7 +19,7 @@ router.route('/')
 	}
 });
 // 题库列表查看
-router.route('/question/list')
+router.route('/questionBank/list')
 .get(function (req, res) {
 	Question.find( function (err, questions) {
 		if (err) {
@@ -46,7 +46,6 @@ router.route('/question/list')
 			}
 		});
 	}
-	// body...
 })
 
 router.route('/question/preview/:id')
@@ -63,7 +62,7 @@ router.route('/question/preview/:id')
 		}
 		// if (question) {
 			res.render('quespreview', {
-				title: question.order + '  题目预览页',
+				title: question.index + '  题目预览页',
 				question: question
 			});
 		// } else {
@@ -76,7 +75,7 @@ router.route('/question/new')
 .get(function (req, res) {
 	var question = {
 			_id:'',
-			order: '',   // 题目序号
+			index: '',   // 题目序号
 			type: '',			// 题目类型
 			chapter:'',		// 题目章节
 			degree: '',		// 题目难度系数

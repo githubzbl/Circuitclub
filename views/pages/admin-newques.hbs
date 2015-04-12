@@ -1,30 +1,37 @@
 {{!-- admin-newques.hbs --}}
 {{!< ../layout}}
 <style>
-.form-group .col-sm-10, .col-sm-2 {
-  margin-bottom: 20px;
+.add-question {
+  font-size: 1.1em;
+}
+.ques-choice {
+  background: orange;
 }
 </style>
-<div class="container">
+<script>
+  
+</script>
+<div class="container add-question">
   <div class="row">    
-     <form action="/admin/question/new", method="post",class="form-horizontal", style="font-size:1.2em;">
+     <form action="/admin/question/new" method="post" class="form-horizontal">
        {{#if question._id}}
-         <input type="hidden",name="question[_id]",value="{{question._id}}">
+         <input type="hidden" name="question[_id]" value="{{question._id}}">
        {{/if}}
-
-       <div class="form-group ">
-         <label for="inputOrder" class="col-sm-2 control-label">题目编号</label>
-         <div class="col-sm-10">
-          <input id="inputOrder" class="form-control" type="text" placeholder="{{question.order}}" name="question[order]"
-          value={{question.order}}>
+       <div class="form-group  ">
+         <label for="inputIndex" class="col-sm-1 col-sm-offset-1 control-label">编号</label>
+         <div class="col-sm-2">
+          <input id="inputIndex" class="form-control" type="text" placeholder="{{question.index}}" name="question[index]"
+          value={{question.index}}>
          </div>
-       </div>
 
-         <div class="form-group ">
-         <label for="inputType" class="col-sm-2 control-label">题目类型</label>
-         <div class="col-sm-10 col-sm-offset-2">
+         <label for="inputChapter" class="col-sm-1 control-label">章节</label>
+         <div class="col-sm-2">
+          <input id="inputChapter" class="form-control" type="text"name="question[chapter]" placeholder="{{question.chapter}}" value={{question.chapter}}>
+         </div>
+         <label for="inputType" class="col-sm-1 control-label">题型</label>
+         <div id="inputType" class="col-sm-4 input-group">
             <label class="radio-inline control-label">
-            <input type="radio" name="question[type]" id="multiple-choice" value="选择题"/>选择题
+            <input type="radio" name="question[type]" id="multiple-choice" value="选择题" checked>选择题
             </label>
             <label class="radio-inline">
             <input type="radio" name="question[type]" id="fill-in" value="填空题"/>填空题
@@ -33,25 +40,18 @@
             <input type="radio" name="question[type]" id="calculate" value="计算题"/>计算题
             </label>
          </div>
-       </div>
-       <div class="form-group ">
-         <label for="inputChapter" class="col-sm-2 control-label">章节</label>
-         <div class="col-sm-10">
-          <input id="inputChapter" class="form-control" type="text"name="question[chapter]" placeholder="{{question.chapter}}" value={{question.chapter}}>
+        
+        <hr>
+
+        <div class="form-group ">
+         <label for="inputContent" class="col-sm-2 control-label">题干</label>
+         <div class="col-sm-8">
+          <textarea type="text" class="form-control" name="question[content]" id="inputContent" cols="20" rows="5">{{question.content}} </textarea>
          </div>
        </div>
 
-       <div class="form-group ">
-         <label for="inputDegree" class="col-sm-2 control-label">难度系数</label>
-         <div class="col-sm-10">
-          <input  id="inputDegree"  type="text"  class="form-control" name="question[degree]" placeholder="{{question.degree}}" value={{question.degree}}>
-         </div>
-       </div>
-        <div class="form-group ">
-         <label for="inputContent" class="col-sm-2 control-label">题目内容</label>
-         <div class="col-sm-10">
-          <textarea type="text" class="form-control" name="question[content]" id="inputContent" cols="30" rows="10">{{question.content}} </textarea>
-         </div>
+       <div id="ques-choice">
+        
        </div>
 
        <div class="form-group ">
@@ -64,15 +64,30 @@
           </div>
         </div>
        </div>
+       <hr>
        <div class="form-group ">
-         <label for="inputAnswer" class="col-sm-2 control-label">答案</label>
-         <div class="col-sm-10">
+         <label for="inputDifficulty" class="col-sm-2 control-label">难度</label>
+           <div id="inputDifficulty" class="col-sm-10">
+              <label class="radio-inline control-label">
+                <input type="radio" name="question[difficulty]" id="easy" value="2" checked>容易
+              </label>         
+              <label class="radio-inline control-label">
+                <input type="radio" name="question[difficulty]" id="medium" value="5" checked>中等
+              </label>
+              <label class="radio-inline control-label">
+                <input type="radio" name="question[difficulty]" id="hard" value="8" checked>困难
+              </label>
+           </div>
+       </div>
+       <div class="form-group ">
+         <label for="inputAnswer" class="col-sm-2 control-label">参考答案</label>
+         <div class="col-sm-8">
           <input id="inputAnswer" class="form-control" type="text" name="question[answer]" placeholder="{{question.answer}}" value={{question.answer}} >
           </div>
        </div>
         <div class="form-group ">
          <label for="inputAnalysis" class="col-sm-2 control-label">解析</label>
-         <div class="col-sm-10">
+         <div class="col-sm-8">
           <textarea type="text" class="form-control" name="question[analysis]" id="inputAnalysis" cols="30" rows="10">{{question.analysis}} </textarea>
          </div>
        </div>

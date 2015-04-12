@@ -1,6 +1,9 @@
 // std.js
-var express = require('express');
-var router = express.Router();
+var router = require('express').Router();
+var _ = require('lodash');
+var Question = require('../models/question');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
 
 router.route('/')
@@ -12,23 +15,28 @@ router.route('/')
 		});
 	}
 });
-router.route('/paperinfo')
-.get(function (req, res) {
-	return res.render('paperinfo');
-
-});
 
 router.route('/exam')
 .get(function (req, res) {
-	res.render('exam', {
-		title: '在线考试' 
+	res.render('paperInfo', {
+		title: '考试信息' 
 	});
 });
 router.route('/exam/start')
 .get(function (req, res) {
-
-
-})
+	Question.find( function (err, questions) {
+		if (err) {
+			console.log(err);
+		}
+		else {
+			res.render('exam', {
+				title: '正式考试',
+				questions: questions
+			});
+		}
+	});
+});
+// 发送文件
 // router.route('/exam/start')
 // .get(function (req, res, next) {
 //   var options = {

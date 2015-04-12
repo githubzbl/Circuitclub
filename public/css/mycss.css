@@ -6,9 +6,15 @@
 }
 body {
 	/*margin-top: 50px;*/
+	background: #F0F0F0;
 }
 #wrapper {
 	margin-top: 80px;
+}
+.container {
+	background: #fff;
+	border-radius: 10px;
+	padding: 15px 20px;
 }
 div.main-container {
 	width: 100%;

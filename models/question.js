@@ -1,11 +1,10 @@
 // models/question.js
 
 var mongoose = require('mongoose');
-// var QuestionSchema = require('../schemas/question');
 var QuestionSchema = new mongoose.Schema({
-  order: {type: Number, unique: true},   // 题目序号
+  index: {type: Number, unique: true},   // 题目序号
   chapter: Number,  // 章节
-  degree: Number,   // 题目难度系数
+  difficulty: Number,   // 题目难度系数
   type: String,     // 题目类型
   content: String,  // 题目内容
   pic: String,      // 题目图片
@@ -25,7 +24,7 @@ var QuestionSchema = new mongoose.Schema({
 });
 // 保存之前查询是否为新加题目
 QuestionSchema.pre('save', function(next) {
-  if(this.isNew) {
+  if (this.isNew) {
     this.meta.createAt = this.meta.updateAt = Date.now();
   }
   else {
