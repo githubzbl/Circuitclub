@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 // var ObjectId = Schema.Types.ObjectId
 
 var QuestionSchema = new mongoose.Schema({
-  index: { type: Number},   // 题目序号
+  index: { type: Number},   // 编号
   chapter: Number,  // 章节
   difficulty: Number,   // 题目难度系数
   type: String,     // 题目类型
@@ -60,11 +60,3 @@ QuestionSchema.statics = {
 var Question = mongoose.model('Question', QuestionSchema);
 
 module.exports = Question;
-
-// for (var i = 0; i < 1000; i++) {
-// 	db.users.save({num: i});
-// };
-
-// db.users.find( { num: { $gt: 20, $lt: 25}})
-// db.users.find( {num: {'$gt': 990}}).explain()
-// db.users.ensureIndex({num: 1})

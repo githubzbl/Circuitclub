@@ -3,12 +3,14 @@
 var mongoose = require('mongoose');
 // var UserSchema = require('../schemas/user'); // 创建Schema
 var UserSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    unique: true
+  }
   name: {
-    unique: true,
     type: String
   },
   password: {
-    unique: true,
     type: String
   },
   meta: {
