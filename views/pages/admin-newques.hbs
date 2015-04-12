@@ -1,15 +1,25 @@
 {{!-- admin-newques.hbs --}}
 {{!< ../layout}}
 <style>
-.add-question {
-  font-size: 1.1em;
-}
-.ques-choice {
-  background: orange;
-}
+  .add-question {
+    font-size: 1.1em;
+  }
+  .choice-editor {
+    /*background: orange;*/
+
+    /*overflow:scroll;*/
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  ol {
+    list-style-type: none;
+  }
 </style>
+{{!-- <script src="/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script> --}}
+
 <script>
-  
+  $(document).ready(function() {
+  });
 </script>
 <div class="container add-question">
   <div class="row">    
@@ -28,6 +38,7 @@
          <div class="col-sm-2">
           <input id="inputChapter" class="form-control" type="text"name="question[chapter]" placeholder="{{question.chapter}}" value={{question.chapter}}>
          </div>
+
          <label for="inputType" class="col-sm-1 control-label">题型</label>
          <div id="inputType" class="col-sm-4 input-group">
             <label class="radio-inline control-label">
@@ -44,15 +55,48 @@
         <hr>
 
         <div class="form-group ">
-         <label for="inputContent" class="col-sm-2 control-label">题干</label>
+         <label for="inputTitle" class="col-sm-2 control-label">题干</label>
          <div class="col-sm-8">
-          <textarea type="text" class="form-control" name="question[content]" id="inputContent" cols="20" rows="5">{{question.content}} </textarea>
+          <textarea type="text" class="form-control" name="question[title]" id="inputTitle" cols="20" rows="5">{{question.title}}</textarea>
          </div>
        </div>
+      
+      <div class="form-group">
+      
+      <ol>
+       <li class="col-md-12"> 
+        <label class="col-sm-2 control-label">A. 
+        </label>
+         <div class="col-md-8">
+          <input id="" class="form-control" type="text" name="question[a]" placeholder="A选项" value={{question.choice.A}} >
+          </div>
+        </li>
+       <li class="col-md-12"> 
+        <label class="col-sm-2 control-label">B. 
+        </label>
+         <div class="col-md-8">
+          <input id="" class="form-control" type="text" name="question[b]" placeholder="B选项" value={{question.choice.B}} >
+          </div>
+        </li>
+       <li class="col-md-12"> 
+        <label class="col-sm-2 control-label">C. 
+        </label>
+         <div class="col-md-8">
+          <input id="" class="form-control" type="text" name="question[c]" placeholder="C选项" value={{question.choice.C}} >
+          </div>
+        </li>
+       <li class="col-md-12"> 
+        <label class="col-sm-2 control-label">D. 
+        </label>
+         <div class="col-md-8">
+          <input id="" class="form-control" type="text" name="question[d]" placeholder="D选项" value={{question.choice.D}} >
+          </div>
+        </li>
 
-       <div id="ques-choice">
-        
-       </div>
+
+      </ol>
+      </div>
+
 
        <div class="form-group ">
         <label for="inputPic" class="col-sm-2 control-label">题目图片 </label>
@@ -72,10 +116,10 @@
                 <input type="radio" name="question[difficulty]" id="easy" value="2" checked>容易
               </label>         
               <label class="radio-inline control-label">
-                <input type="radio" name="question[difficulty]" id="medium" value="5" checked>中等
+                <input type="radio" name="question[difficulty]" id="medium" value="5" >中等
               </label>
               <label class="radio-inline control-label">
-                <input type="radio" name="question[difficulty]" id="hard" value="8" checked>困难
+                <input type="radio" name="question[difficulty]" id="hard" value="8" >困难
               </label>
            </div>
        </div>
@@ -93,7 +137,7 @@
        </div>
 
        <div class="form-group">
-        <div class="col-sm-6">
+        <div class="col-sm-6 col-sm-offset-4">
           <button class="btn btn-success" type="submit">录入</button>
         </div>
        </div>

@@ -21,9 +21,6 @@ var app = express();
 
 
 // view engine setup
-// app.set('views', path.join(__dirname, 'views/pages'));
-// app.set('view engine', 'jade');
-
 // express-hbs
 // Use `.hbs` for extensions and find partials in `views/partials`.
 app.engine('hbs', hbs.express4({

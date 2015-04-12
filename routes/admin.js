@@ -62,7 +62,7 @@ router.route('/question/preview/:id')
 		}
 		// if (question) {
 			res.render('quespreview', {
-				title: question.index + '  题目预览页',
+				title: '第 ' + question.index + ' 题预览页',
 				question: question
 			});
 		// } else {
@@ -78,7 +78,7 @@ router.route('/question/new')
 			index: '',   // 题目序号
 			type: '',			// 题目类型
 			chapter:'',		// 题目章节
-			degree: '',		// 题目难度系数
+			difficulty: '',		// 题目难度系数
 			content: '',  // 题目内容
 			pic:'',
 			answer: ''    // 题目答案

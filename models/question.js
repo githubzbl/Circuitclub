@@ -1,12 +1,19 @@
 // models/question.js
 
 var mongoose = require('mongoose');
+// var ObjectId = Schema.Types.ObjectId
+
 var QuestionSchema = new mongoose.Schema({
-  index: {type: Number, unique: true},   // 题目序号
+  index: { type: Number},   // 题目序号
   chapter: Number,  // 章节
   difficulty: Number,   // 题目难度系数
   type: String,     // 题目类型
-  content: String,  // 题目内容
+  title: { type:String, trim: true},  // 题干
+  a: { type:String, trim: true},  //选项
+  b: { type:String, trim: true},  //选项
+  c: { type:String, trim: true},  //选项
+  d: { type:String, trim: true},  //选项
+  content: { type:String, trim: true}, 
   pic: String,      // 题目图片
   answer: String,   // 题目答案
   analysis: String, // 解析

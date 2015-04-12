@@ -15,17 +15,23 @@
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
       <dl class="dl-horizontal">
-        <dt>题目编号</dt>
-        <dd>{{question.order}}</dd>
-        <dt>题目类型</dt>
+        <dt>编号</dt>
+        <dd>{{question.index}}</dd>
+        <dt>题型</dt>
         <dd>{{question.type}}</dd>
-        <dt>题目章节</dt>
+        <dt>章节</dt>
         <dd>{{question.chapter}}</dd>
-        <dt>难度系数</dt>
-        <dd>{{question.degree}}</dd>
-        <dt>题目内容</dt>
-        <dd>{{question.content}}</dd>
-        <dt>题目答案</dt>
+        <dt class="difficulty" id="{{question.difficulty}}">难易</dt>
+        <dd class="difficulty"> </dd>
+        <dt>题干</dt>
+        <dd>{{question.title}}</dd>
+        <dt>选项</dt>
+        <dd>A. {{question.a}}</dd>
+        <dd>B. {{question.b}}</dd>
+        <dd>C. {{question.c}}</dd>
+        <dd>D. {{question.d}}</dd>
+
+        <dt>答案</dt>
         <dd>{{question.answer}}</dd>
         <dt>解析</dt>
         <dd>{{question.analysis}}</dd>
@@ -38,3 +44,22 @@
     <div class="col-md-2 col-md-offset-5"><button class="btn btn-primary">修改</button></div>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+
+    var $ddText = $('dd.difficulty');
+    var diff = $('dt.difficulty')[0].id;
+    console.log(diff)
+    switch(diff) {
+      case '2': 
+        $ddText.html('容易');
+        break;
+      case '5': 
+        $ddText.html('中等');
+        break;
+      case 8: 
+        $ddText.html('困难');
+        break;
+    }
+  });
+</script>
