@@ -1,0 +1,27 @@
+{{!-- login.hbs --}}
+{{!< ../layout}}
+
+<div class="container">
+  <h2 class="page-header">用户登录</h2>
+  <form method="post" class="form-horizontal">
+    <filedset>
+      <div class="form-group">
+        <label for="username" class="control-label col-sm-4 col-md-3">用户名</label>
+        <div class="col-sm-5">
+          <input id="username" type="text" name="username" placeholder="请输入您的学号" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password" class="control-label col-sm-4 col-md-3">密码</label>
+        <div class="col-sm-5">
+          <input id="password" type="password" name="password" placeholder="请输入您的密码" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">登录</button>
+        </div>
+      </div>
+    </filedset>
+  </form>
+</div>

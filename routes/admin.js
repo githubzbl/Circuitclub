@@ -10,7 +10,7 @@ router.route('/')
 	console.log('session:', req.session, 'session.name:', req.session.name);
 	if (req.session.logged_in) {
 		return res.render('admin', {
-			title: 'Admin page',
+			title: '管理员控制面板',
 			user: req.session.name
 		});
 	} else {
@@ -28,6 +28,7 @@ router.route('/questionBank/list')
 		else {
 			res.render('question-list',{
 				title: '题目列表',
+				user: req.session.name,
 				questions: questions
 			});
 		}
@@ -50,7 +51,6 @@ router.route('/questionBank/list')
 
 router.route('/question/preview/:id')
 .get(function (req, res) {
-
 	var id = req.params.id; 
 	Question.findById(id, function(err, question) {
 		if (err) {
@@ -62,7 +62,30 @@ router.route('/question/preview/:id')
 		}
 		// if (question) {
 			res.render('quespreview', {
-				title: '第 ' + question.index + ' 题预览页',
+				title: '题目预览',
+				user: req.session.name,
+				question: question
+			});
+		// } else {
+		// 	res.redirect('/');
+		// }
+	});
+});
+router.route('/question/edit/:id')
+.get(function (req, res) {
+	var id = req.params.id; 
+	Question.findById(id, function(err, question) {
+		if (err) {
+			console.log(err);
+			res.render('error', {
+      message: err.message,   
+      error: err
+      });
+		}
+		// if (question) {
+			res.render('quesedit', {
+				title: '编辑题目',
+				user: req.session.name,
 				question: question
 			});
 		// } else {
@@ -86,6 +109,7 @@ router.route('/question/new')
 
 	res.render('admin-newques', {
 		title: '题目录入',
+		user: req.session.name,
 		question: question
 	});
 })
@@ -127,7 +151,7 @@ router.route('/question/new')
 			res.redirect('/admin/question/preview/' + question._id);
 		});
 	}
-})
+});
 
 
 module.exports = router;

@@ -25,11 +25,13 @@
         <dd class="difficulty"> </dd>
         <dt>题干</dt>
         <dd>{{question.title}}</dd>
+        {{#if question.a}}
         <dt>选项</dt>
         <dd>A. {{question.a}}</dd>
         <dd>B. {{question.b}}</dd>
         <dd>C. {{question.c}}</dd>
         <dd>D. {{question.d}}</dd>
+        {{/if}}
 
         <dt>答案</dt>
         <dd>{{question.answer}}</dd>
@@ -41,7 +43,9 @@
   </div>
 
   <div class="row">
-    <div class="col-md-2 col-md-offset-5"><button class="btn btn-primary">修改</button></div>
+    <div class="col-md-2 col-md-offset-5">
+    <a href="/admin/question/edit/{{question._id}}"> <button class="btn btn-primary">修 改</button></a></div>    
+    <a href="/admin/questionBank/list"> <button class="btn btn-info">返回列表</button></a></div>    
   </div>
 </div>
 <script>

@@ -12,19 +12,35 @@
     top: 200px; 
     right: 60px;
   }
-
+  article.per-ques {
+    margin-bottom: 20px;
+  }
+  h2 {
+    margin-bottom: 30px;
+  }
 
 </style>
 
 <div class="container">
   <div class="row">
+    <h2 class="col-sm-10 col-sm-offset-5">在 线 考 试</h2>
+
     <div class="col-sm-10 col-sm-offset-1" id="exam-container">
+
        {{#each questions}}
           <article class="panel panel-info per-ques ques-id-{{_id}}">
             <section class="ques-info panel-heading">
               <label class="ques-index" for="">第 X 题</label>
               <label class="ques-type" for="">{{this.type}}</label>
-              <div class="ques-content">{{this.content}}</div>
+              <div class="ques-title">{{this.title}}</div>
+              {{#if this.a}} 
+                <dt>选项</dt>
+                <dd>A. {{this.a}}</dd>
+                <dd>B. {{this.b}}</dd>
+                <dd>C. {{this.c}}</dd>
+                <dd>D. {{this.d}}</dd>
+              {{/if}}
+               <div class="ques-content">{{this.content}}</div>            
             </section>
             <section class="ans-info panel-body">
               <div class="row">
@@ -36,15 +52,17 @@
                 </div><!-- /.col-lg-6 -->
               </div><!-- /.row -->
             </section>
+
           </article>
+          <hr>
         {{/each}}
     </div>
-    <aside id="exam-nav">
+{{!--     <aside id="exam-nav">
       <ul class="nav nav-pills nav-stacked col-sm-1">
         <li role=""><a href="#">上一题</a></li>
         <li role="" class="active"><a href="#">下一题</a></li>
       </ul>
-    </aside>
+    </aside> --}}
   </div>
 
 </div>
