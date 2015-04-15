@@ -5,16 +5,19 @@ var mongoose = require('mongoose');
 
 var QuestionSchema = new mongoose.Schema({
   index: { type: Number},   // 编号
-  chapter: Number,  // 章节
-  difficulty: Number,   // 题目难度系数
-  type: String,     // 题目类型
+  chapter: Number,          // 章节
+  difficulty: Number,       // 题目难度系数
+  type: String,             // 题目类型
   title: { type:String, trim: true},  // 题干
-  a: { type:String, trim: true},  //选项
-  b: { type:String, trim: true},  //选项
-  c: { type:String, trim: true},  //选项
-  d: { type:String, trim: true},  //选项
+  a: { type:String, trim: true},  //选项A
+  b: { type:String, trim: true},  //选项B
+  c: { type:String, trim: true},  //选项C
+  d: { type:String, trim: true},  //选项D
   content: { type:String, trim: true}, 
-  pic: String,      // 题目图片
+  pic: {            // 题目图片
+    name: String,    // 对应的题目名称
+    path: String     // 路径
+  },      
   answer: String,   // 题目答案
   analysis: String, // 解析
   
