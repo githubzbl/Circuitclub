@@ -4,7 +4,6 @@ var express   = require('express'),
      logger   = require('morgan'),
  cookieParser = require('cookie-parser'),
  bodyParser   = require('body-parser'),
-    bcrypt    = require('bcrypt'),
 
     session   = require('express-session'),   // session 支持
  RedisStore   = require('connect-redis')(session);

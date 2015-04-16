@@ -1,0 +1,50 @@
+{{!-- reg.hbs --}}
+{{!< ../layout}}
+
+<div class="container">
+  <h2 class="page-header">注册</h2>
+  <div class="col-md-5">
+    <form method="post" class="form-horizontal">
+      <filedset>
+        <div class="row">
+          <div class="form-group username">
+            <label for="username" class="control-label col-md-4">学号</label>
+            <div class="col-md-7">
+              <input id="username" type="text" name="user[username]" placeholder="请输入您的学号a " class="form-control"/>
+              <span class="fade warning">请输入正确的学号！</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group ">
+            <label for="password" class="control-label col-md-4">密码</label>
+            <div class="col-md-7">
+              <input id="password" type="password" name="user[passowrd]" placeholder="请输入您的密码" class="form-control"/>
+
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <label for="username" class="control-label col-md-4">重复密码</label>
+            <div class="col-md-7">
+              <input id="password-repeat" type="password" name="user[password]" placeholder="请再次输入密码" class="form-control"/>
+              <span class="fade warning">两次密码不一致！</span>
+            </div>
+          </div>
+        </div>
+
+          <div class="row">
+          <div class="form-group sign-up">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button id="sign-up" type="submit" class="btn btn-primary">注册</button>
+            </div>
+          </div>
+        </div>
+      </filedset>
+    </form>
+  </div>
+
+  <div class="col-md-7"><img src="./libs/images/login_welcomeback_happyface.png"/></div>
+
+</div>

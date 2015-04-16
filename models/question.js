@@ -15,7 +15,10 @@ var QuestionSchema = new mongoose.Schema({
   d: { type:String, trim: true},  //选项D
   content: { type:String, trim: true}, 
   pic: {            // 题目图片
-    name: String,    // 对应的题目名称
+    name: {
+      type: String,
+      default: this.index + 'pic'
+    },    // 对应的题目名称
     path: String     // 路径
   },      
   answer: String,   // 题目答案
