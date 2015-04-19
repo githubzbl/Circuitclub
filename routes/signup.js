@@ -1,6 +1,6 @@
 var router = require('express').Router();
 
-var User = require('../models/user.js');
+var User = require('../models/user');
 
 // 注册
 router.route('/')
@@ -11,25 +11,23 @@ router.route('/')
 })
 .post(function (req, res, next) {
 	var data = req.body;
-	console.log(data)
-	User.findByUsrname(data.username, function (err, user) {
+	console.log(data);
+	User.findOne({ username: data.username }, function (err, user) {
 		if (err) return next(err);
-
 		if (user) {
-			res.json({ err: 1});
-			
-		} 
-	});
+			return res.json({ err: 1 });    // 用户名已被占用
+		} else {
 			user = new User(data);
 			user.save(function (err, user) {
-				if (err) {
-					console.log(err);
-				}
-				req.session.uid = user._id;
-				res.redirect('/std');
+			if (err) {
+				console.log(err);
+			}
+			// req.session.uid = user._id;
+			res.json({success: 1});  // 注册成功
 			});
-	// console.log('body: ' + JSON.stringify(req.body));
-	
-})
+		}
+	});
+	// console.log('body: ' + JSON.stringify(req.body));	
+});
 
 module.exports = router;

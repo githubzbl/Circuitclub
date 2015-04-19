@@ -1,39 +1,38 @@
 // login.js
 var router = require('express').Router();
-
-var users = require('./users');
+var User = require('../models/user');
+// var users = require('./users');
 
 // 登录
 router.route('/')
 .get(function (req, res) {
-		res.render('login', {
-			title: '登录'
-		});
+	return res.render('login', {
+		title: '登录'
+	})
 })
-.post(function (req, res) {
-	console.log(req.body.username);
-	console.log(req.body.password);
-	if (!users[req.body.username] || 
-		req.body.password != users[req.body.username].password) {
-		res.end('Bad name/passwd!');
-	} else {
-		req.session.logged_in = true;
-		req.session.name = users[req.body.username].name;
-		console.log('session:', req.session, 'session.name:', req.session.name);
-		if (req.body.username === 'admin') {
-			return res.redirect('/admin');
+.post(function (req, res, next) {
+	var data = req.body;
+	console.log(data);
+	User.findOne({ username: data.username }, function (err, user) {
+		if (err) return next(err);
+		if (!user) {
+			return res.json({ err: 1 });    // 用户不存在
 		} else {
-			return res.redirect('/std');
+			user.comparePassword(data.password, function(err, isMatch) {
+	      if (err) {
+	        console.log(err)
+	      }
+
+	      if (isMatch) {
+	        req.session.user = user;
+					return res.json({ success: 1 });  // 登录成功
+	      } else {
+	        return res.json({ err: 2 });  // 密码错误	      
+    		}
+			})
 		}
-
-	}
-
-	// if (req.body.username == 'admin')
-	// 	if (req.body.password == 'root')
-	// 		return res.redirect('/admin')
-	// if (err)
-	// req.session.msg= 'Error'
-	// return res.redirect('/')
+	// console.log('body: ' + JSON.stringify(req.body));	
+	});
 });
 
 module.exports = router;

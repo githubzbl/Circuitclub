@@ -2,6 +2,7 @@
 var router = require('express').Router();
 var _ = require('lodash');
 var Question = require('../models/question');
+var User = require('../models/user');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
@@ -40,6 +41,36 @@ router.route('/questionBank/list')
 
 	if (id) {
 		Question.remove({_id: id}, function (err, question) {
+			if (err) {
+				console.log(err);
+			}  else {
+			  res.json({success: 1});
+			}
+		});
+	}
+})
+// 学生列表查看
+router.route('/userlist')
+.get(function (req, res) {
+	User.find( function (err, users) {
+		if (err) {
+			console.log(err);
+		}
+		else {
+			res.render('userlist',{
+				title: '学生列表查看',
+				user: req.session.name,
+				users: users
+			});
+		}
+	});
+	// console.log(questions);
+})
+.delete( function (req, res) {
+	var id = req.query.id;
+
+	if (id) {
+		User.remove({_id: id}, function (err, user) {
 			if (err) {
 				console.log(err);
 			}  else {

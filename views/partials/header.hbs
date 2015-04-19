@@ -20,8 +20,8 @@
         {{#if user}}
           <li><a href="/logout">退出</a></li>
         {{ else }}  
-          <li><a href="#" data-toggle="modal" data-target="#loginModal">登录</a></li>
-          <li><a href="#" data-toggle="modal" data-target="#signupModal">注册</a></li>
+          <li><a href="#" class="login" data-toggle="modal" data-target="#loginModal">登录</a></li>
+          <li><a href="#" class="signup" data-toggle="modal" data-target="#signupModal">注册</a></li>
         {{/if}}
       </li>
     </ul>
@@ -32,7 +32,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" data-dismiss="modal" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <button type="button" data-dismiss="modal" class="close closeModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
           <h4 id="loginLabel" class="modal-title">登录</h4>
         </div>
         <div class="modal-body">
@@ -42,12 +42,14 @@
                 <label for="login-username" class="control-label col-sm-4">用户名</label>
                 <div class="col-sm-8">
                   <input id="login-username" type="text" name="username" placeholder="请输入您的学号" class="form-control"/>
+                <span class="fade warning">请正确输入学号！</span>
                 </div>
               </div>
               <div class="form-group">
                 <label for="login-password" class="control-label col-sm-4">密码</label>
                 <div class="col-sm-8">
-                  <input id="log-inpassword" type="password" name="password" placeholder="请输入您的密码" class="form-control"/>
+                  <input id="login-password" type="password" name="password" placeholder="请输入您的密码" class="form-control"/>
+                  <span class="fade warning">密码错误</span>
                 </div>
               </div>
             </filedset>
@@ -75,7 +77,7 @@
                 <label for="signup-username" class="control-label col-sm-4">用户名</label>
                 <div class="col-sm-8">
                   <input id="signup-username" type="text" name="user[username]" placeholder="请输入您的学号" class="form-control"/>
-                  <span class="fade warning">请输入正确的学号！</span>
+                  <span class="fade warning">请正确输入学号！</span>
 
                 </div>
               </div>
@@ -107,12 +109,19 @@
 
 <script>
   $(document).ready(function() {
+    // 注册验证
     var $signName = $('#signup-username');
     var $signPwd = $('#signup-password');
     var $signpwdRp = $('#signup-password-repeat');
-    var regexp = /^[0-9]{13}$/g;
-    $('button.closeModal').click(function(event) {
+    // 登录验证
+    var $loginName = $('#login-username');
+    var $loginPwd = $('#login-password');
+
+    // var regexp = /^[0-9]{13}$/g;
+    var regexp = /^[0-9]+$/g;
+    $('a.login, a.signup').click(function(event) {
       $('input').val('');
+      $('span.warning').addClass('fade');
     });
 
     $('#signupModal').on('submit', function(event) {
@@ -149,7 +158,11 @@
         if (res.err === 1) {
           $signName.next().removeClass('fade')
                           .text('用户名已被占用');
+        } else if (res.success === 1){
+          $('button.closeModal').click();
+          $('ul.nav').html('<li class="active"><li><a href="/logout">退出</a></li>');
         }
+          
       })
       .fail(function() {
         console.log("error");
@@ -158,8 +171,56 @@
         console.log("complete");
       });
       }
+  
+    });
+    $('#loginModal').on('submit', function(event) {
+      event.preventDefault();
+      var username = $loginName.val(); 
+      var pwd = $loginPwd.val();
+       // 发送至服务器的数据
+      var data = {
+        username: username,
+        password: pwd
+      };
+      if (!username.match(regexp)) {
+        return $loginName.next().removeClass('fade');
+      } else {
+        $loginName.next().addClass('fade');        
+      }
 
-      
+      if ( username.match(regexp) && pwd) {
+        // 2011029050016
+        
+       $.ajax({
+        url: '/login',
+        type: 'POST',
+        data: JSON.stringify(data),   // 发送至服务器的数据
+        contentType: 'application/json',
+      })
+      .done(function(res) {
+        console.log("success");
+        console.log(res);
+        if (res.err === 1) {
+          $loginName.next().removeClass('fade')
+                            .text('此学号还未注册！')
+        } if (res.err === 2) {
+          $loginPwd.next().removeClass('fade');
+
+        }
+        else if (res.success === 1){
+          $('button.closeModal').click();
+          $('ul.nav').html('<li class="active"><li><a href="/logout">退出</a></li>');
+        }
+          
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+      }
+  
     });
 
   });
