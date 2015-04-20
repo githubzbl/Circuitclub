@@ -21,8 +21,8 @@ var UserSchema = new mongoose.Schema({
   // >10: admin
   // >50: super admin
   role: {
-    type: Number,
-    default: 0
+    type: String,
+    default: 'std'
   },
 
   myQues: [],    // 做过的题目

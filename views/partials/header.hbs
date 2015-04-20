@@ -18,6 +18,7 @@
     <ul class="nav navbar-nav navbar-right">
       <li class="active">
         {{#if user}}
+          <li><a href="/{{user.role}}">个人主页</a></li>
           <li><a href="/logout">退出</a></li>
         {{ else }}  
           <li><a href="#" class="login" data-toggle="modal" data-target="#loginModal">登录</a></li>
@@ -160,7 +161,7 @@
                           .text('用户名已被占用');
         } else if (res.success === 1){
           $('button.closeModal').click();
-          $('ul.nav').html('<li class="active"><li><a href="/logout">退出</a></li>');
+          $('ul.nav').html('<li><a href="/std">个人主页</a></li><li><a href="/logout">退出</a></li>');
         }
           
       })
@@ -209,7 +210,7 @@
         }
         else if (res.success === 1){
           $('button.closeModal').click();
-          $('ul.nav').html('<li class="active"><li><a href="/logout">退出</a></li>');
+          $('ul.nav').html('<li><a href="/std">个人主页</a></li><li><a href="/logout">退出</a></li>');
         }
           
       })

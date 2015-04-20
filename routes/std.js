@@ -8,12 +8,12 @@ var multipartMiddleware = multipart();
 
 router.route('/')
 .get(function (req, res) {
-	if (req.session.logged_in) {
+	// if (req.session.logged_in) {
 		return res.render('std', {
-			title: req.session.name + ' Home',
-			user: req.session.name
+			user: req.session.user,
+			title: user.username + ' Home',
 		});
-	}
+	// }
 });
 
 router.route('/exam')
