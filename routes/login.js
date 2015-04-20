@@ -12,7 +12,7 @@ router.route('/')
 })
 .post(function (req, res, next) {
 	var data = req.body;
-	console.log(data);
+	console.log('postdata:', data);
 	User.findOne({ username: data.username }, function (err, user) {
 		if (err) return next(err);
 		if (!user) {

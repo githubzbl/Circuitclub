@@ -37,19 +37,19 @@
           <h4 id="loginLabel" class="modal-title">登录</h4>
         </div>
         <div class="modal-body">
-          <form method="post" action="/login" class="form-horizontal">
+          <form method="post" action="/login" class="form-horizontal login">
             <filedset>
               <div class="form-group">
                 <label for="login-username" class="control-label col-sm-4">用户名</label>
                 <div class="col-sm-8">
-                  <input id="login-username" type="text" name="username" placeholder="请输入您的学号" class="form-control"/>
+                  <input id="login-username" type="text" name="username" placeholder="请输入您的学号" class="form-control" autofocus required/>
                 <span class="fade warning">请正确输入学号！</span>
                 </div>
               </div>
               <div class="form-group">
                 <label for="login-password" class="control-label col-sm-4">密码</label>
                 <div class="col-sm-8">
-                  <input id="login-password" type="password" name="password" placeholder="请输入您的密码" class="form-control"/>
+                  <input id="login-password" type="password" name="password" placeholder="请输入您的密码" class="form-control" required/>
                   <span class="fade warning">密码错误</span>
                 </div>
               </div>
@@ -72,12 +72,12 @@
           <h4 id="signupLabel" class="modal-title">注册</h4>
         </div>
         <div class="modal-body">
-          <form method="post" action="/signup" class="form-horizontal" enctype="" >
+          <form method="post" action="/signup" class="form-horizontal signup" >
             <filedset>
               <div class="form-group">
                 <label for="signup-username" class="control-label col-sm-4">用户名</label>
                 <div class="col-sm-8">
-                  <input id="signup-username" type="text" name="user[username]" placeholder="请输入您的学号" class="form-control"/>
+                  <input id="signup-username" type="text" name="user[username]" placeholder="请输入您的学号" class="form-control" pattern="[0-9]+" oninvalid="setCustomValidity('请正确输入学号！')" autofocus required/>
                   <span class="fade warning">请正确输入学号！</span>
 
                 </div>
@@ -85,13 +85,13 @@
               <div class="form-group">
                 <label for="signup-password" class="control-label col-sm-4">密码</label>
                 <div class="col-sm-8">
-                  <input id="signup-password" type="password" name="user[password]" placeholder="长度不小于8位" class="form-control"/>
+                  <input id="signup-password" type="password" name="user[password]" placeholder="长度不小于8位" class="form-control" required/>
                 </div>
               </div>              
               <div class="form-group">
                 <label for="signup-password-repeat" class="control-label col-sm-4">重复密码</label>
                 <div class="col-sm-8">
-                  <input id="signup-password-repeat" type="password" name="password" placeholder="请再次输入密码" class="form-control"/>
+                  <input id="signup-password-repeat" type="password" name="password" placeholder="请再次输入密码" class="form-control" required/>
                   <span class="fade warning">两次密码不一致！</span>
                   {{!-- <span class="fade warning">棉麻长度至少8位！</span> --}}
 
@@ -120,11 +120,11 @@
 
     // var regexp = /^[0-9]{13}$/g;
     var regexp = /^[0-9]+$/g;
-    $('a.login, a.signup').click(function(event) {
+    $('button.closeModal').click(function(event) {
       $('input').val('');
       $('span.warning').addClass('fade');
     });
-
+    // 注册验证
     $('#signupModal').on('submit', function(event) {
       event.preventDefault();
       var username = $signName.val(); 
@@ -174,6 +174,7 @@
       }
   
     });
+    // 登录验证
     $('#loginModal').on('submit', function(event) {
       event.preventDefault();
       var username = $loginName.val(); 
@@ -183,6 +184,12 @@
         username: username,
         password: pwd
       };
+
+      // var $form = $(this).find('form.login')
+      // var postdata = $form.serialize();
+      // console.log($form);
+      // console.log('postdata:', postdata);
+
       if (!username.match(regexp)) {
         return $loginName.next().removeClass('fade');
       } else {
@@ -190,12 +197,12 @@
       }
 
       if ( username.match(regexp) && pwd) {
-        // 2011029050016
         
        $.ajax({
         url: '/login',
         type: 'POST',
         data: JSON.stringify(data),   // 发送至服务器的数据
+        // data: postdata,   // 发送至服务器的数据
         contentType: 'application/json',
       })
       .done(function(res) {

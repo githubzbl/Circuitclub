@@ -51,32 +51,23 @@ UserSchema.pre('save', function(next) {
   if (!user.isModified('password')) return next();
   // 生成10个字符的盐
   bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
-    if (err) return next(err);
-
-    bcrypt.hash(user.password, salt, function (err, hash) {
-      if (err) return next(err);
-      // console.log(hash);
-      user.password = hash;
-
-      next();
+    bcrypt.hash(user.password, salt, function(err, hash) {
+        if (err) return next(err);
+        user.password = hash;
+        // console.log('hash:%s, password: %s', hash, user.password);
+        next();
     });
   });
-  next();
 });
 
 UserSchema.methods = {
-  comparePassword: function(_password, cb) {
-    if ( _password === this.password ) {
-      console.log(_password, this.password);
-      cb(null, true);
-    } else {
-      return cb(null, false);
-    }
-    // bcrypt.compare(_password, this.password, function(err, isMatch) {
-    //   if (err) return cb(err)
+  comparePassword: function(_password, cb) {   
+    bcrypt.compare(_password, this.password, function(err, isMatch) {
+        // res == true
+          if (err) return cb(err);
 
-    //   cb(null, isMatch)
-    // })
+          cb(null, isMatch);
+    });
   }
 }
 UserSchema.statics = {
