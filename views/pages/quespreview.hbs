@@ -32,7 +32,10 @@
         <dd>C. {{question.c}}</dd>
         <dd>D. {{question.d}}</dd>
         {{/if}}
-
+        <dt>题图</dt>
+        <dd><img src="{{question.image.path}}" alt="">
+          {{question.image}}
+        </dd>
         <dt>答案</dt>
         <dd>{{question.answer}}</dd>
         <dt>解析</dt>

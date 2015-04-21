@@ -19,9 +19,9 @@
   $(document).ready(function() {
     $('#inputType').click(function(event) {
       var target = event.target;
-      console.log(target);
+      // console.log(target);
       var id = target.id;
-      console.log(id);
+      // console.log(id);
       switch (id) {
         case 'multiple-choice':
           $('#ques-choice').show();
@@ -40,7 +40,7 @@
 </script>
 <div class="container add-question">
   <div class="row">    
-     <form action="/admin/question/new" method="post" class="form-horizontal">
+     <form action="/admin/question/new" method="post" class="form-horizontal" enctype="multipart/form-data">
        {{#if question._id}}
          <input type="hidden" name="question[_id]" value="{{question._id}}">
        {{/if}}
@@ -113,17 +113,7 @@
       </ol>
       </div>
 
-
-       <div class="form-group ">
-        <label for="inputPic" class="col-sm-2 control-label">题目图片 </label>
-        <div class="col-sm-10">
-          <div class="upload-control input-group input-group-sm">
-            <div class="input-group-btn"></div>
-              <span class="btn btn-default btn-sm">选择文件
-              <input id="inputPic" type="file" name="question" class="form-control"/></span>
-          </div>
-        </div>
-       </div>
+      {{> upload}}
        <hr>
        <div class="form-group ">
          <label for="inputDifficulty" class="col-sm-2 control-label">难度</label>

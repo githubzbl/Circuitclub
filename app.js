@@ -19,7 +19,6 @@ mongoose.connect('mongodb://localhost/exam');
 
 var app = express();
 
-
 // view engine setup
 // express-hbs
 // Use `.hbs` for extensions and find partials in `views/partials`.
@@ -28,7 +27,7 @@ app.engine('hbs', hbs.express4({
 }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, '/views/pages'));
- hbs.registerHelper("debug", function(optionalValue) { 
+hbs.registerHelper("debug", function(optionalValue) { 
   console.log("Current Context"); 
   console.log("====================");
   console.log(this);
@@ -36,18 +35,21 @@ app.set('views', path.join(__dirname, '/views/pages'));
     console.log("Value"); 
     console.log("===================="); 
     console.log(optionalValue);
-} });
+  } 
+});
+// 存储题目图片的目录
+app.set('images', path.join(__dirname, '/public/images'));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+app.use(logger('dev'));  // 开发环境
+
 app.use(bodyParser.json({limit: '1mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 // express-session
 app.use(session({ 
-  secret: 'my app secret',
+  secret: 'uestc ee',
   store: new RedisStore,
   resave: false,
   saveUninitialized: true
@@ -58,8 +60,11 @@ app.use(session({
 // app.use('/users', users);
 require('./routes')(app);
 
+// 静态资源，缓存三天
 app.locals.moment = require('moment');
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: 259200000
+}));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

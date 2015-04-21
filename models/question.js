@@ -1,6 +1,7 @@
 // models/question.js
 
 var mongoose = require('mongoose');
+var Image = require('./image');
 // var ObjectId = Schema.Types.ObjectId
 
 var QuestionSchema = new mongoose.Schema({
@@ -14,13 +15,13 @@ var QuestionSchema = new mongoose.Schema({
   c: { type:String, trim: true},  //选项C
   d: { type:String, trim: true},  //选项D
   content: { type:String, trim: true}, 
-  pic: {            // 题目图片
-    name: {
+  image:  {
+   name: {
       type: String,
-      default: this.index + 'pic'
-    },    // 对应的题目名称
-    path: String     // 路径
-  },      
+      // default: this.index + '-image' // 对应的题目名称
+    },    
+    path: String     // 存储路径  
+  },          // 题目图片      
   answer: String,   // 题目答案
   analysis: String, // 解析
   

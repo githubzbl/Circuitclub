@@ -24,7 +24,9 @@ router.route('/')
 	      }
 
 	      if (isMatch) {
-	        req.session.user = user;
+	      	req.session.user = user;
+	        // req.session.logged_in = true;
+	        console.log('session:', req.session);
 					return res.json({ success: 1 });  // 登录成功
 	      } else {
 	        return res.json({ err: 2 });  // 密码错误	      

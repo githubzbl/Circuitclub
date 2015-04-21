@@ -5,25 +5,33 @@ var Question = require('../models/question');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
-
-router.route('/')
+router.route('/home')
 .get(function (req, res) {
-	// if (req.session.logged_in) {
+	if (req.session.user) {
+		var user = req.session.user;
+		console.log('std req.session.user:', user);
 		return res.render('std', {
-			user: req.session.user,
+			user: user,
 			title: user.username + ' Home',
 		});
-	// }
+	} else {
+		return res.send('Not login!');
+	}
+
 });
 
 router.route('/exam')
 .get(function (req, res) {
+	var user = req.session.user;
 	res.render('paperInfo', {
-		title: '考试信息' 
+		title: '考试信息',
+		user: user
 	});
 });
+
 router.route('/exam/start')
 .get(function (req, res) {
+	var user = req.session.user;
 	Question.find( function (err, questions) {
 		if (err) {
 			console.log(err);
@@ -31,6 +39,7 @@ router.route('/exam/start')
 		else {
 			res.render('exam', {
 				title: '正式考试',
+				user: user,
 				questions: questions
 			});
 		}

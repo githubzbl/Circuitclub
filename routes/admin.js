@@ -5,6 +5,9 @@ var Question = require('../models/question');
 var User = require('../models/user');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
+var fs = require('fs');
+var path = require('path');
+var join = path.join;
 
 router.route('/')
 .get(function (req, res) {
@@ -140,18 +143,17 @@ router.route('/question/new')
 
 	res.render('admin-newques', {
 		title: '题目录入',
-		user: req.session.name,
+		user: req.session.user,
 		question: question
 	});
 })
-.post(multipartMiddleware, function (req, res) {
+.post(multipartMiddleware, function (req, res, next) {
 
 	console.log(req.body.question);
 	var id = req.body.question._id;
 	console.log("id",id);
 	var questionObj = req.body.question;
 	var _question;
-	// console.log("questionObj",questionObj);
 	// 更新题目
 	if (id) {
 		Question.findById(id, function(err, question) {
@@ -169,17 +171,24 @@ router.route('/question/new')
 		});
 	}
 	else {
-	
-		_question = new Question(questionObj);
+		var img = req.files.image.img;
+		// var name = questionObj.index + '-image';
+		console.log('img:',img);
+		var path = join(__dirname,'/public/images', img.name);
+		console.log('img.path:', img.path);
+		console.log('path:', path);
 
-		_question.save(function(err, question) {
-			if(err) {
-				console.log(err);
-			}
-		// 	res.render('admin-newques', {
-		// title: question._id + '题目录入',
-		// question: question
-			res.redirect('/admin/question/preview/' + question._id);
+		fs.rename(img.path, path, function(err){
+			if (err) return next(err);
+			
+			_question = new Question(questionObj);
+			_question.save(function(err, question) {
+				if(err) {
+					console.log(err);
+				}
+
+				res.redirect('/admin/question/preview/' + question._id);
+			});	
 		});
 	}
 });
