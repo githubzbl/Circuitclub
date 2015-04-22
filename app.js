@@ -23,10 +23,10 @@ var app = express();
 // express-hbs
 // Use `.hbs` for extensions and find partials in `views/partials`.
 app.engine('hbs', hbs.express4({
-  partialsDir: __dirname + '/views/partials'
+  partialsDir: __dirname + '/app/views/partials'
 }));
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, '/views/pages'));
+app.set('views', path.join(__dirname, '/app/views/pages'));
 hbs.registerHelper("debug", function(optionalValue) { 
   console.log("Current Context"); 
   console.log("====================");
@@ -47,7 +47,6 @@ app.use(logger('dev'));  // 开发环境
 app.use(bodyParser.json({limit: '1mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-// express-session
 app.use(session({ 
   secret: 'uestc ee',
   store: new RedisStore,
@@ -55,10 +54,9 @@ app.use(session({
   saveUninitialized: true
 }));
 
+// require('./routes')(app);
+require('./config/routes')(app);
 
-// app.use('/', routes(app));
-// app.use('/users', users);
-require('./routes')(app);
 
 // 静态资源，缓存三天
 app.locals.moment = require('moment');

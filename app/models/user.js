@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bcrypt    = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
 
+
 var UserSchema = new mongoose.Schema({
   username: {    // 学号
     type: String,
@@ -83,8 +84,6 @@ UserSchema.statics = {
       .exec(cb);
   }
 };
-
-
 var User = mongoose.model('User', UserSchema); // 注册模型
 
 module.exports = User;
