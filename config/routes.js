@@ -2,10 +2,13 @@
 
 var Home = require('../app/controllers/home');
 var User = require('../app/controllers/user');
-// var Admin = require('../app/controllers/admin');
-
+var Admin = require('../app/controllers/admin');
+var Ques = require('../app/controllers/question');
 var Image = require('../app/controllers/image');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
+var multer   = require('multer');
 
 module.exports = function(app) {
   // pre handle user
@@ -35,6 +38,24 @@ module.exports = function(app) {
 
   // 管理员
   app.get('/admin/userlist', User.list);
+  app.delete('/admin/userlist', Admin.delUser);
+  app.get('/admin/question/new', Ques.new);
+  app.post('/admin/question/new', multer({ dest: './public/images/'}), Ques.save);
+  app.get('/admin/question/preview/:id', Ques.preview);
+  app.get('/admin/question/edit/:id', Ques.edit);
+
+  app.get('/upload', function (req, res) {
+    
+    res.render('upload', {
+      title: '文件上传'
+    })
+  });
+  app.post('/upload', multer({ dest: './public/images/'}), function (req, res) {
+    
+    console.log('req.body:', req.body);
+    console.log('req.files:', req.files);
+    res.json({ success: 1}); // 上传成功
+  });
 
 
 }

@@ -1,5 +1,9 @@
 {{!-- header.hbs --}}
 <style>
+  nav.navbar-fixed-top {
+    background: #fff;
+    border-bottom: 2px solid #00A7EB;
+  }
   .warning {
     color: red;
   }
@@ -55,7 +59,7 @@
               </div>
             </filedset>
             <div class="modal-footer">
-              <button id="login" type="button" onclick="javascript:$('.form-horizontal').submit()" class="btn btn-primary">登录</button>
+              <button id="login" type="submit" class="btn btn-primary">登录</button>
               <button type="button" data-dismiss="modal" class="btn btn-default">取消</button>
             </div>
           </form>
