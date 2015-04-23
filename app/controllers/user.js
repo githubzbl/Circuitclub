@@ -1,6 +1,18 @@
 var mongoose = require('mongoose');
 var User = require('../models/user');
 var Question = require('../models/question');
+var _ = require('lodash');
+
+// middleware for user
+exports.loginRequired = function(req, res, next) {
+  var user = req.session.user;
+
+  if (!user) {
+    return res.redirect('/login');
+  }
+
+  next()
+};
 
 // signup
 exports.showSignup = function(req, res) {
@@ -107,7 +119,25 @@ exports.examStart = function (req, res) {
   });
 };
 
-
+exports.examCheck = function (req, res) {
+  var user = req.session.user;
+  var answer = req.body.user.answer;
+  console.log('answer:', answer);
+  Question.find( function (err, questions) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      var arr = [];
+      _.each(questions, function (ques, key) {
+        var ans = ques.answer;
+        return arr.push(ans);
+      });
+      console.log('arr', arr);
+    }
+  });
+  // body...
+}
 
 // userlist page
 exports.list = function(req, res) {
@@ -123,13 +153,3 @@ exports.list = function(req, res) {
   });
 }
 
-// middleware for user
-exports.loginRequired = function(req, res, next) {
-  var user = req.session.user;
-
-  if (!user) {
-    return res.redirect('/login');
-  }
-
-  next()
-};

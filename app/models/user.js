@@ -3,9 +3,10 @@
 var mongoose = require('mongoose');
 var bcrypt    = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
+var Schema = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
 
-
-var UserSchema = new mongoose.Schema({
+var UserSchema = new Schema({
   username: {    // 学号
     type: String,
     unique: true
@@ -25,9 +26,12 @@ var UserSchema = new mongoose.Schema({
     type: String,
     default: 'std'
   },
-
+  // question: {
+  //   type: ObjectId,
+  //   ref: 'Question'
+  // },
   myQues: [],    // 做过的题目
-  myPaper: [],   // 做过的考卷
+  myPaper: [Schema.ObjectId],   // 做过的考卷
 
   meta: {
     createAt: {

@@ -5,6 +5,24 @@ var fs = require('fs');
 var path = require('path');
 var join = path.join;
 
+exports.findAns = function (req, res) {
+ Question.find( function (err, questions) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      var arr = [];
+      _.each(questions, function (ques, key) {
+        var ans = ques.answer;
+        return arr.push(ans);
+      });
+      res.json(arr);
+      console.log('arr:', arr);
+    }
+  }); 
+  // body...
+}
+
 exports.new = function (req, res) {
   var question = {
       _id:'',
@@ -25,6 +43,7 @@ exports.new = function (req, res) {
 };
 exports.preview = function (req, res) {
   var id = req.params.id; 
+  var user = req.session.user;
   Question.findById(id, function(err, question) {
     if (err) {
       console.log(err);
@@ -36,7 +55,7 @@ exports.preview = function (req, res) {
     // if (question) {
       res.render('quespreview', {
         title: '题目预览',
-        user: req.session.name,
+        user: user,
         question: question
       });
     // } else {
@@ -66,18 +85,21 @@ exports.edit = function (req, res) {
     //  res.redirect('/');
     // }
   });
-  // body...
-}
+};
+
 exports.save = function (req, res) {
   console.log('req.body:', req.body);
   console.log('req.files:', req.files);
   var image = req.files.image;
   var id = req.body.question._id;
   var questionObj = req.body.question;
-  var _question = {
-    image: {
-      name: image.name,
-      path: image.path.slice(6)
+  var _question;
+  if (image) {
+    _question = {
+      image: {
+        name: image.name,
+        path: image.path.slice(6)
+      }
     }
   };
   questionObj = _.extend(questionObj, _question);
@@ -109,5 +131,32 @@ exports.save = function (req, res) {
       }); 
     
     }
+};
+exports.list = function (req, res) {
+  var user = req.session.user;
+  Question.find( function (err, questions) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.render('queslist',{
+        title: '题目列表',
+        user: user,
+        questions: questions
+      });
+    }
+  });
+};
+exports.del = function (req, res) {
+  var id = req.query.id;
+  if (id) {
+    Question.remove({_id: id}, function (err, question) {
+      if (err) {
+        console.log(err);
+      }  else {
+        res.json({success: 1});
+      }
+    });
+  }
 };
 

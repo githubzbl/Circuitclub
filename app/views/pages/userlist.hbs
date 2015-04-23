@@ -10,6 +10,33 @@
     font-size: 1.1em;
   }
 </style>
+<script>
+  $(function() {
+  $('.del').click(function(e) {
+    var target = $(e.target);
+    var id = target.data('id');
+    console.log('delete:', id);
+    var tr = $('.user-id-' + id);
+    
+    $('#delModal button.del').click(function(event) {
+      $('#delModal').hide('slow');
+      $.ajax({
+        type: 'DELETE',
+        url: '/admin/userlist?id='+ id
+        })
+      .done(function(results) {
+        if (results.success === 1) {
+        if (tr.length > 0) {
+        tr.remove();
+
+        }
+      }
+      });
+    });
+
+  });
+});
+</script>
 
 <div class="container">
   <div class="row">
@@ -39,9 +66,9 @@
           <td>{{this.type}}</td>
           <td>{{this.title}}</td> --}}
           {{!-- <td>{{moment(this.meta.updateAt).format('MM/DD/YYYY')}}</td> --}}
-          <td><a href="/admin/question/preview/{{_id}}"><button class="btn btn-primary">查看</button></a> </td>
-          <td><a href="/admin/question/edit/{{_id}}"><button class="btn btn-info">编辑</button></a> </td>
-          <td><button class="btn btn-danger del" data-id="{{_id}}">删除</button></td>
+          <td><a href="#"><button class="btn btn-primary">查看</button></a> </td>
+          <td><a href="#"><button class="btn btn-info">编辑</button></a> </td>
+          <td><button class="btn btn-danger del" data-id="{{_id}}" data-toggle="modal" data-target="#delModal">删除用户</button></td>
         </tr>
         {{/each}}
       </tbody>
@@ -49,4 +76,23 @@
     
   </div>
 </div>
-<script src="/js/admin.js"></script>
+
+<div id="delModal" tabindex="-1" role="dialog" aria-labelledby="
+myModalLabel" aria-hidden="true" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">确认删除？</h4>
+      </div>
+      <div class="modal-body">
+        <p>删除后无法恢复</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-danger del">删除</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div>
+</div>
+{{!-- <script src="/js/admin.js"></script> --}}

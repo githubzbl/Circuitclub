@@ -3,6 +3,13 @@ var User = require('../models/user');
 var Question = require('../models/question');
 var _ = require('lodash');
 
+exports.index = function (req, res) {
+  var user = req.session.user;
+  return res.render('admin', {
+    title: '管理员控制面板',
+    user: user
+  });
+};
 
 exports.adminRequired = function(req, res, next) {
   var user = req.session.user;

@@ -1,6 +1,7 @@
 {{!-- header.hbs --}}
 <style>
   nav.navbar-fixed-top {
+    height: 60px;
     background: #fff;
     border-bottom: 2px solid #00A7EB;
   }
@@ -10,7 +11,7 @@
 </style>
 
 
-<nav role="navigation" style="margin-bottom: 0" class="navbar navbar-default navbar-fixed-top">
+<nav role="navigation" class="navbar navbar-default navbar-fixed-top">
   <div class="navbar-header">
     <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
       <span class="sr-only">Toggle navigation</span>                   
@@ -124,10 +125,20 @@
 
     // var regexp = /^[0-9]{13}$/g;
     var regexp = /^[0-9]+$/g;
-    $('button.closeModal').click(function(event) {
-      $('input').val('');
+    // $('button.closeModal').click(function(event) {
+    //   $('input').val('');
+    //   $('span.warning').addClass('fade');
+
+    // });
+    $('#loginModal, #signupModal').on('shown.bs.modal', function () {
+      $('#login-username, #signup-username').focus();
+    });
+    $('#loginModal, #signupModal').on('hidden.bs.modal', function () {
       $('span.warning').addClass('fade');
     });
+
+
+
     // 注册验证
     $('#signupModal').on('submit', function(event) {
       event.preventDefault();
@@ -214,7 +225,9 @@
         console.log(res);
         if (res.err === 1) {
           $loginName.next().removeClass('fade')
-                            .text('此学号还未注册！')
+                            .text('此学号还未注册！');
+          $('#loginModal').hide('slow');
+          $('#signupModal').modal();
         } if (res.err === 2) {
           $loginPwd.next().removeClass('fade');
 

@@ -33,8 +33,8 @@
         <dd>D. {{question.d}}</dd>
         {{/if}}
         <dt>题图</dt>
-        <dd><img src="{{question.image.path}}" alt="图呢？">
-          图像。
+        <dd>
+          <img src="{{question.image.path}}" alt="图呢？">     
         </dd>
         <dt>答案</dt>
         <dd>{{question.answer}}</dd>
@@ -46,9 +46,13 @@
   </div>
 
   <div class="row">
-    <div class="col-md-2 col-md-offset-5">
-    <a href="/admin/question/edit/{{question._id}}"> <button class="btn btn-primary">修 改</button></a></div>    
-    <a href="/admin/questionBank/list"> <button class="btn btn-info">返回列表</button></a></div>    
+    <div class="col-md-12" style="text-align: center">
+    <a href="/admin/question/edit/{{question._id}}"> <button class="btn btn-primary">修 改</button></a>
+    &nbsp;&nbsp;
+    <a href="/admin/question/new"> <button class="btn btn-success">继续添加</button></a> 
+    &nbsp;&nbsp;
+    <a href="/admin/questionBank/list"> <button class="btn btn-info">习题列表</button></a>
+    </div>    
   </div>
 </div>
 <script>

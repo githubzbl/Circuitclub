@@ -5,16 +5,21 @@ $(function() {
 		console.log('delete:', id);
 		var tr = $('.ques-id-' + id);
 		
-		$.ajax({
-			type: 'DELETE',
-			url: '/admin/questionBank/list?id='+ id
-		})
-		.done(function(results) {
-			if (results.success === 1) {
+		$('#delModal button.del').click(function(event) {
+			$('#delModal').hide('slow');
+			$.ajax({
+				type: 'DELETE',
+				url: '/admin/questionBank/list?id='+ id
+				})
+			.done(function(results) {
+				if (results.success === 1) {
 				if (tr.length > 0) {
-					tr.remove();
+				tr.remove();
+
 				}
 			}
+			});
 		});
+
 	});
 });

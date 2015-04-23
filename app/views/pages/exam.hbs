@@ -38,22 +38,58 @@
         $(this).find('span.ques-index').text((index+1));
 
      });
-    $('#submit-paper').click(function(event) {
-      event.preventDefault();
-      $('.per-ques').each(function(index, el) {
-        var stdAns = $(this).find('.std-ans').val();
-        var trueAns = $(this).find('span.true-ans').text();
-        // console.log(trueAns, stdAns)
-        if (trueAns == stdAns) {
-          $(this).find('.ans-check-right').show()
-        } else {
-          $(this).find('.ans-check-wrong').show();
-        }
+    // $('#submit-paper').click(function(event) {
+    //   event.preventDefault();
+    //   var data = $('form').serializeArray();
+    //   $.ajax({
+    //     url: '/std/exam/check',
+    //     type: 'POST',
+    //     dataType: 'json',
+    //     data: data,
+    //   })
+    //   .done(function() {
+    //     console.log("success");
+    //   })
+    //   .fail(function() {
+    //     console.log("error");
+    //   })
+    //   .always(function() {
+    //     console.log("complete");
+    //   });
+      
+      
+      // $.get('/std/exam/check', function(data) {
+      //   var items = [];
+      //   console.log(data);
+      //   // $.each(data, function(key, val) {
+      //   //   items.push('<li id="' + key + '">' + val + '</li>');
+      //   // });
+      //   $.each(data, function(index, val) {
+      //     var text = '<div class="col-lg-2 col-md-offset-2"><div class="input-group true-ans" ><p> 正确答案: <span class="true-ans">'+ val +'</span></p></div></div></div>';
+      //     $('.ans-info:eq(index)').append(text);
+      //     console.log('index:', index);
+      //     console.log('val:', val);
+      //   });
 
-      });
+      // });
+    //    $('.per-ques').each(function(index, el) {
+    //     var stdAns = $(this).find('.std-ans').val();
+    //     var trueAns = $(this).find('span.true-ans').text();
+    //     console.log( 'trueAns');
+    //     console.log( trueAns);
+    //     console.log( 'stdAns');
+    //     console.log( stdAns);
+    //     if (trueAns == stdAns) {
+    //       $(this).find('.ans-check-right').show()
+    //     } else {
+    //       $(this).find('.ans-check-wrong').show();
+    //     }
+
+    //   }); 
+      
 
 
-    });
+    // });
   });
 </script>
 
@@ -63,69 +99,74 @@
       <h2 id="paper-heading" class="col-md-offset-5">在 线 考 试</h2>
       <hr>
     </div>
+    <form action="/std/exam/check" method="post" class="form-horizontal" enctype="multipart/form-data">
+      <div class="col-md-10 col-md-offset-1" id="exam-container">
+     
+        {{#each questions}}
+            <article class="panel panel-info per-ques ques-id-{{_id}}" data-id="{{_id}}">
+            <input type="hidden" name="answer[question]" value="{{_id}}">
+              <section class="ques-info panel-heading">
+                <label for="">第 <span class="ques-index">X</span> 题 </label>
+                <label class="ques-type" for=""> &nbsp;&nbsp;&nbsp; [&nbsp;{{this.type}}&nbsp;]&nbsp;</label>
+                <div class="ques-title">{{this.title}}</div>
+                {{#if this.a}} 
+                  <dt>选项</dt>
+                  <dd>A. {{this.a}}</dd>
+                  <dd>B. {{this.b}}</dd>
+                  <dd>C. {{this.c}}</dd>
+                  <dd>D. {{this.d}}</dd>
+                {{/if}}
+                 <div class="ques-content">{{this.content}}</div>
 
-    <div class="col-md-10 col-md-offset-1" id="exam-container">
+              </section>
+               {{#if this.image.path}}
+                   <dt>第 <span class="ques-index">X</span> 题图</dt>
+                   <dd><img src="{{this.image.path}}" alt="{{this.index}}图">
+                   </dd>
+                {{/if}}
 
-      {{#each questions}}
-          <article class="panel panel-info per-ques ques-id-{{_id}} data-id="{{_id}}">
-            <section class="ques-info panel-heading">
-              <label for="">第 <span class="ques-index">X</span> 题 </label>
-              <label class="ques-type" for=""> &nbsp;&nbsp;&nbsp; [&nbsp;{{this.type}}&nbsp;]&nbsp;</label>
-              <div class="ques-title">{{this.title}}</div>
-              {{#if this.a}} 
-                <dt>选项</dt>
-                <dd>A. {{this.a}}</dd>
-                <dd>B. {{this.b}}</dd>
-                <dd>C. {{this.c}}</dd>
-                <dd>D. {{this.d}}</dd>
-              {{/if}}
-               <div class="ques-content">{{this.content}}</div>
-            </section>
-
-            <section class="ans-info panel-body" >
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="input-group ans-content">
-                    <span class="input-group-addon">回答：</span>
-                    <input type="text" class="form-control std-ans" placeholder="" name="answer" value="">
-                  </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-                <div class="col-md-2 ans-check-right">
-                    <i class="fa fa-check-circle"></i>
-                </div>               
-                <div class="col-md-2 ans-check-wrong">
-                    <i class="fa fa-times-circle"></i>
-                </div>
-                <div class="col-lg-2 col-md-offset-2">
-                  <div class="input-group true-ans" >
-                    <p> 正确答案: 
-                    <span class="true-ans"></span>
-                    </p>
-                  </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-
-              </div><!-- /.row -->
-
-            </section>
-
-          </article>
-          <hr>
-      {{/each}}
-    </div>
-    <aside id="exam-nav">
-      <ul class="nav nav-pills nav-stacked col-sm-1">
-        <li role=""><a href="#">上一题</a></li>
-        <li role="" class="active"><a href="#">下一题</a></li>
-      </ul>
-    </aside>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="col-md-offset-5">
-          <a href="#"><button id="submit-paper" class="btn btn-danger">提 交 答 卷</button></a>
+              <section class="ans-info panel-body" >
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="input-group ans-content">
+                      <span class="input-group-addon">回答：</span>
+                      <input type="text" class="form-control std-ans" placeholder="" name="answer[content]" value="">
+                    </div><!-- /input-group -->
+                  </div><!-- /.col-lg-6 -->
+                  <div class="col-md-2 ans-check-right">
+                      <i class="fa fa-check-circle"></i>
+                  </div>               
+                  <div class="col-md-2 ans-check-wrong">
+                      <i class="fa fa-times-circle"></i>
+                  </div>
+{{!--                   <div class="col-lg-2 col-md-offset-2">
+                    <div class="input-group true-ans" >
+                      <p> 正确答案: 
+                      <span class="true-ans"></span>
+                      </p>
+                    </div><!-- /input-group -->
+                  </div> --}}<!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+              </section>
+            </article>
+            <hr>
+        {{/each}}
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-offset-5">
+            <a href="#"><button id="submit-paper" class="btn btn-danger" type="submit">提 交 答 卷</button></a>
+          </div>
         </div>
       </div>
-    </div>
+  {{!--     <aside id="exam-nav">
+        <ul class="nav nav-pills nav-stacked col-sm-1">
+          <li role=""><a href="#">上一题</a></li>
+          <li role="" class="active"><a href="#">下一题</a></li>
+        </ul>
+      </aside> --}}
+     
   </div>
-
+ </form> 
 </div>
 <script src="/js/admin.js"></script>
