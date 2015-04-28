@@ -36,11 +36,13 @@ module.exports = function(app) {
   /*** 学生模块 ***/
   // 学生主页 个人信息
   app.get('/std/home', User.loginRequired, User.index);
+  app.get('/std/profile', User.loginRequired, User.profile);
+  app.post('/std/profile', User.loginRequired, multer(), User.setProfile);
   // 学生考试 
   app.get('/std/exam', User.loginRequired, User.examInfo);
   app.get('/std/exam/start', User.loginRequired, User.examStart);
   // app.get('/std/exam/check', User.loginRequired, Ques.findAns);
-  app.post('/std/exam/check', User.loginRequired, multer(), Answer.save);
+  // app.post('/std/exam/check', User.loginRequired, multer(), Answer.save, Answer.check);
 
 
   /*** 管理员模块 ***/

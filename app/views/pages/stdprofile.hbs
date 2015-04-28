@@ -1,0 +1,50 @@
+{{!-- stdprofile.hbs --}}
+{{!-- reg.hbs --}}
+{{!< ../layout}}
+
+<div class="container">
+  <h2 class="page-header">个人信息</h2>
+  <div class="col-md-5">
+    <form method="post" class="form-horizontal">
+      <filedset>
+        <div class="row">
+          <div class="form-group username">
+            <label for="username" class="control-label col-md-4">学号</label>
+            <div class="col-md-7">
+              <input id="username" type="text" name="user[username]" placeholder="{{user.username}}" value="{{user.username}}" class="form-control" readonly="true" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group ">
+            <label for="name" class="control-label col-md-4">姓名</label>
+            <div class="col-md-7">
+              <input id="name" type="text" name="user[name]" placeholder="" value="{{user.name}}" class="form-control"/>
+
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="form-group">
+            <label for="questions" class="control-label col-md-4">我做过的试题</label>
+            <div class="col-md-7">
+              <p class="questions ">暂时为空</p>
+            </div>
+          </div>
+        </div>
+
+          <div class="row">
+          <div class="form-group sign-up">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button id="sign-up" type="submit" class="btn btn-primary">提交修改</button>
+            </div>
+          </div>
+        </div>
+      </filedset>
+    </form>
+  </div>
+
+  <div class="col-md-7"><img src="../libs/images/login_welcomeback_happyface.png"/></div>
+
+</div>

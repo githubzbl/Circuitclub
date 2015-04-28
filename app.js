@@ -84,8 +84,8 @@ if (app.get('env') === 'development') {
             error: err
         });
     });
-    app.locals.pretty = true
-    mongoose.set('debug', true);
+    app.locals.pretty = true;
+    // mongoose.set('debug', true);
 
 } else {
   console.log('production env.');

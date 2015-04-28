@@ -8,6 +8,9 @@
   .warning {
     color: red;
   }
+  .navbar-right {
+    margin-right: 30px;
+  }
 </style>
 
 
@@ -32,6 +35,11 @@
       </li>
     </ul>
   </div>  
+  {{#if user}}
+  <p class="nav navbar-right">
+   欢迎 {{user.name}}
+  </p>
+  {{/if}}
 </nav>
 {{!-- 登录modal --}}
 <div id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
@@ -123,13 +131,9 @@
     var $loginName = $('#login-username');
     var $loginPwd = $('#login-password');
 
-    // var regexp = /^[0-9]{13}$/g;
-    var regexp = /^[0-9]+$/g;
-    // $('button.closeModal').click(function(event) {
-    //   $('input').val('');
-    //   $('span.warning').addClass('fade');
+    var regexp = /^[0-9]{13}$/g;
+    // var regexp = /^[0-9]+$/g;
 
-    // });
     $('#loginModal, #signupModal').on('shown.bs.modal', function () {
       $('#login-username, #signup-username').focus();
     });

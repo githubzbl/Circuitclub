@@ -94,6 +94,37 @@ exports.index = function (req, res) {
       title: user.username + ' Home',
     }); 
 };
+exports.profile = function (req, res) {
+  var user = req.session.user;
+  res.render('stdprofile', {
+    title:'个人资料修改',
+    user: user
+  });
+}
+exports.setProfile = function (req, res) {
+  var user = req.session.user;
+  var id = user._id;
+  var userObj = req.body.user;
+  var _user;
+  User.findById(id, function(err, user) {
+    if(err) {
+        console.log(err);
+     } 
+      // 将现更新的 questionObj 的属性加到数据库原有的 question 上
+      _user = _.extend(user, userObj);
+      _user.save(function(err, user) {
+        if(err) {
+          console.log(err);
+        }
+        req.session.user = user;
+        res.render('stdprofile', {
+          title:'个人资料修改',
+          user: user
+        });       
+      });
+  });
+}
+
 // 考试信息
 exports.examInfo = function (req, res) {
   var user = req.session.user;

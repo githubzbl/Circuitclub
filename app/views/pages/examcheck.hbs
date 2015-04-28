@@ -1,3 +1,4 @@
+{{!-- examcheck.hbs --}}
 {{!-- 正式考试页面 --}}
 
 {{!< ../layout}}
@@ -38,21 +39,21 @@
         $(this).find('span.ques-index').text((index+1));
 
      });
-    $('#submit-paper').click(function(event) {
-        event.preventDefault();
-      $('.true-ans, .ans-check-right, .ans-check-wrong').hide();
-       $('.per-ques').each(function(index, el) {
-        var stdAns = $(this).find('.std-ans').val();
-        var trueAns = $(this).find('span.true-ans').text();
-        if (trueAns == stdAns) {
-          $(this).find('.ans-check-right').show()
-        } else {
-          $(this).find('.ans-check-wrong').show();
-        }
 
-      }); 
-      
-    });
+     $('.per-ques').each(function(index, el) {
+      var stdAns = $(this).find('.std-ans').val();
+      var trueAns = $(this).find('span.true-ans').text();
+      console.log( 'trueAns');
+      console.log( trueAns);
+      console.log( 'stdAns');
+      console.log( stdAns);
+      if (trueAns == stdAns) {
+        $(this).find('.ans-check-right').show()
+      } else {
+        $(this).find('.ans-check-wrong').show();
+      }
+
+    }); 
   });
 </script>
 
@@ -105,7 +106,7 @@
                   <div class="col-lg-2 col-md-offset-2">
                     <div class="input-group true-ans" >
                       <p> 正确答案: 
-                      <span class="true-ans">{{this.answer}}</span>
+                      <span class="true-ans"></span>
                       </p>
                     </div><!-- /input-group -->
                   </div><!-- /.col-lg-6 -->
