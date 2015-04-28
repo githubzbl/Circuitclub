@@ -209,13 +209,13 @@
       // console.log($form);
       // console.log('postdata:', postdata);
 
-      if (!username.match(regexp)) {
+      if ( username !== 'admin' && !username.match(regexp)) {
         return $loginName.next().removeClass('fade');
       } else {
         $loginName.next().addClass('fade');        
       }
 
-      if ( username.match(regexp) && pwd) {
+      if ( username == 'admin' || (username.match(regexp) && pwd)) {
         
        $.ajax({
         url: '/login',

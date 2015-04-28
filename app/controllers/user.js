@@ -53,6 +53,7 @@ exports.signup = function(req, res) {
 // login 登录
 exports.login = function(req, res) {
   var data = req.body;
+  
   console.log('postdata:', data);
   User.findOne({ username: data.username }, function (err, user) {
     if (err) return next(err);
@@ -76,6 +77,7 @@ exports.login = function(req, res) {
     }
   // console.log('body: ' + JSON.stringify(req.body));  
   });
+
 }
 
 // logout
