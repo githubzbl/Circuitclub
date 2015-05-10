@@ -1,5 +1,7 @@
 ###Circuit Club
-####Circuit Analysis Online test system, built with MEAN.
+####Circuit Analysis Online test system, built with Express + MongoDB + Redis.  
+
+See [Online Demo](https://uestc-circuit.herokuapp.com).
 
 ---
 
