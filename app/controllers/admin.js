@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var User = require('../models/user');
-var Question = require('../models/question');
+var Problem = require('../models/problem');
 var _ = require('lodash');
 
 exports.index = function (req, res) {
@@ -13,7 +13,7 @@ exports.index = function (req, res) {
 
 exports.adminRequired = function(req, res, next) {
   var user = req.session.user;
-  
+
   if (user.role === 'std') {
     return res.redirect('/signin');
   }

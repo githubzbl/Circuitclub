@@ -3,8 +3,8 @@
 var Home = require('../app/controllers/home');
 var User = require('../app/controllers/user');
 var Admin = require('../app/controllers/admin');
-var Ques = require('../app/controllers/question');
-var Answer = require('../app/controllers/answer');
+var Problem = require('../app/controllers/problem');
+var userAnswer = require('../app/controllers/userAnswer');
 var Image = require('../app/controllers/image');
 var multer = require('multer');
 // var multipart = require('connect-multiparty');
@@ -26,23 +26,23 @@ module.exports = function(app) {
 
   // 注册登录
   // app.post('/user/signup', User.signup);
-  // app.post('/user/login', User.login);  
+  // app.post('/user/login', User.login);
   app.post('/signup', User.signup);
   app.post('/login', User.login);
   app.get('/login', User.showSignin)
   app.get('/signup', User.showSignup)
   app.get('/logout', User.logout);
-  
+
   /*** 学生模块 ***/
   // 学生主页 个人信息
   app.get('/std/home', User.loginRequired, User.index);
   app.get('/std/profile', User.loginRequired, User.profile);
   app.post('/std/profile', User.loginRequired, multer(), User.setProfile);
-  // 学生考试 
+  // 学生考试
   app.get('/std/exam', User.loginRequired, User.examInfo);
   app.get('/std/exam/start', User.loginRequired, User.examStart);
-  // app.get('/std/exam/check', User.loginRequired, Ques.findAns);
-  // app.post('/std/exam/check', User.loginRequired, multer(), Answer.save, Answer.check);
+  // app.get('/std/exam/check', User.loginRequired, Problem.findAns);
+  // app.post('/std/exam/check', User.loginRequired, multer(), userAnswer.save, userAnswer.check);
 
 
   /*** 管理员模块 ***/
@@ -52,13 +52,12 @@ module.exports = function(app) {
   app.get('/admin/userlist', User.list);
   app.delete('/admin/userlist', Admin.delUser);
   // 习题管理
-  app.get('/admin/question/new', Ques.new);
-  app.post('/admin/question/new', multer({ dest: './public/images/'}), Ques.save);
-  app.get('/admin/question/preview/:id', Ques.preview);
-  app.get('/admin/question/edit/:id', Ques.edit);
-  app.get('/admin/questionBank/list', Ques.list);
-  app.delete('/admin/questionBank/list', Ques.del);
-
+  app.get('/admin/problem/new', Problem.new);
+  app.post('/admin/problem/new', multer({ dest: './public/images/'}), Problem.save);
+  app.get('/admin/problem/preview/:id', Problem.preview);
+  app.get('/admin/problem/edit/:id', Problem.edit);
+  app.get('/admin/problemBank/list', Problem.list);
+  app.delete('/admin/problemBank/list', Problem.del);
 
 
 }

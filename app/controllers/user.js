@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var User = require('../models/user');
-var Question = require('../models/question');
+var Problem = require('../models/problem');
 var _ = require('lodash');
 
 // middleware for user
@@ -47,13 +47,13 @@ exports.signup = function(req, res) {
         });
       }
   });
-  // console.log('body: ' + JSON.stringify(req.body));  
+  // console.log('body: ' + JSON.stringify(req.body));
 }
 
 // login 登录
 exports.login = function(req, res) {
   var data = req.body;
-  
+
   console.log('postdata:', data);
   User.findOne({ username: data.username }, function (err, user) {
     if (err) return next(err);
@@ -71,11 +71,11 @@ exports.login = function(req, res) {
           console.log('session:', req.session);
           return res.json({ success: 1 });  // 登录成功
         } else {
-          return res.json({ err: 2 });  // 密码错误       
+          return res.json({ err: 2 });  // 密码错误
         }
       })
     }
-  // console.log('body: ' + JSON.stringify(req.body));  
+  // console.log('body: ' + JSON.stringify(req.body));
   });
 
 }
@@ -94,7 +94,7 @@ exports.index = function (req, res) {
   res.render('std', {
       user: user,
       title: user.username + ' Home',
-    }); 
+    });
 };
 exports.profile = function (req, res) {
   var user = req.session.user;
@@ -111,8 +111,8 @@ exports.setProfile = function (req, res) {
   User.findById(id, function(err, user) {
     if(err) {
         console.log(err);
-     } 
-      // 将现更新的 questionObj 的属性加到数据库原有的 question 上
+     }
+      // 将现更新的 problemObj 的属性加到数据库原有的 problem 上
       _user = _.extend(user, userObj);
       _user.save(function(err, user) {
         if(err) {
@@ -122,7 +122,7 @@ exports.setProfile = function (req, res) {
         res.render('stdprofile', {
           title:'个人资料修改',
           user: user
-        });       
+        });
       });
   });
 }
@@ -138,7 +138,7 @@ exports.examInfo = function (req, res) {
 // 正式考试
 exports.examStart = function (req, res) {
   var user = req.session.user;
-  Question.find( function (err, questions) {
+  Problem.find( function (err, problems) {
     if (err) {
       console.log(err);
     }
@@ -146,7 +146,7 @@ exports.examStart = function (req, res) {
       res.render('exam', {
         title: '正式考试',
         user: user,
-        questions: questions
+        problems: problems
       });
     }
   });
@@ -156,13 +156,13 @@ exports.examCheck = function (req, res) {
   var user = req.session.user;
   var answer = req.body.user.answer;
   console.log('answer:', answer);
-  Question.find( function (err, questions) {
+  Problem.find( function (err, problems) {
     if (err) {
       console.log(err);
     }
     else {
       var arr = [];
-      _.each(questions, function (ques, key) {
+      _.each(problems, function (ques, key) {
         var ans = ques.answer;
         return arr.push(ans);
       });

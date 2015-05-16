@@ -1,30 +1,30 @@
 var mongoose = require('mongoose');
-var Question = require('../models/question');
+var Problem = require('../models/problem');
 var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
 var join = path.join;
 
 exports.findAns = function (req, res) {
- Question.find( function (err, questions) {
+ Problem.find( function (err, problems) {
     if (err) {
       console.log(err);
     }
     else {
       var arr = [];
-      _.each(questions, function (ques, key) {
+      _.each(problems, function (ques, key) {
         var ans = ques.answer;
         return arr.push(ans);
       });
       res.json(arr);
       console.log('arr:', arr);
     }
-  }); 
+  });
   // body...
 }
 
 exports.new = function (req, res) {
-  var question = {
+  var problem = {
       _id:'',
       index: '',   // 题目序号
       type: '',     // 题目类型
@@ -35,28 +35,28 @@ exports.new = function (req, res) {
       answer: ''    // 题目答案
     };
 
-  res.render('admin-newques', {
+  res.render('admin-addprob', {
     title: '题目录入',
     user: req.session.user,
-    question: question
+    problem: problem
   });
 };
 exports.preview = function (req, res) {
-  var id = req.params.id; 
+  var id = req.params.id;
   var user = req.session.user;
-  Question.findById(id, function(err, question) {
+  Problem.findById(id, function(err, problem) {
     if (err) {
       console.log(err);
       res.render('error', {
-      message: err.message,   
+      message: err.message,
       error: err
       });
     }
-    // if (question) {
-      res.render('quespreview', {
+    // if (problem) {
+      res.render('prob-preview', {
         title: '题目预览',
         user: user,
-        question: question
+        problem: problem
       });
     // } else {
     //  res.redirect('/');
@@ -67,19 +67,19 @@ exports.preview = function (req, res) {
 exports.edit = function (req, res) {
   var id = req.params.id;
   var user = req.session.user;
-  Question.findById(id, function(err, question) {
+  Problem.findById(id, function(err, problem) {
     if (err) {
       console.log(err);
       res.render('error', {
-      message: err.message,   
+      message: err.message,
       error: err
       });
     }
-    // if (question) {
-      res.render('quesedit', {
+    // if (problem) {
+      res.render('prob-edit', {
         title: '编辑题目',
         user: user,
-        question: question
+        problem: problem
       });
     // } else {
     //  res.redirect('/');
@@ -91,58 +91,58 @@ exports.save = function (req, res) {
   console.log('req.body:', req.body);
   console.log('req.files:', req.files);
   var image = req.files.image;
-  var id = req.body.question._id;
-  var questionObj = req.body.question;
-  var _question;
+  var id = req.body.problem._id;
+  var problemObj = req.body.problem;
+  var _problem;
   if (image) {
-    _question = {
+    _problem = {
       image: {
         name: image.name,
         path: image.path.slice(6)
       }
     }
   };
-  questionObj = _.extend(questionObj, _question);
-  // console.log('questionObj:', questionObj);
-  // console.log('_question', _question);
+  problemObj = _.extend(problemObj, _problem);
+  // console.log('problemObj:', problemObj);
+  // console.log('_problem', _problem);
   // 更新题目
   if (id) {
-    Question.findById(id, function(err, question) {
+    Problem.findById(id, function(err, problem) {
       if(err) {
         console.log(err);
-      } 
-      // 将现更新的 questionObj 的属性加到数据库原有的 question 上
-      _question = _.extend(question, questionObj);
-      _question.save(function(err, question) {
+      }
+      // 将现更新的 problemObj 的属性加到数据库原有的 problem 上
+      _problem = _.extend(problem, problemObj);
+      _problem.save(function(err, problem) {
         if(err) {
           console.log(err);
         }
-        res.redirect('/admin/question/preview/' + question.id);
+        res.redirect('/admin/problem/preview/' + problem.id);
       });
     });
   } else {
-      _question = new Question(questionObj);
-      _question.save(function(err, question) {
+      _problem = new Problem(problemObj);
+      _problem.save(function(err, problem) {
         if(err) {
           console.log(err);
         }
 
-        res.redirect('/admin/question/preview/' + question._id);
-      }); 
-    
+        res.redirect('/admin/problem/preview/' + problem._id);
+      });
+
     }
 };
 exports.list = function (req, res) {
   var user = req.session.user;
-  Question.find( function (err, questions) {
+  Problem.find( function (err, problems) {
     if (err) {
       console.log(err);
     }
     else {
-      res.render('queslist',{
+      res.render('prob-list',{
         title: '题目列表',
         user: user,
-        questions: questions
+        problems: problems
       });
     }
   });
@@ -150,7 +150,7 @@ exports.list = function (req, res) {
 exports.del = function (req, res) {
   var id = req.query.id;
   if (id) {
-    Question.remove({_id: id}, function (err, question) {
+    Problem.remove({_id: id}, function (err, problem) {
       if (err) {
         console.log(err);
       }  else {

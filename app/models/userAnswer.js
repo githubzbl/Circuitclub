@@ -50,6 +50,6 @@ AnswerSchema.statics = {
   }
 }
 
-var Answer = mongoose.model('Answer', AnswerSchema);
+var userAnswer = mongoose.model('userAnswer', AnswerSchema);
 
-module.exports = Answer;
+module.exports = userAnswer;
