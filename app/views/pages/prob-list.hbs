@@ -1,4 +1,4 @@
-{{!-- question-list.hbs --}}
+{{!-- problem-list.hbs --}}
 {{!< ../layout}}
 
 <style>
@@ -20,7 +20,7 @@
       <h2>考试题库列表</h2>
 
     </div>
-    
+
     <table class="table table-hover table-bordered">
       <thead>
         <tr>
@@ -36,17 +36,17 @@
       </thead>
       <tbody>
 
-        {{#each questions}}
-        <tr class="ques-id-{{_id}}">
+        {{#each problems}}
+        <tr class="prob-id-{{_id}}">
           <td>{{this.index}}</td>
           <td>{{this.chapter}}</td>
           <td>{{this.type}}</td>
           <td>{{this.title}}</td>
           {{!-- <td>{{moment(this.meta.updateAt).format('MM/DD/YYYY')}}</td> --}}
-          <td><a href="/admin/question/preview/{{_id}}"><button class="btn btn-primary">查看</button></a> </td>
-          <td><a href="/admin/question/edit/{{_id}}"><button class="btn btn-info">编辑</button></a> </td>
+          <td><a href="/admin/problem/preview/{{_id}}"><button class="btn btn-primary">查看</button></a> </td>
+          <td><a href="/admin/problem/edit/{{_id}}"><button class="btn btn-info">编辑</button></a> </td>
           <td><button class="btn btn-danger del" data-id="{{_id}}" data-toggle="modal" data-target="#delModal">删除</button></td>
-          
+
         </tr>
         {{/each}}
       </tbody>
@@ -54,8 +54,8 @@
     <hr>
     <div class="col-md-12 back">
     <a href="/admin">
-       <button class="btn btn-primary">返 回</button> 
-    </a> 
+       <button class="btn btn-primary">返 回</button>
+    </a>
     </div>
   </div>
 </div>

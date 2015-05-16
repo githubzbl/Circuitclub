@@ -30,7 +30,7 @@ var UserSchema = new Schema({
   //   type: ObjectId,
   //   ref: 'Question'
   // },
-  myQues: [],    // 做过的题目
+  myProblems: [],    // 做过的题目
   myPaper: [Schema.ObjectId],   // 做过的考卷
 
   meta: {
@@ -66,7 +66,7 @@ UserSchema.pre('save', function(next) {
 });
 
 UserSchema.methods = {
-  comparePassword: function(_password, cb) {   
+  comparePassword: function(_password, cb) {
     bcrypt.compare(_password, this.password, function(err, isMatch) {
         // res == true
           if (err) return cb(err);

@@ -1,7 +1,7 @@
 {{!-- admin-newques.hbs --}}
 {{!< ../layout}}
 <style>
-  .add-question {
+  .add-problem {
     font-size: 1.1em;
   }
   .choice-editor {
@@ -20,7 +20,7 @@
     if ($('#inputType').hasClass('选择题')) {
       $('#multiple-choice').prop('checked', 'true');
     }  else if($('#inputType').hasClass('填空题')) {
-      $('#fill-in').prop('checked', 'true');      
+      $('#fill-in').prop('checked', 'true');
     }  else {
       $('#calculate').prop('checked', 'true');
     }
@@ -28,83 +28,86 @@
     if ($('#inputDifficulty').hasClass('2')) {
       $('#easy').prop('checked', 'true');
     }  else if($('#inputDifficulty').hasClass('5')) {
-      $('#medium').prop('checked', 'true');      
+      $('#medium').prop('checked', 'true');
     }  else {
       $('#hard').prop('checked', 'true');
     }
   });
 </script>
-<div class="container add-question">
-  <div class="row">    
-     <form action="/admin/question/new" method="post" class="form-horizontal">
-       {{#if question._id}}
-         <input type="hidden" name="question[_id]" value="{{question._id}}">
+<div class="container add-problem">
+  <div class="row">
+     <form action="/admin/problem/new" method="post" class="form-horizontal">
+       {{#if problem._id}}
+         <input type="hidden" name="problem[_id]" value="{{problem._id}}">
        {{/if}}
        <div class="form-group  ">
          <label for="inputIndex" class="col-sm-1 col-sm-offset-1 control-label">编号</label>
          <div class="col-sm-2">
-          <input id="inputIndex" class="form-control" type="text" placeholder="{{question.index}}" name="question[index]"
-          value={{question.index}}>
+          <input id="inputIndex" class="form-control" type="text" placeholder="{{problem.index}}" name="problem[index]"
+          value={{problem.index}}>
          </div>
 
          <label for="inputChapter" class="col-sm-1 control-label">章节</label>
          <div class="col-sm-2">
-          <input id="inputChapter" class="form-control" type="text"name="question[chapter]" placeholder="{{question.chapter}}" value={{question.chapter}}>
+          <input id="inputChapter" class="form-control" type="text"name="problem[chapter]" placeholder="{{problem.chapter}}" value={{problem.chapter}}>
          </div>
 
          <label for="inputType" class="col-sm-1 control-label">题型</label>
-         <div id="inputType" class="{{question.type}} col-sm-4 input-group ">
-             {{!--  <div id="" class="{{question.type}}"></div> --}}
+         <div id="inputType" class="{{problem.type}} col-sm-4 input-group ">
+             {{!--  <div id="" class="{{problem.type}}"></div> --}}
             <label class="radio-inline control-label">
-            <input type="radio" name="question[type]" id="multiple-choice" value="选择题" 
+            <input type="radio" name="problem[type]" id="multiple-choice" value="选择题"
             >选择题
             </label>
             <label class="radio-inline">
-            <input type="radio" name="question[type]" id="fill-in" value="填空题">填空题
+            <input type="radio" name="problem[type]" id="fill-in" value="填空题">填空题
             </label>
             <label class="radio-inline">
-            <input type="radio" name="question[type]" id="calculate" value="计算题">计算题
+            <input type="radio" name="problem[type]" id="calculate" value="计算题">计算题
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="problem[type]" id="question" value="问答题">问答题
             </label>
          </div>
-        
+
         <hr>
 
         <div class="form-group ">
          <label for="inputTitle" class="col-sm-2 control-label">题干</label>
          <div class="col-sm-8">
-          <textarea type="text" class="form-control" name="question[title]" id="inputTitle" cols="20" rows="5">{{question.title}}</textarea>
+          <textarea type="text" class="form-control" name="problem[title]" id="inputTitle" cols="20" rows="5">{{problem.title}}</textarea>
          </div>
        </div>
-      
-      {{#if question.a}}
+
+      {{#if problem.a}}
       <div class="form-group">
       <ol>
-       <li class="col-md-12"> 
-        <label class="col-sm-2 control-label">A. 
+       <li class="col-md-12">
+        <label class="col-sm-2 control-label">A.
         </label>
          <div class="col-md-8">
-          <input id="" class="form-control" type="text" name="question[a]" placeholder="{{question.a}}" value={{question.a}} >
+          <input id="" class="form-control" type="text" name="problem[a]" placeholder="{{problem.a}}" value={{problem.a}} >
           </div>
         </li>
-       <li class="col-md-12"> 
-        <label class="col-sm-2 control-label">B. 
+       <li class="col-md-12">
+        <label class="col-sm-2 control-label">B.
         </label>
          <div class="col-md-8">
-          <input id="" class="form-control" type="text" name="question[b]" placeholder="{{question.b}}" value={{question.b}} >
+          <input id="" class="form-control" type="text" name="problem[b]" placeholder="{{problem.b}}" value={{problem.b}} >
           </div>
         </li>
-       <li class="col-md-12"> 
-        <label class="col-sm-2 control-label">C. 
+       <li class="col-md-12">
+        <label class="col-sm-2 control-label">C.
         </label>
          <div class="col-md-8">
-          <input id="" class="form-control" type="text" name="question[c]" placeholder="{{question.c}}" value={{question.c}} >
+          <input id="" class="form-control" type="text" name="problem[c]" placeholder="{{problem.c}}" value={{problem.c}} >
           </div>
         </li>
-       <li class="col-md-12"> 
-        <label class="col-sm-2 control-label">D. 
+       <li class="col-md-12">
+        <label class="col-sm-2 control-label">D.
         </label>
          <div class="col-md-8">
-          <input id="" class="form-control" type="text" name="question[d]" placeholder="{{question.d}}" value={{question.d}} >
+          <input id="" class="form-control" type="text" name="problem[d]" placeholder="{{problem.d}}" value={{problem.d}} >
           </div>
         </li>
 
@@ -117,28 +120,28 @@
        <hr>
        <div class="form-group ">
          <label for="inputDifficulty" class="col-sm-2 control-label">难度</label>
-           <div id="inputDifficulty" class="{{question.difficulty}} col-sm-10">
+           <div id="inputDifficulty" class="{{problem.difficulty}} col-sm-10">
               <label class="radio-inline control-label">
-                <input type="radio" name="question[difficulty]" id="easy" value="2" >容易
-              </label>         
-              <label class="radio-inline control-label">
-                <input type="radio" name="question[difficulty]" id="medium" value="5" >中等
+                <input type="radio" name="problem[difficulty]" id="easy" value="2" >容易
               </label>
               <label class="radio-inline control-label">
-                <input type="radio" name="question[difficulty]" id="hard" value="8" >困难
+                <input type="radio" name="problem[difficulty]" id="medium" value="5" >中等
+              </label>
+              <label class="radio-inline control-label">
+                <input type="radio" name="problem[difficulty]" id="hard" value="8" >困难
               </label>
            </div>
        </div>
        <div class="form-group ">
          <label for="inputAnswer" class="col-sm-2 control-label">参考答案</label>
          <div class="col-sm-8">
-          <input id="inputAnswer" class="form-control" type="text" name="question[answer]" placeholder="{{question.answer}}" value={{question.answer}} >
+          <input id="inputAnswer" class="form-control" type="text" name="problem[answer]" placeholder="{{problem.answer}}" value={{problem.answer}} >
           </div>
        </div>
         <div class="form-group ">
          <label for="inputAnalysis" class="col-sm-2 control-label">解析</label>
          <div class="col-sm-8">
-          <textarea type="text" class="form-control" name="question[analysis]" id="inputAnalysis" cols="30" rows="10">{{question.analysis}} </textarea>
+          <textarea type="text" class="form-control" name="problem[analysis]" id="inputAnalysis" cols="30" rows="10">{{problem.analysis}} </textarea>
          </div>
        </div>
 
@@ -148,8 +151,8 @@
           &nbsp;&nbsp;&nbsp;
         </div>
        </div>
-       {{!-- {{debug question}} --}}
+       {{!-- {{debug problem}} --}}
      </form>
   </div>
-</div> 
+</div>
 

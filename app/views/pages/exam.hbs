@@ -18,10 +18,10 @@
   #exam-nav ul {
     display: block;
     position: fixed;
-    top: 200px; 
+    top: 200px;
     right: 60px;
   }
-  article.per-ques {
+  article.per-prob {
     margin-bottom: 20px;
   }
   #paper-heading {
@@ -34,25 +34,10 @@
   $(document).ready(function() {
     var $trueAns = $('.true-ans');
     $('.true-ans, .ans-check-right, .ans-check-wrong').hide();
-    $('.per-ques').each(function(index, el) {
-        $(this).find('span.ques-index').text((index+1));
+    $('.per-prob').each(function(index, el) {
+        $(this).find('span.prob-index').text((index+1));
 
      });
-    $('#submit-paper').click(function(event) {
-        event.preventDefault();
-      $('.true-ans, .ans-check-right, .ans-check-wrong').hide();
-       $('.per-ques').each(function(index, el) {
-        var stdAns = $(this).find('.std-ans').val();
-        var trueAns = $(this).find('span.true-ans').text();
-        if (trueAns == stdAns) {
-          $(this).find('.ans-check-right').show()
-        } else {
-          $(this).find('.ans-check-wrong').show();
-        }
-
-      }); 
-      
-    });
   });
 </script>
 
@@ -64,26 +49,26 @@
     </div>
     <form action="/std/exam/check" method="post" class="form-horizontal" enctype="multipart/form-data">
       <div class="col-md-10 col-md-offset-1" id="exam-container">
-     
-        {{#each questions}}
-            <article class="panel panel-info per-ques ques-id-{{_id}}" data-id="{{_id}}">
-            <input type="hidden" name="question" value="{{_id}}">
-              <section class="ques-info panel-heading">
-                <label for="">第 <span class="ques-index">X</span> 题 </label>
-                <label class="ques-type" for=""> &nbsp;&nbsp;&nbsp; [&nbsp;{{this.type}}&nbsp;]&nbsp;</label>
-                <div class="ques-title">{{this.title}}</div>
-                {{#if this.a}} 
+
+        {{#each problems}}
+            <article class="panel panel-info per-prob prob-id-{{_id}}" data-id="{{_id}}">
+            <input type="hidden" name="problem" value="{{_id}}">
+              <section class="prob-info panel-heading">
+                <label for="">第 <span class="prob-index">X</span> 题 </label>
+                <label class="prob-type" for=""> &nbsp;&nbsp;&nbsp; &nbsp;{{this.type}}&nbsp;&nbsp;</label>
+                <div class="prob-title">{{this.title}}</div>
+                {{#if this.a}}
                   <dt>选项</dt>
                   <dd>A. {{this.a}}</dd>
                   <dd>B. {{this.b}}</dd>
                   <dd>C. {{this.c}}</dd>
                   <dd>D. {{this.d}}</dd>
                 {{/if}}
-                 <div class="ques-content">{{this.content}}</div>
+                 <div class="prob-content">{{this.content}}</div>
 
               </section>
                {{#if this.image.path}}
-                   <dt>第 <span class="ques-index">X</span> 题图</dt>
+                   <dt>第 <span class="prob-index">X</span> 题图</dt>
                    <dd><img src="{{this.image.path}}" alt="{{this.index}}图">
                    </dd>
                 {{/if}}
@@ -98,14 +83,15 @@
                   </div><!-- /.col-lg-6 -->
                   <div class="col-md-2 ans-check-right">
                       <i class="fa fa-check-circle"></i>
-                  </div>               
+                  </div>
                   <div class="col-md-2 ans-check-wrong">
                       <i class="fa fa-times-circle"></i>
                   </div>
                   <div class="col-lg-2 col-md-offset-2">
                     <div class="input-group true-ans" >
-                      <p> 正确答案: 
-                      <span class="true-ans">{{this.answer}}</span>
+                      <p> 正确答案:
+                      {{!-- <span class="true-ans">{{this.answer}}</span> --}}
+                      <span class="true-ans"></span>
                       </p>
                     </div><!-- /input-group -->
                   </div><!-- /.col-lg-6 -->
@@ -128,8 +114,8 @@
           <li role="" class="active"><a href="#">下一题</a></li>
         </ul>
       </aside> --}}
-     
+
   </div>
- </form> 
+ </form>
 </div>
 {{!-- <script src="/js/admin.js"></script> --}}

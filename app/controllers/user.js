@@ -152,25 +152,6 @@ exports.examStart = function (req, res) {
   });
 };
 
-exports.examCheck = function (req, res) {
-  var user = req.session.user;
-  var answer = req.body.user.answer;
-  console.log('answer:', answer);
-  Problem.find( function (err, problems) {
-    if (err) {
-      console.log(err);
-    }
-    else {
-      var arr = [];
-      _.each(problems, function (ques, key) {
-        var ans = ques.answer;
-        return arr.push(ans);
-      });
-      console.log('arr', arr);
-    }
-  });
-  // body...
-}
 
 // userlist page
 exports.list = function(req, res) {

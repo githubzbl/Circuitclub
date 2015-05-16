@@ -12,7 +12,7 @@ var express   = require('express'),
 
 
 var mongoose  = require('mongoose');
-mongoose.connect('mongodb://localhost/exam'); 
+mongoose.connect('mongodb://localhost/exam');
 
 // var routes = require('./routes/index');
 // var users = require('./routes/users');
@@ -27,15 +27,18 @@ app.engine('hbs', hbs.express4({
 }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, '/app/views/pages'));
-hbs.registerHelper("debug", function(optionalValue) { 
-  console.log("Current Context"); 
+hbs.registerHelper("debug", function(optionalValue) {
+  console.log("Current Context");
   console.log("====================");
   console.log(this);
-  if (optionalValue) { 
-    console.log("Value"); 
-    console.log("===================="); 
+  if (optionalValue) {
+    console.log("Value");
+    console.log("====================");
     console.log(optionalValue);
-  } 
+  }
+});
+hbs.registerHelper('with', function(context, options) {
+  return options.fn(context);
 });
 // 存储题目图片的目录
 app.set('images', path.join(__dirname, '/public/images'));
@@ -47,7 +50,7 @@ app.use(logger('dev'));  // 开发环境
 app.use(bodyParser.json({limit: '1mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(session({ 
+app.use(session({
   secret: 'uestc ee',
   store: new RedisStore,
   resave: false,

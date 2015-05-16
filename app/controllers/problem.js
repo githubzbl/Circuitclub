@@ -12,8 +12,8 @@ exports.findAns = function (req, res) {
     }
     else {
       var arr = [];
-      _.each(problems, function (ques, key) {
-        var ans = ques.answer;
+      _.each(problems, function (prob, key) {
+        var ans = prob.answer;
         return arr.push(ans);
       });
       res.json(arr);
@@ -103,8 +103,7 @@ exports.save = function (req, res) {
     }
   };
   problemObj = _.extend(problemObj, _problem);
-  // console.log('problemObj:', problemObj);
-  // console.log('_problem', _problem);
+
   // 更新题目
   if (id) {
     Problem.findById(id, function(err, problem) {

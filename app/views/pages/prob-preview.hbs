@@ -16,32 +16,32 @@
     <div class="col-md-10 col-md-offset-1">
       <dl class="dl-horizontal">
         <dt>编号</dt>
-        <dd>{{question.index}}</dd>
+        <dd>{{problem.index}}</dd>
         <dt>题型</dt>
-        <dd>{{question.type}}</dd>
+        <dd>{{problem.type}}</dd>
         <dt>章节</dt>
-        <dd>{{question.chapter}}</dd>
-        <dt class="difficulty" id="{{question.difficulty}}">难易</dt>
+        <dd>{{problem.chapter}}</dd>
+        <dt class="difficulty" id="{{problem.difficulty}}">难易</dt>
         <dd class="difficulty"> </dd>
         <dt>题干</dt>
-        <dd>{{question.title}}</dd>
-        {{#if question.a}}
+        <dd>{{problem.title}}</dd>
+        {{#if problem.a}}
         <dt>选项</dt>
-        <dd>A. {{question.a}}</dd>
-        <dd>B. {{question.b}}</dd>
-        <dd>C. {{question.c}}</dd>
-        <dd>D. {{question.d}}</dd>
+        <dd>A. {{problem.a}}</dd>
+        <dd>B. {{problem.b}}</dd>
+        <dd>C. {{problem.c}}</dd>
+        <dd>D. {{problem.d}}</dd>
         {{/if}}
-        {{#if question.image.path}}
+        {{#if problem.image.path}}
         <dt>题图</dt>
         <dd>
-          <img src="{{question.image.path}}" alt="图呢？">     
+          <img src="{{problem.image.path}}" alt="图呢？">
         </dd>
         {{/if}}
         <dt>答案</dt>
-        <dd>{{question.answer}}</dd>
+        <dd>{{problem.answer}}</dd>
         <dt>解析</dt>
-        <dd>{{question.analysis}}</dd>
+        <dd>{{problem.analysis}}</dd>
       </dl>
     </div>
 
@@ -49,12 +49,12 @@
 
   <div class="row">
     <div class="col-md-12" style="text-align: center">
-    <a href="/admin/question/edit/{{question._id}}"> <button class="btn btn-primary">修 改</button></a>
+    <a href="/admin/problem/edit/{{problem._id}}"> <button class="btn btn-primary">修 改</button></a>
     &nbsp;&nbsp;
-    <a href="/admin/question/new"> <button class="btn btn-success">继续添加</button></a> 
+    <a href="/admin/problem/new"> <button class="btn btn-success">继续添加</button></a>
     &nbsp;&nbsp;
-    <a href="/admin/questionBank/list"> <button class="btn btn-info">习题列表</button></a>
-    </div>    
+    <a href="/admin/problemBank/list"> <button class="btn btn-info">习题列表</button></a>
+    </div>
   </div>
 </div>
 <script>
@@ -64,13 +64,13 @@
     var diff = $('dt.difficulty')[0].id;
     console.log(diff)
     switch(diff) {
-      case '2': 
+      case '2':
         $ddText.html('容易');
         break;
-      case '5': 
+      case '5':
         $ddText.html('中等');
         break;
-      case 8: 
+      case 8:
         $ddText.html('困难');
         break;
     }

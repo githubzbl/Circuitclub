@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 
 var AnswerSchema = new Schema({
-  question: {type: ObjectId, ref: 'Question'},
+  problem: {type: ObjectId, ref: 'Problem'},
   user: {type: ObjectId, ref: 'User'},
   // reply: [{
   //   from: {type: ObjectId, ref: 'User'},
@@ -12,6 +12,7 @@ var AnswerSchema = new Schema({
   //   content: String
   // }],
   content: String,
+  status: Boolean,
   meta: {
     createAt: {
       type: Date,
