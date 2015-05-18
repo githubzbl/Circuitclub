@@ -41,8 +41,9 @@ module.exports = function(app) {
   // 学生考试
   app.get('/std/exam', User.loginRequired, User.examInfo);
   app.get('/std/exam/start', User.loginRequired, User.examStart);
-  // app.get('/std/exam/check', User.loginRequired, Problem.findAns);
-  app.post('/std/exam/check', User.loginRequired, multer(), userAnswer.save, userAnswer.check);
+  app.post('/std/exam/check', User.loginRequired, multer(), userAnswer.save);
+  app.get('/std/exam/check', User.loginRequired, userAnswer.check);
+  // app.post('/std/exam/check', User.loginRequired, multer(), userAnswer.save, userAnswer.check);
 
 
   /*** 管理员模块 ***/

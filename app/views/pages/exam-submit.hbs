@@ -1,0 +1,28 @@
+{{!< ../layout}}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 id="paper-heading" class="col-md-offset-5">在 线 考 试</h2>
+      <hr>
+    </div>
+    <form action="/std/exam/check" method="get" class="form-horizontal" enctype="multipart/form-data">
+      <div class="col-md-10 col-md-offset-1" id="exam-container">
+       <p>保存成功</p>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-offset-5">
+            <a href="#"><button id="submit-paper" class="btn btn-danger" type="submit">查 看 结 果</button></a>
+          </div>
+        </div>
+      </div>
+  {{!--     <aside id="exam-nav">
+        <ul class="nav nav-pills nav-stacked col-sm-1">
+          <li role=""><a href="#">上一题</a></li>
+          <li role="" class="active"><a href="#">下一题</a></li>
+        </ul>
+      </aside> --}}
+  </div>
+ </form>
+</div>
