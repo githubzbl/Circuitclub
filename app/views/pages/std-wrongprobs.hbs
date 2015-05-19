@@ -24,44 +24,102 @@
 </style>
 <script>
   $(document).ready(function () {
-    $('#dataTable').on('click', 'a', function(event) {
+    // 所有题目暂存
+    var $probList = $('article.per-prob');
+    // 正确显示难易程度
+    $('.per-prob').each(function(index, el) {
+       var $diff = $(this).find('.difficulty');
+       var difNub = $diff.data('id');
+        switch(difNub) {
+          case 2:
+            $diff.text('易');
+            break;
+          case 5:
+            $diff.text('中');
+            break;
+          case 8:
+            $diff.text('难');
+            break;
+        };
+     });
+    // 点击后确定功能
+    $('.btn-group').on('click', function(event) {
       event.preventDefault();
-      var target = $(event.target);
-      var id = target.data('id');
-      var $prob = $('tr.prob-id-' + id);
-      if (target.hasClass('detail')) {
-        $.ajax({
-          url: '/std/myproblems/list?id='+ id,
-          type: 'GET',
-          dataType: 'json'
-        })
-        .done(function(data) {
-          console.log("success");
-          var data = JSON.parse(data);
-          console.log('data:::', data[0])
-          console.log('data:::', data[0].problem)
-          var text = '<tr class="prob-detail"><td>'+ data[0].problem.title +'</td></tr>';
-          $(text).insertAfter($prob);
+      var $target = $(event.target);
+      var txt = $target.text();
 
+      $(this).find('.selected').text(txt);
 
-        })
-        .fail(function() {
-          console.log("error");
-        })
-        .always(function() {
-          console.log("complete");
-        });
+      if ($target.is('a')) {
+        var type = '' + $target.data('type'); // 不是字符串
+        console.log('type', type);
+        switch (type) {
+          case 'true':
+            $probList.filter('.false').hide();
+            break;
+          case 'wrong':
+            $probList.filter('.true').hide();
+            break;
 
+        }
       }
-      console.log('works!');
-      /* Act on the event */
     });
+
   });
 </script>
 <div id="list-container" class="container">
   <div class="row">
     <div class="col-md-12 heading">
-      <h3>错 题 库</h3>
+      <h3>我 的 题 库</h3>
+      <div class="prob-list-header">
+          <div class="btn-group-list">
+            <div class="btn-group">
+              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="selected">所有题目</span>
+                 <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#" data-type="status">所有题目</a></li>
+                <li class="divider"></li>
+                <li><a href="#" data-type="true">正确</a></li>
+                <li class="divider"></li>
+                <li><a href="#" data-type="wrong">错误</a></li>
+              </ul>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="selected">所有难度</span>
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">所有难度</a></li>
+                <li class="divider"></li>
+                <li><a href="#">容易</a></li>
+                <li class="divider"></li>
+                <li><a href="#">中等</a></li>
+                <li class="divider"></li>
+                <li><a href="#">困难</a></li>
+              </ul>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="selected">所有题型</span>
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">所有题型</a></li>
+                <li class="divider"></li>
+                <li><a href="#">选择题</a></li>
+                <li class="divider"></li>
+                <li><a href="#">填空题</a></li>
+                <li class="divider"></li>
+                <li><a href="#">计算题</a></li>
+                <li class="divider"></li>
+                <li><a href="#">问答题</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
     </div>
     <div class="col-md-3">
@@ -77,13 +135,17 @@
       </div>
     </div>
     <div class="col-md-9">
+
         {{#each userAnsArr}}
-          <article class="panel panel-info per-prob prob-id-{{_id}}" data-id="{{_id}}">
+          <article class="{{this.status}} panel panel-info per-prob prob-id-{{_id}}" data-id="{{_id}}" data-status="" data-difficulty="{{problem.difficulty}}" data-probtype="{{problem.type}}">
             <input type="hidden" name="problem" value="{{_id}}">
               <section class="prob-info panel-heading">
                 <label for="">编号 &nbsp;&nbsp;<span class="prob-index">{{problem.index}}</span> &nbsp;&nbsp; </label>
                 <label class="prob-type" for=""> &nbsp;&nbsp;&nbsp;[&nbsp;{{problem.type}}&nbsp;] &nbsp;</label>
+                 <label for="time"> <i class="fa fa-clock-o" style="font-size: 1em;"></i> {{moment this.meta.updateAt format="YYYY-MM-DD"}}</label>&nbsp;&nbsp;&nbsp;
+                  <i class="fa fa-question-circle" style="font-size: 1em;"></i>&nbsp;&nbsp;<label for="difficulty" class="difficulty" data-id="{{problem.difficulty}}"></label>
                 <div class="prob-title">{{problem.title}}</div>
+
                 {{#if problem.a}}
                   <dt>选项</dt>
                   <dd>A. {{problem.a}}</dd>
@@ -100,10 +162,7 @@
                 </div>
                 {{/if}}
 
-              <dt>保存时间</dt>
-              <dt>{{moment this.meta.updateAt format="YYYY-MM-DD"}}</dt>
               </section>
-
 
               <section class="ans-info panel-body" >
                 <div class="row">
@@ -114,6 +173,7 @@
                     </div><!-- /input-group -->
                   </div><!-- /.col-lg-6 -->
                   <div class="col-lg-2">
+
                     {{#if this.status}}
                         <i class="fa fa-check-circle ans-check-right"></i>
                     {{else}}
@@ -131,9 +191,11 @@
                 <div class="row prob-detail">
                   <p class="analysis">{{problem.analysis}}</p>
                 </div>
+
               </section>
+              <hr>
             </article>
-            <hr>
+
         {{/each}}
     </div>
     {{!-- <table id="dataTable" class="table table-hover table-bordered">
