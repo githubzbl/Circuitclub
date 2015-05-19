@@ -111,33 +111,41 @@ exports.check = function (req, res) {
 };
 
 exports.getProblems = function (req, res) {
-  var userId = req.session.user._id;
-  // var problemIds = req.body.problem;
+  var user = req.session.user;
+  var userId = user._id;
   var problems = [];
+  var id = req.query.id;
+  console.log('****id***', id)
 
   userAnswer
     .find({user: userId})
     .populate('problem')
     .exec(function (err, userAnsArr) {
-      // _.each(userAnsArr, function (userAns, key) {
-      //   // console.log('****userAns', userAns);
-      //   // console.log('****key', key);
-      //   problems.push(userAns.problem);
-      //   if (userAns.problem.answer !== userAns.content) {
-      //     userAns.status = false;
-      //   } else {
-      //     userAns.status = true;
-      //   }
-      // });
-      res.json(JSON.stringify(userAnsArr));
+      res.render('std-wrongprobs', {
+        title: user.name + '的题库',
+        user: user,
+        userAnsArr: userAnsArr
+      });
 
     });
+  // if (id) {
+  // // userAnswer
+  // //   .find({user: userId})
+  // //   .populate('problem')
+  // //   .exec(function (err, userAnsArr) {
+  // //       res.json(JSON.stringify(userAnsArr));
+  // //   });
+  //   userAnswer
+  //     .find({_id: id})
+  //     .populate('problem')
+  //     .exec(function (err, userAnswer) {
+  //       res.json(JSON.stringify(userAnswer));
+  //     })
+  // }
 };
 
 exports.getWrongProblems = function (req, res) {
   var user = req.session.user;
-  req.session.moment = require('moment');
-  console.log('moment', moment)
   var userId = user._id;
   // var problemIds = req.body.problem;
   var problems = [];

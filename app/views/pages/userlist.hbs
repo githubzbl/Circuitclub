@@ -17,7 +17,7 @@
     var id = target.data('id');
     console.log('delete:', id);
     var tr = $('.user-id-' + id);
-    
+
     $('#delModal button.del').click(function(event) {
       $('#delModal').hide('slow');
       $.ajax({
@@ -43,7 +43,7 @@
     <div class="col-md-5 col-md-offset-5">
       <h2 class="heading">注册学生列表</h2>
     </div>
-    
+
     <table class="table table-hover table-bordered">
       <thead>
         <tr>
@@ -51,8 +51,8 @@
 {{!--           <th>章节</th>
           <th>类型</th>
           <th>题目内容</th>
- --}}          {{!-- <th>保存时间</th> --}}
-          <th>详细</th>          
+ --}}     <th>注册时间</th>
+          <th>详细</th>
           <th>编辑</th>
           <th>删除</th>
         </tr>
@@ -65,7 +65,7 @@
 {{!--           <td>{{this.chapter}}</td>
           <td>{{this.type}}</td>
           <td>{{this.title}}</td> --}}
-          {{!-- <td>{{moment(this.meta.updateAt).format('MM/DD/YYYY')}}</td> --}}
+          <td>{{moment this.meta.updateAt format="YYYY-MM-DD"}}</td>
           <td><a href="#"><button class="btn btn-primary">查看</button></a> </td>
           <td><a href="#"><button class="btn btn-info">编辑</button></a> </td>
           <td><button class="btn btn-danger del" data-id="{{_id}}" data-toggle="modal" data-target="#delModal">删除用户</button></td>
@@ -73,7 +73,7 @@
         {{/each}}
       </tbody>
     </table>
-    
+
   </div>
 </div>
 

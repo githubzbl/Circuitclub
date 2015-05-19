@@ -28,7 +28,7 @@
           <th>章节</th>
           <th>类型</th>
           <th>题目内容</th>
-          {{!-- <th>保存时间</th> --}}
+          <th>保存时间</th>
           <th>详细</th>
           <th>编辑</th>
           <th>删除</th>
@@ -42,7 +42,7 @@
           <td>{{this.chapter}}</td>
           <td>{{this.type}}</td>
           <td>{{this.title}}</td>
-          {{!-- <td>{{moment(this.meta.updateAt).format('MM/DD/YYYY')}}</td> --}}
+          <td>{{moment this.meta.updateAt format="YYYY-MM-DD"}}</td>
           <td><a href="/admin/problem/preview/{{_id}}"><button class="btn btn-primary">查看</button></a> </td>
           <td><a href="/admin/problem/edit/{{_id}}"><button class="btn btn-info">编辑</button></a> </td>
           <td><button class="btn btn-danger del" data-id="{{_id}}" data-toggle="modal" data-target="#delModal">删除</button></td>

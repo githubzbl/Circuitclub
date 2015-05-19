@@ -1,0 +1,122 @@
+{{!-- wrongproblems-list.hbs --}}
+{{!< ../layout}}
+
+<style>
+  .heading {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .container {
+    font-size: 1.1em;
+  }
+  .back {
+    text-align: center;
+  }
+</style>
+<script>
+  $(document).ready(function () {
+    $('#dataTable').on('click', 'a', function(event) {
+      event.preventDefault();
+      var target = $(event.target);
+      var id = target.data('id');
+      var $prob = $('tr.prob-id-' + id);
+      if (target.hasClass('detail')) {
+        $.ajax({
+          url: '/std/myproblems/list?id='+ id,
+          type: 'GET',
+          dataType: 'json'
+        })
+        .done(function(data) {
+          console.log("success");
+          var data = JSON.parse(data);
+          console.log('data:::', data[0])
+          console.log('data:::', data[0].problem)
+          var text = '<tr class="prob-detail"><td>'+ data[0].problem.title +'</td></tr>';
+          $(text).insertAfter($prob);
+
+
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+
+      }
+      console.log('works!');
+      /* Act on the event */
+    });
+  });
+</script>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 heading">
+      <h2>错 题 库</h2>
+
+    </div>
+
+    <table id="dataTable" class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th>习题编号</th>
+          <th>章节</th>
+          <th>类型</th>
+          <th>题目内容</th>
+
+          <th>保存时间</th>
+          <th>详细</th>
+          <th>编辑</th>
+          <th>删除</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {{#each userAnsArr}}
+
+          <tr class="prob-id-{{this._id}}">
+            <td>{{this.problem.index}}</td>
+            <td>{{this.problem.chapter}}</td>
+            <td>{{this.problem.type}}</td>
+            <td>{{this.problem.title}}</td>
+            <td>{{moment this.meta.updateAt format="YYYY-MM-DD"}}</td>
+            <td><a href="/std/myproblems/list/" data-id="{{this._id}}" role="button" class="btn btn-primary detail">查看</a> </td>
+            <td><a href="/admin/problem/preview/{{_id}}" role="button" class="btn btn-info">编辑</a> </td>
+            <td><a href="/admin/problem/preview/{{_id}}" role="button" class="btn btn-danger del" data-target="#delModal">删除</a> </td>
+
+          </tr>
+
+
+
+        {{/each}}
+      </tbody>
+    </table>
+    <hr>
+    <div class="col-md-12 back center">
+    <a href="/std/home">
+       <button class="btn btn-primary">返 回 主 页</button>
+    </a>
+    </div>
+  </div>
+</div>
+
+<div id="delModal" tabindex="-1" role="dialog" aria-labelledby="
+myModalLabel" aria-hidden="true" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">确认删除？</h4>
+      </div>
+      <div class="modal-body">
+        <p>删除后无法恢复</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-danger del">删除</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div>
+</div>
+
+

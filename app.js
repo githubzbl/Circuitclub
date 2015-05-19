@@ -37,7 +37,14 @@ hbs.registerHelper("debug", function(optionalValue) {
     console.log(optionalValue);
   }
 });
-hbs.registerHelper('moment', moment);
+hbs.registerHelper('moment', function(context, block) {
+  if (moment) {
+    var f = block.hash.format || "MMM DD, YYYY hh:mm:ss A";
+    return moment(context).format(f); //had to remove Date(context)
+  } else{
+    return context;   //  moment plugin not available. return data as is.
+  };
+});
 // 存储题目图片的目录
 app.set('images', path.join(__dirname, '/public/images'));
 

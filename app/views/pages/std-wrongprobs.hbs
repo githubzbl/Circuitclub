@@ -2,6 +2,15 @@
 {{!< ../layout}}
 
 <style>
+  #list-container {
+    width: 98%;
+  }
+  .paper-list {
+    height: 100vh;
+  }
+  .panel ul{
+    list-style-type: none;
+  }
   .heading {
     margin-bottom: 30px;
     text-align: center;
@@ -13,16 +22,121 @@
     text-align: center;
   }
 </style>
-<script src="/js/moment-with-locales.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#dataTable').on('click', 'a', function(event) {
+      event.preventDefault();
+      var target = $(event.target);
+      var id = target.data('id');
+      var $prob = $('tr.prob-id-' + id);
+      if (target.hasClass('detail')) {
+        $.ajax({
+          url: '/std/myproblems/list?id='+ id,
+          type: 'GET',
+          dataType: 'json'
+        })
+        .done(function(data) {
+          console.log("success");
+          var data = JSON.parse(data);
+          console.log('data:::', data[0])
+          console.log('data:::', data[0].problem)
+          var text = '<tr class="prob-detail"><td>'+ data[0].problem.title +'</td></tr>';
+          $(text).insertAfter($prob);
 
-<div class="container">
+
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+
+      }
+      console.log('works!');
+      /* Act on the event */
+    });
+  });
+</script>
+<div id="list-container" class="container">
   <div class="row">
     <div class="col-md-12 heading">
-      <h2>错 题 库</h2>
+      <h3>错 题 库</h3>
 
     </div>
+    <div class="col-md-3">
+      <div class="panel panel-info paper-list">
+        <div class="panel-heading">
+          <h3 class="panel-title">试卷列表</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li>试卷1</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+        {{#each userAnsArr}}
+          <article class="panel panel-info per-prob prob-id-{{_id}}" data-id="{{_id}}">
+            <input type="hidden" name="problem" value="{{_id}}">
+              <section class="prob-info panel-heading">
+                <label for="">编号 &nbsp;&nbsp;<span class="prob-index">{{problem.index}}</span> &nbsp;&nbsp; </label>
+                <label class="prob-type" for=""> &nbsp;&nbsp;&nbsp;[&nbsp;{{problem.type}}&nbsp;] &nbsp;</label>
+                <div class="prob-title">{{problem.title}}</div>
+                {{#if problem.a}}
+                  <dt>选项</dt>
+                  <dd>A. {{problem.a}}</dd>
+                  <dd>B. {{problem.b}}</dd>
+                  <dd>C. {{problem.c}}</dd>
+                  <dd>D. {{problem.d}}</dd>
+                {{/if}}
+                 <div class="prob-content">{{problem.content}}</div>
+               {{#if problem.image.path}}
+                <div class="prob-img">
+                   <dt> <span class="prob-index">{{problem.index}}</span> 题图</dt>
+                   <dd><img src="{{problem.image.path}}" alt="{{problem.index}}图">
+                   </dd>
+                </div>
+                {{/if}}
 
-    <table class="table table-hover table-bordered">
+              <dt>保存时间</dt>
+              <dt>{{moment this.meta.updateAt format="YYYY-MM-DD"}}</dt>
+              </section>
+
+
+              <section class="ans-info panel-body" >
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="input-group ans-content">
+                      <span class="input-group-addon">你的回答：</span>
+                      <input type="text" class="form-control std-ans" placeholder="{{this.content}}" name="answer" value="{{this.content}}" readonly>
+                    </div><!-- /input-group -->
+                  </div><!-- /.col-lg-6 -->
+                  <div class="col-lg-2">
+                    {{#if this.status}}
+                        <i class="fa fa-check-circle ans-check-right"></i>
+                    {{else}}
+                        <i class="fa fa-times-circle ans-check-wrong"></i>
+                    {{/if}}
+                  </div>
+                   <div class="col-lg-4">
+                    <div class="input-group true-ans">
+                      <p> 正确答案:
+                      <span>{{this.problem.answer}}</span>
+                      </p>
+                    </div><!-- /input-group -->
+                  </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+                <div class="row prob-detail">
+                  <p class="analysis">{{problem.analysis}}</p>
+                </div>
+              </section>
+            </article>
+            <hr>
+        {{/each}}
+    </div>
+    {{!-- <table id="dataTable" class="table table-hover table-bordered">
       <thead>
         <tr>
           <th>习题编号</th>
@@ -39,24 +153,24 @@
       <tbody>
 
         {{#each userAnsArr}}
-        <tr class="prob-id-{{this._id}}">
-          <td>{{this.problem.index}}</td>
-          <td>{{this.problem.chapter}}</td>
-          <td>{{this.problem.type}}</td>
-          <td>{{this.problem.title}}</td>
 
-          {{!-- <td>{{moment(this.meta.updateAt).format('MM/DD/YYYY')}}</td> --}}
-          <td>{{moment this.meta.updateAt}}</td>
-          <td><a href="/admin/problem/preview/{{_id}}"><button class="btn btn-primary">查看</button></a> </td>
-          <td><a href="/admin/problem/edit/{{_id}}"><button class="btn btn-info">编辑</button></a> </td>
-          <td><button class="btn btn-danger del" data-id="{{_id}}" data-toggle="modal" data-target="#delModal">删除</button></td>
+          <tr class="prob-id-{{problem._id}}">
+            <td>{{problem.problem.index}}</td>
+            <td>{{problem.problem.chapter}}</td>
+            <td>{{problem.problem.type}}</td>
+            <td>{{problem.problem.title}}</td>
+            <td></td>
+            <td><a href="/std/myproblems/list/" data-id="{{problem._id}}" role="button" class="btn btn-primary detail">查看</a> </td>
+            <td><a href="/admin/problem/preview/{{_id}}" role="button" class="btn btn-info">编辑</a> </td>
+            <td><a href="/admin/problem/preview/{{_id}}" role="button" class="btn btn-danger del" data-target="#delModal">删除</a> </td>
 
-        </tr>
+          </tr>
         {{/each}}
       </tbody>
-    </table>
+    </table> --}}
+    </div>
     <hr>
-    <div class="col-md-12 back">
+    <div class="col-md-12 back center">
     <a href="/std/home">
        <button class="btn btn-primary">返 回 主 页</button>
     </a>
