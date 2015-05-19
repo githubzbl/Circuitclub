@@ -7,11 +7,14 @@
 body {
 	/*margin-top: 50px;*/
 	background: #F0F0F0;
-	font-family: "微软雅黑", "Century Gothic", 
-	"Open Sans", Arial, "Hiragino Sans GB", 
-	"Microsoft YaHei", "STHeiti", "WenQuanYi Micro Hei", 
+	font-family: "微软雅黑", "Century Gothic",
+	"Open Sans", Arial, "Hiragino Sans GB",
+	"Microsoft YaHei", "STHeiti", "WenQuanYi Micro Hei",
 	SimSun, sans-serif;
 }
+/****
+	Home Page
+*****/
 #wrapper {
 	margin-top: 80px;
 }
@@ -28,7 +31,7 @@ div.main-container {
 }
 img.main-pic {
 	position: absolute;
-	top: -100px; 
+	top: -100px;
 	width: 100%; height: auto;
 	display: block;
 	opacity: 1;
@@ -68,6 +71,71 @@ div.holder-container {
 	border: 2px solid #0050DD;
 	cursor: pointer;
 }
+
+/****
+	Exam Page
+*****/
+  #exam-container i.fa {
+    font-size: 2em;
+  }
+  #exam-container {
+    /*background: orange;*/
+    font-size: 1.1em;
+  }
+  #exam-nav ul {
+    display: block;
+    position: fixed;
+    top: 200px;
+    right: 60px;
+  }
+  article.per-prob {
+    margin-bottom: 20px;
+  }
+  #paper-heading {
+    margin-bottom: 40px;
+  }
+
+/****
+	Exam Check Page
+*****/
+
+  i.fa-check-circle {
+    color: #2a8c01;
+  }
+  i.fa-times-circle {
+    color: #DD1B45;
+    color: red;
+  }
+  #exam-container {
+    font-size: 1.1em;
+  }
+  #exam-container .prob-img {
+    margin-top: 10px;
+    background: #fff;
+  }
+  #exam-container .analysis {
+    margin: 10px;
+    padding: 0 10px;
+    border-left: 5px solid #286090;
+    color: #31708f;
+  }
+
+  article.per-prob {
+    margin-bottom: 20px;
+  }
+  #paper-heading {
+    margin-bottom: 40px;
+  }
+  #exam-container .true-ans {
+    color: red;
+  }
+  #exam-container .check {
+    margin-top: 10px;
+  }
+
+/****
+	Footer
+*****/
 footer {
 	text-align: center;
 	color: #999;

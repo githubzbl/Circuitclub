@@ -2,6 +2,7 @@
 
 node_modules/
 
+public/images/
 public/libs/jquery/
 public/libs/bootstrap/
 

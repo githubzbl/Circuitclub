@@ -2,37 +2,11 @@
 
 {{!< ../layout}}
 <style>
-  i.fa {
-    font-size: 2em;
-  }
-  i.fa-check-circle {
-    color: #2a8c01;
-  }
-  i.fa-times-circle {
-    color: #DD1B45;
-  }
-  #exam-container {
-    /*background: orange;*/
-    font-size: 1.1em;
-  }
-  #exam-nav ul {
-    display: block;
-    position: fixed;
-    top: 200px;
-    right: 60px;
-  }
-  article.per-prob {
-    margin-bottom: 20px;
-  }
-  #paper-heading {
-    margin-bottom: 40px;
-  }
 
 </style>
 
 <script>
   $(document).ready(function() {
-    var $trueAns = $('.true-ans');
     $('.true-ans, .ans-check-right, .ans-check-wrong').hide();
     $('.per-prob').each(function(index, el) {
         $(this).find('span.prob-index').text((index+1));
@@ -54,8 +28,8 @@
             <article class="panel panel-info per-prob prob-id-{{_id}}" data-id="{{_id}}">
             <input type="hidden" name="problem" value="{{_id}}">
               <section class="prob-info panel-heading">
-                <label for="">第 <span class="prob-index">X</span> 题 </label>
-                <label class="prob-type" for=""> &nbsp;&nbsp;&nbsp; &nbsp;{{this.type}}&nbsp;&nbsp;</label>
+                <label for="">第 &nbsp;&nbsp;<span class="prob-index">X</span> &nbsp;&nbsp;题 </label>
+                <label class="prob-type" for=""> &nbsp;&nbsp;&nbsp;[&nbsp;{{this.type}}&nbsp;] &nbsp;</label>
                 <div class="prob-title">{{this.title}}</div>
                 {{#if this.a}}
                   <dt>选项</dt>
@@ -65,13 +39,15 @@
                   <dd>D. {{this.d}}</dd>
                 {{/if}}
                  <div class="prob-content">{{this.content}}</div>
-
-              </section>
                {{#if this.image.path}}
+                <div class="prob-img">
                    <dt>第 <span class="prob-index">X</span> 题图</dt>
                    <dd><img src="{{this.image.path}}" alt="{{this.index}}图">
                    </dd>
+                </div>
                 {{/if}}
+              </section>
+
 
               <section class="ans-info panel-body" >
                 <div class="row">

@@ -7,17 +7,16 @@ var Problem = require('../app/controllers/problem');
 var userAnswer = require('../app/controllers/userAnswer');
 var Image = require('../app/controllers/image');
 var multer = require('multer');
+
 // var multipart = require('connect-multiparty');
 // var multipartMiddleware = multipart();
 
-
-
 module.exports = function(app) {
+
   // pre handle user
   app.use(function(req, res, next) {
     var _user = req.session.user;
     app.locals.user = _user;
-
     next()
   });
 
@@ -34,10 +33,15 @@ module.exports = function(app) {
   app.get('/logout', User.logout);
 
   /*** 学生模块 ***/
-  // 学生主页 个人信息
+  // 学生主页
   app.get('/std/home', User.loginRequired, User.index);
+  // 个人信息
   app.get('/std/profile', User.loginRequired, User.profile);
   app.post('/std/profile', User.loginRequired, multer(), User.setProfile);
+  // 考试记录
+  app.get('/std/myproblems', User.loginRequired, userAnswer.getProblems);
+  app.get('/std/:userid/wrongproblems', User.loginRequired, userAnswer.getWrongProblems);
+
   // 学生考试
   app.get('/std/exam', User.loginRequired, User.examInfo);
   app.get('/std/exam/start', User.loginRequired, User.examStart);

@@ -4,7 +4,7 @@ var express   = require('express'),
      logger   = require('morgan'),
  cookieParser = require('cookie-parser'),
  bodyParser   = require('body-parser'),
-
+       moment = require('moment'),
     session   = require('express-session'),   // session 支持
  RedisStore   = require('connect-redis')(session);
 
@@ -37,16 +37,13 @@ hbs.registerHelper("debug", function(optionalValue) {
     console.log(optionalValue);
   }
 });
-hbs.registerHelper('with', function(context, options) {
-  return options.fn(context);
-});
+hbs.registerHelper('moment', moment);
 // 存储题目图片的目录
 app.set('images', path.join(__dirname, '/public/images'));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));  // 开发环境
-
 app.use(bodyParser.json({limit: '1mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -58,7 +55,6 @@ app.use(session({
 }));
 
 
-// require('./routes')(app);
 require('./config/routes')(app);
 
 
@@ -80,6 +76,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
+
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {

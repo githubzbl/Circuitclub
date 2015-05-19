@@ -93,12 +93,12 @@ exports.index = function (req, res) {
 
   res.render('std', {
       user: user,
-      title: user.username + ' Home',
+      title: user.name + '的主页',
     });
 };
 exports.profile = function (req, res) {
   var user = req.session.user;
-  res.render('stdprofile', {
+  res.render('std-profile', {
     title:'个人资料修改',
     user: user
   });
@@ -119,7 +119,7 @@ exports.setProfile = function (req, res) {
           console.log(err);
         }
         req.session.user = user;
-        res.render('stdprofile', {
+        res.render('std-profile', {
           title:'个人资料修改',
           user: user
         });

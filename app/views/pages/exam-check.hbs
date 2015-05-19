@@ -3,70 +3,46 @@
 
 {{!< ../layout}}
 <style>
-  i.fa {
-    font-size: 2em;
-  }
-  i.fa-check-circle {
-    color: #2a8c01;
-  }
-  i.fa-times-circle {
-    color: #DD1B45;
-    color: red;
-  }
-  #exam-container {
-    /*background: orange;*/
-    font-size: 1.1em;
-  }
-  #exam-nav ul {
-    display: block;
-    position: fixed;
-    top: 200px;
-    right: 60px;
-  }
-  article.per-prob {
-    margin-bottom: 20px;
-  }
-  #paper-heading {
-    margin-bottom: 40px;
-  }
-  #exam-container .true-ans {
-    color: red;
-  }
-  #exam-container .check {
-    margin-top: 10px;
-  }
+
 
 </style>
 
 <script>
   $(document).ready(function() {
-    var $trueAns = $('.true-ans'),
-        $probDetail = $('.prob-detail');
-    $trueAns.hide();
-    $probDetail.hide();
     $('.per-prob').each(function(index, el) {
         $(this).find('span.prob-index').text((index+1));
      });
+
     $('.answer, .detail').click(function(event) {
       event.preventDefault();
-      var $target = $(event.target);
-      var id = $target.data('id');
+      // var $target = $(event.target);
+      // var id = $target.data('id');
+      var id = $(this).data('id');
       var $prob = $('.prob-id-' + id);
-      if($target.hasClass('answer')) {
-        $prob.find('.true-ans').show();
+      var $trueAns = $prob.find('.true-ans'),
+        $probDetail = $prob.find('.prob-detail');
+        var $analysis = $prob.find('.analysis');
+      var txt;
+      txt = $(this).hasClass('answer') ? '答案': '解析';
+      if ($analysis.text().trim() == '') {
+        $analysis.text('本题暂无解析');
+      }
+      if($(this).hasClass('answer')) {
+        $trueAns.toggleClass('hidden');
+        if (!($trueAns.hasClass('hidden'))) {
+          $(this).text('隐藏' + txt);
+        } else {
+          $(this).text('查看' + txt);
+        }
       } else {
-        $prob.find('.prob-detail').show();
+        $probDetail.toggleClass('hidden');
+        if (!($probDetail.hasClass('hidden'))) {
+          $(this).text('隐藏' + txt);
+        } else {
+          $(this).text('查看' + txt);
+        }
       }
     });
-    // $('.detail').click(function(event) {
-    //   event.preventDefault();
-    //   var target = $(event.target);
-    //   var id = target.data('id');
-    //   console.log('problem id', id);
-
-    //   var $prob = $('.prob-id-' + id);
-    //   $prob.find('.prob-detail').show();
-    // });
 
 
   });
@@ -85,8 +61,8 @@
             <article class="panel panel-info per-prob prob-id-{{_id}}" data-id="{{_id}}">
             <input type="hidden" name="problem" value="{{_id}}">
               <section class="prob-info panel-heading">
-                <label for="">第 <span class="prob-index">X</span> 题 </label>
-                <label class="prob-type" for=""> &nbsp;&nbsp;&nbsp; &nbsp;{{this.problem.type}}&nbsp; &nbsp;</label>
+                <label for="">第 &nbsp;&nbsp;<span class="prob-index">X</span> &nbsp;&nbsp;题 </label>
+                <label class="prob-type" for=""> &nbsp;&nbsp;&nbsp;[&nbsp;{{this.problem.type}}&nbsp;] &nbsp;</label>
                 <div class="prob-title">{{this.problem.title}}</div>
                 {{#if this.problem.a}}
                   <dt>选项</dt>
@@ -96,14 +72,15 @@
                   <dd>D. {{this.problem.d}}</dd>
                 {{/if}}
                  <div class="prob-content">{{this.problem.content}}</div>
-
-              </section>
                {{#if this.problem.image.path}}
+                <div class="prob-img">
                    <dt>第 <span class="prob-index">X</span> 题图</dt>
                    <dd><img src="{{this.problem.image.path}}" alt="{{this.problem.index}}图">
                    </dd>
+                </div>
                 {{/if}}
 
+              </section>
               <section class="ans-info panel-body" >
                 <div class="row">
                   <div class="col-lg-6">
@@ -122,7 +99,7 @@
                   </div>
 
                   <div class="col-lg-4">
-                    <div class="input-group true-ans">
+                    <div class="input-group true-ans hidden">
                       <p> 正确答案:
                       <span>{{this.problem.answer}}</span>
                       </p>
@@ -135,8 +112,8 @@
                     <button class="btn btn-primary detail" data-id="{{_id}}">查看解析</button>
                   </div>
                 </div>
-                <div class="row prob-detail">
-                  <p>{{this.problem.analysis}}</p>
+                <div class="row prob-detail hidden">
+                  <p class="analysis">{{this.problem.analysis}}</p>
                 </div>
               </section>
             </article>
@@ -151,12 +128,6 @@
           </div> --}}
         </div>
       </div>
-  {{!--     <aside id="exam-nav">
-        <ul class="nav nav-pills nav-stacked col-sm-1">
-          <li role=""><a href="#">上一题</a></li>
-          <li role="" class="active"><a href="#">下一题</a></li>
-        </ul>
-      </aside> --}}
 
   </div>
 {{!--  </form> --}}

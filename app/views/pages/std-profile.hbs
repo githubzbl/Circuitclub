@@ -2,6 +2,32 @@
 {{!-- reg.hbs --}}
 {{!< ../layout}}
 
+<script>
+  $(document).ready(function() {
+    $('.myprob').on('click', function(event) {
+      event.preventDefault();
+      $.ajax({
+        url: '/std/problems',
+        type: 'GET',
+        dataType: 'json',
+      })
+      .done(function(data) {
+        console.log("success");
+        console.log("data::::", data);
+        $('.problems').html(data);
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+      /* Act on the event */
+    });
+  });
+</script>
+
 <div class="container">
   <h2 class="page-header">个人信息</h2>
   <div class="col-md-5">
@@ -24,12 +50,15 @@
             </div>
           </div>
         </div>
-        
+
         <div class="row">
           <div class="form-group">
-            <label for="questions" class="control-label col-md-4">我做过的试题</label>
+            <label for="problems" class="control-label col-md-4">我做过的试题</label>
+            <a href="/std/problems" role="button" class="btn btn-default myprob">
+              查看
+            </a>
             <div class="col-md-7">
-              <p class="questions ">暂时为空</p>
+              <p class="problems "></p>
             </div>
           </div>
         </div>

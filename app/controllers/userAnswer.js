@@ -33,7 +33,7 @@ exports.save = function (req, res, next) {
   });
 };
 
-
+// TODO 直接异步提交保存至数据库后可以立马查看到结果
 exports.saveCheck = function (req, res) {
   var userId = req.session.user._id;
   var _answer = req.body.answer;    // Array 学生回答的内容
@@ -94,7 +94,14 @@ exports.check = function (req, res) {
         } else {
           userAns.status = true;
         }
+        userAns.save(function (err, user) {
+          if (err) {
+            console.error('answer save err:', err);
+            return next(err);
+          }
+        });
       });
+
       res.render('exam-check', {
         title: 'Check Answer',
         userAnsArr: userAnsArr
@@ -102,3 +109,50 @@ exports.check = function (req, res) {
 
     });
 };
+
+exports.getProblems = function (req, res) {
+  var userId = req.session.user._id;
+  // var problemIds = req.body.problem;
+  var problems = [];
+
+  userAnswer
+    .find({user: userId})
+    .populate('problem')
+    .exec(function (err, userAnsArr) {
+      // _.each(userAnsArr, function (userAns, key) {
+      //   // console.log('****userAns', userAns);
+      //   // console.log('****key', key);
+      //   problems.push(userAns.problem);
+      //   if (userAns.problem.answer !== userAns.content) {
+      //     userAns.status = false;
+      //   } else {
+      //     userAns.status = true;
+      //   }
+      // });
+      res.json(JSON.stringify(userAnsArr));
+
+    });
+};
+
+exports.getWrongProblems = function (req, res) {
+  var user = req.session.user;
+  req.session.moment = require('moment');
+  console.log('moment', moment)
+  var userId = user._id;
+  // var problemIds = req.body.problem;
+  var problems = [];
+
+  userAnswer
+    .find({user: userId})
+    .find({status: false})
+    .populate('problem')
+    .exec(function (err, userAnsArr) {
+      res.render('std-wrongprobs', {
+        title: user.name + '的错题库',
+        user: user,
+        userAnsArr: userAnsArr
+      });
+
+    });
+};
+
