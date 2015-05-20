@@ -53,14 +53,17 @@
 
       if ($target.is('a')) {
         // Ajax 提交筛选功能
-        var _data = {};
-         _data.status = $target.data('status'); // 不是字符串
-         _data.type = $target.data('type'); // 不是字符串
-        $.extend(true, data, _data);
-        // *******
-        //TODO 根据不同类型显示题目
-        // *******
+        // *****
+        // TODO 题目难度的筛选
+        // *****
 
+        var _status = $target.data('status'); // 不是字符串
+        var _type = $target.data('type'); // 不是字符串
+        var _data = {
+          status: _status,
+          type: _type
+        };
+        $.extend(true, data, _data);
 
         console.log('send data', JSON.stringify(data));
         $.ajax({
@@ -82,16 +85,6 @@
           console.log("complete");
         });
 
-        // console.log('type', type);
-        // switch (type) {
-        //   case 'true':
-
-        //     break;
-        //   case 'wrong':
-        //     $probList.filter('.true').hide();
-        //     break;
-
-        // }
       }
     });
 
@@ -109,7 +102,7 @@
                  <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">所有题目</a></li>
+                <li><a href="#" data-status="all">所有题目</a></li>
                 <li class="divider"></li>
                 <li><a href="#" data-status="true">正确</a></li>
                 <li class="divider"></li>
@@ -137,7 +130,7 @@
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">所有题型</a></li>
+                <li><a href="#" data-type="all">所有题型</a></li>
                 <li class="divider"></li>
                 <li><a href="#" data-type="选择题">选择题</a></li>
                 <li class="divider"></li>

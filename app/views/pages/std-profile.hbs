@@ -4,27 +4,27 @@
 
 <script>
   $(document).ready(function() {
-    $('.myprob').on('click', function(event) {
-      event.preventDefault();
-      $.ajax({
-        url: '/std/problems',
-        type: 'GET',
-        dataType: 'json',
-      })
-      .done(function(data) {
-        console.log("success");
-        console.log("data::::", data);
-        $('.problems').html(data);
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
+    // $('.myprob').on('click', function(event) {
+    //   event.preventDefault();
+    //   $.ajax({
+    //     url: '/std/problems',
+    //     type: 'GET',
+    //     dataType: 'json',
+    //   })
+    //   .done(function(data) {
+    //     console.log("success");
+    //     console.log("data::::", data);
+    //     $('.problems').html(data);
+    //   })
+    //   .fail(function() {
+    //     console.log("error");
+    //   })
+    //   .always(function() {
+    //     console.log("complete");
+    //   });
 
-      /* Act on the event */
-    });
+    //   /* Act on the event */
+    // });
   });
 </script>
 
@@ -54,16 +54,17 @@
         <div class="row">
           <div class="form-group">
             <label for="problems" class="control-label col-md-4">我做过的试题</label>
-            <a href="/std/problems" role="button" class="btn btn-default myprob">
+            <div class="col-md-7">
+              <a href="/std/myproblems/bank" role="button" class="btn btn-default myprob">
               查看
             </a>
-            <div class="col-md-7">
-              <p class="problems "></p>
+            </div>
             </div>
           </div>
         </div>
+        <div class="col-md-7"><img src="../libs/images/login_welcomeback_happyface.png"/></div>
 
-          <div class="row">
+        <div class="row">
           <div class="form-group sign-up">
             <div class="col-sm-offset-2 col-sm-10">
               <button id="sign-up" type="submit" class="btn btn-primary">提交修改</button>
@@ -74,6 +75,6 @@
     </form>
   </div>
 
-  <div class="col-md-7"><img src="../libs/images/login_welcomeback_happyface.png"/></div>
+
 
 </div>

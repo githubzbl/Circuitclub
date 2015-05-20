@@ -190,12 +190,12 @@ exports.getTypeProblems = function (req, res) {
       .populate('problem')
       .exec(function (err, _userAnsArr) {
         var userAnsArr = _userAnsArr;
-        if (type) {
+        if (type && (type !== 'all')) {
           userAnsArr = _.filter(_userAnsArr, function(index) {
             return index.problem.type == type;
           });
         }
-        if (status !== undefined) {
+        if ((status !== undefined) && (status !== 'all') ) {
           userAnsArr = _.filter(userAnsArr, function(index) {
             return index.status == status;
           });
