@@ -1,6 +1,7 @@
 ### Files ###
 
 node_modules/
+bower_components/
 
 public/images/
 public/libs/jquery/

@@ -45,6 +45,7 @@ hbs.registerHelper('moment', function(context, block) {
     return context;   //  moment plugin not available. return data as is.
   };
 });
+
 // 存储题目图片的目录
 app.set('images', path.join(__dirname, '/public/images'));
 

@@ -6,12 +6,7 @@ var ObjectId = Schema.Types.ObjectId;
 var AnswerSchema = new Schema({
   problem: {type: ObjectId, ref: 'Problem'},
   user: {type: ObjectId, ref: 'User'},
-  // reply: [{
-  //   from: {type: ObjectId, ref: 'User'},
-  //   to: {type: ObjectId, ref: 'User'},
-  //   content: String
-  // }],
-  content: String,
+  content: String,  // 学生回答的内容
   status: Boolean,
   meta: {
     createAt: {

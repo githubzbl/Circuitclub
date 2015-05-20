@@ -5,6 +5,7 @@ var Problem = require('../models/problem');
 var userAnswer = require('../models/userAnswer');
 var _ = require('lodash');
 var Q = require('q');
+var async = require('async')
 
 exports.save = function (req, res, next) {
   var userId = req.session.user._id;
@@ -114,20 +115,19 @@ exports.getProblems = function (req, res) {
   var user = req.session.user;
   var userId = user._id;
   var problems = [];
-  var id = req.query.id;
-  console.log('****id***', id)
 
   userAnswer
     .find({user: userId})
     .populate('problem')
     .exec(function (err, userAnsArr) {
-      res.render('std-wrongprobs', {
+      res.render('std-problist', {
         title: user.name + '的题库',
         user: user,
         userAnsArr: userAnsArr
       });
 
     });
+
   // if (id) {
   // // userAnswer
   // //   .find({user: userId})
@@ -144,23 +144,83 @@ exports.getProblems = function (req, res) {
   // }
 };
 
-exports.getWrongProblems = function (req, res) {
+exports.getTypeProblems = function (req, res) {
   var user = req.session.user;
   var userId = user._id;
-  // var problemIds = req.body.problem;
+  var data = req.body;
+  var status = req.body.status,
+      type = req.body.type;
   var problems = [];
+  var userAnsArr;
 
-  userAnswer
-    .find({user: userId})
-    .find({status: false})
-    .populate('problem')
-    .exec(function (err, userAnsArr) {
-      res.render('std-wrongprobs', {
-        title: user.name + '的错题库',
-        user: user,
-        userAnsArr: userAnsArr
+  console.log('data::: ' + JSON.stringify(req.body));
+
+  // async.waterfall([
+  //     function whichType (callback) {
+  //       if (status) {
+  //       userAnswer
+  //         .find({user: userId})
+  //         .find(data)
+  //         .populate('problem')
+  //         .exec(function (err, _userAnsArr) {
+  //           userAnsArr = _userAnsArr;
+  //           // res.json(JSON.stringify(userAnsArr));
+  //         });
+  //       }
+  //         callback(null, 'one', 'two');
+  //     },
+  //     function (arg1, arg2, callback) {
+  //       // arg1 now equals 'one' and arg2 now equals 'two'
+  //         callback(null, 'three');
+  //     },
+  //     function (arg1, callback) {
+  //         // arg1 now equals 'three'
+  //         callback(null, 'done');
+  //     }
+  //   ], function (err, result) {
+  //       // result now equals 'done'
+  //       console.log('result', result);
+  // });
+
+  // res.send(data);
+
+
+    userAnswer
+      .find({user: userId})
+      .populate('problem')
+      .exec(function (err, _userAnsArr) {
+        var userAnsArr = _userAnsArr;
+        if (type) {
+          userAnsArr = _.filter(_userAnsArr, function(index) {
+            return index.problem.type == type;
+          });
+        }
+        if (status !== undefined) {
+          userAnsArr = _.filter(userAnsArr, function(index) {
+            return index.status == status;
+          });
+        }
+        res.render('std-answer', {
+          user: user,
+          userAnsArr: userAnsArr
+        });
+        // res.json(JSON.stringify(userAnsArr));
       });
 
-    });
+    // userAnswer
+    //   .find({user: userId})
+    //   .populate('problem')
+    //   .exec(function (err, _userAnsArr) {
+    //     var userAnsArr = _.filter(_userAnsArr, function(index) {
+    //      return index.problem.type == type;
+    //     });
+
+    //     res.render('std-answer', {
+    //       user: user,
+    //       userAnsArr: userAnsArr
+    //     });
+    //     // res.json(JSON.stringify(userAnsArr));
+    //   });
+
 };
 

@@ -14,7 +14,7 @@ var ProblemSchema = new mongoose.Schema({
   b: { type:String, trim: true},  //选项B
   c: { type:String, trim: true},  //选项C
   d: { type:String, trim: true},  //选项D
-  content: { type:String, trim: true},
+  content: { type:String, trim: true},  // 题目内容
   image:  {
    name: {
       type: String,

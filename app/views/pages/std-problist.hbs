@@ -22,10 +22,9 @@
     text-align: center;
   }
 </style>
+<script src="/js/lodash.min.js"></script>
 <script>
   $(document).ready(function () {
-    // 所有题目暂存
-    var $probList = $('article.per-prob');
     // 正确显示难易程度
     $('.per-prob').each(function(index, el) {
        var $diff = $(this).find('.difficulty');
@@ -43,6 +42,8 @@
         };
      });
     // 点击后确定功能
+    var data = {
+    };
     $('.btn-group').on('click', function(event) {
       event.preventDefault();
       var $target = $(event.target);
@@ -51,17 +52,46 @@
       $(this).find('.selected').text(txt);
 
       if ($target.is('a')) {
-        var type = '' + $target.data('type'); // 不是字符串
-        console.log('type', type);
-        switch (type) {
-          case 'true':
-            $probList.filter('.false').hide();
-            break;
-          case 'wrong':
-            $probList.filter('.true').hide();
-            break;
+        // Ajax 提交筛选功能
+        var _data = {};
+         _data.status = $target.data('status'); // 不是字符串
+         _data.type = $target.data('type'); // 不是字符串
+        $.extend(true, data, _data);
+        // *******
+        //TODO 根据不同类型显示题目
+        // *******
 
-        }
+
+        console.log('send data', JSON.stringify(data));
+        $.ajax({
+          url: '/std/myproblems/',
+          type: 'POST',
+          data: JSON.stringify(data),
+          contentType: 'application/json'
+        })
+        .done(function(data) {
+          // console.log('**receive data**:', data);
+          console.log("success");
+          $('.ans-list').html(data);
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+
+          console.log("complete");
+        });
+
+        // console.log('type', type);
+        // switch (type) {
+        //   case 'true':
+
+        //     break;
+        //   case 'wrong':
+        //     $probList.filter('.true').hide();
+        //     break;
+
+        // }
       }
     });
 
@@ -79,11 +109,11 @@
                  <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#" data-type="status">所有题目</a></li>
+                <li><a href="#">所有题目</a></li>
                 <li class="divider"></li>
-                <li><a href="#" data-type="true">正确</a></li>
+                <li><a href="#" data-status="true">正确</a></li>
                 <li class="divider"></li>
-                <li><a href="#" data-type="wrong">错误</a></li>
+                <li><a href="#" data-status="false">错误</a></li>
               </ul>
             </div>
             <div class="btn-group">
@@ -94,11 +124,11 @@
               <ul class="dropdown-menu" role="menu">
                 <li><a href="#">所有难度</a></li>
                 <li class="divider"></li>
-                <li><a href="#">容易</a></li>
+                <li><a href="#" data-diff="2">容易</a></li>
                 <li class="divider"></li>
-                <li><a href="#">中等</a></li>
+                <li><a href="#" data-diff="5">中等</a></li>
                 <li class="divider"></li>
-                <li><a href="#">困难</a></li>
+                <li><a href="#" data-diff="8">困难</a></li>
               </ul>
             </div>
             <div class="btn-group">
@@ -109,13 +139,13 @@
               <ul class="dropdown-menu" role="menu">
                 <li><a href="#">所有题型</a></li>
                 <li class="divider"></li>
-                <li><a href="#">选择题</a></li>
+                <li><a href="#" data-type="选择题">选择题</a></li>
                 <li class="divider"></li>
-                <li><a href="#">填空题</a></li>
+                <li><a href="#" data-type="填空题">填空题</a></li>
                 <li class="divider"></li>
-                <li><a href="#">计算题</a></li>
+                <li><a href="#" data-type="计算题">计算题</a></li>
                 <li class="divider"></li>
-                <li><a href="#">问答题</a></li>
+                <li><a href="#" data-type="问答题">问答题</a></li>
               </ul>
             </div>
           </div>
@@ -134,69 +164,10 @@
         </div>
       </div>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-9 ans-list">
 
-        {{#each userAnsArr}}
-          <article class="{{this.status}} panel panel-info per-prob prob-id-{{_id}}" data-id="{{_id}}" data-status="" data-difficulty="{{problem.difficulty}}" data-probtype="{{problem.type}}">
-            <input type="hidden" name="problem" value="{{_id}}">
-              <section class="prob-info panel-heading">
-                <label for="">编号 &nbsp;&nbsp;<span class="prob-index">{{problem.index}}</span> &nbsp;&nbsp; </label>
-                <label class="prob-type" for=""> &nbsp;&nbsp;&nbsp;[&nbsp;{{problem.type}}&nbsp;] &nbsp;</label>
-                 <label for="time"> <i class="fa fa-clock-o" style="font-size: 1em;"></i> {{moment this.meta.updateAt format="YYYY-MM-DD"}}</label>&nbsp;&nbsp;&nbsp;
-                  <i class="fa fa-question-circle" style="font-size: 1em;"></i>&nbsp;&nbsp;<label for="difficulty" class="difficulty" data-id="{{problem.difficulty}}"></label>
-                <div class="prob-title">{{problem.title}}</div>
+          {{> std-answer }}
 
-                {{#if problem.a}}
-                  <dt>选项</dt>
-                  <dd>A. {{problem.a}}</dd>
-                  <dd>B. {{problem.b}}</dd>
-                  <dd>C. {{problem.c}}</dd>
-                  <dd>D. {{problem.d}}</dd>
-                {{/if}}
-                 <div class="prob-content">{{problem.content}}</div>
-               {{#if problem.image.path}}
-                <div class="prob-img">
-                   <dt> <span class="prob-index">{{problem.index}}</span> 题图</dt>
-                   <dd><img src="{{problem.image.path}}" alt="{{problem.index}}图">
-                   </dd>
-                </div>
-                {{/if}}
-
-              </section>
-
-              <section class="ans-info panel-body" >
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="input-group ans-content">
-                      <span class="input-group-addon">你的回答：</span>
-                      <input type="text" class="form-control std-ans" placeholder="{{this.content}}" name="answer" value="{{this.content}}" readonly>
-                    </div><!-- /input-group -->
-                  </div><!-- /.col-lg-6 -->
-                  <div class="col-lg-2">
-
-                    {{#if this.status}}
-                        <i class="fa fa-check-circle ans-check-right"></i>
-                    {{else}}
-                        <i class="fa fa-times-circle ans-check-wrong"></i>
-                    {{/if}}
-                  </div>
-                   <div class="col-lg-4">
-                    <div class="input-group true-ans">
-                      <p> 正确答案:
-                      <span>{{this.problem.answer}}</span>
-                      </p>
-                    </div><!-- /input-group -->
-                  </div><!-- /.col-lg-6 -->
-                </div><!-- /.row -->
-                <div class="row prob-detail">
-                  <p class="analysis">{{problem.analysis}}</p>
-                </div>
-
-              </section>
-              <hr>
-            </article>
-
-        {{/each}}
     </div>
     {{!-- <table id="dataTable" class="table table-hover table-bordered">
       <thead>

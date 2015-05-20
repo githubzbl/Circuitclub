@@ -1,0 +1,63 @@
+{{!-- std-answer.hbs --}}
+{{!-- pages just for Ajax --}}
+
+{{#each userAnsArr}}
+<article class="{{this.status}} panel panel-info per-prob prob-id-{{_id}}" data-id="{{_id}}" data-difficulty="{{problem.difficulty}}" data-probtype="{{problem.type}}">
+<input type="hidden" name="problem" value="{{_id}}">
+  <section class="prob-info panel-heading">
+    <label for="">编号 &nbsp;&nbsp;<span class="prob-index">{{problem.index}}</span> &nbsp;&nbsp; </label>
+    <label class="prob-type" for=""> &nbsp;&nbsp;&nbsp;[&nbsp;{{problem.type}}&nbsp;] &nbsp;</label>
+     <label for="time"> <i class="fa fa-clock-o" style="font-size: 1em;"></i> {{moment this.meta.updateAt format="YYYY-MM-DD"}}</label>&nbsp;&nbsp;&nbsp;
+      <i class="fa fa-question-circle" style="font-size: 1em;"></i>&nbsp;&nbsp;<label for="difficulty" class="difficulty" data-id="{{problem.difficulty}}"></label>
+    <div class="prob-title">{{problem.title}}</div>
+
+    {{#if problem.a}}
+      <dt>选项</dt>
+      <dd>A. {{problem.a}}</dd>
+      <dd>B. {{problem.b}}</dd>
+      <dd>C. {{problem.c}}</dd>
+      <dd>D. {{problem.d}}</dd>
+    {{/if}}
+     <div class="prob-content">{{problem.content}}</div>
+   {{#if problem.image.path}}
+    <div class="prob-img">
+       <dt> <span class="prob-index">{{problem.index}}</span> 题图</dt>
+       <dd><img src="{{problem.image.path}}" alt="{{problem.index}}图">
+       </dd>
+    </div>
+    {{/if}}
+
+  </section>
+
+  <section class="ans-info panel-body" >
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="input-group ans-content">
+          <span class="input-group-addon">你的回答：</span>
+          <input type="text" class="form-control std-ans" placeholder="{{this.content}}" name="answer" value="{{this.content}}" readonly>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+      <div class="col-lg-2">
+
+        {{#if this.status}}
+            <i class="fa fa-check-circle ans-check-right"></i>
+        {{else}}
+            <i class="fa fa-times-circle ans-check-wrong"></i>
+        {{/if}}
+      </div>
+       <div class="col-lg-4">
+        <div class="input-group true-ans">
+          <p> 正确答案:
+          <span>{{this.problem.answer}}</span>
+          </p>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+    <div class="row prob-detail">
+      <p class="analysis">{{problem.analysis}}</p>
+    </div>
+
+  </section>
+  <hr>
+</article>
+{{/each}}
