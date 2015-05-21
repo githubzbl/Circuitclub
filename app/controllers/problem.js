@@ -41,6 +41,7 @@ exports.new = function (req, res) {
     problem: problem
   });
 };
+
 exports.preview = function (req, res) {
   var id = req.params.id;
   var user = req.session.user;
