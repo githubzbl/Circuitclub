@@ -123,7 +123,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="input-group ">
                   <span class="input-group-addon">
-                    <input type="radio" aria-label="A" name="choice-group">
+                    <input type="radio" aria-label="A" name="problem[answer]" value="A">
                   </span>
                   <input class="form-control" type="text" aria-label="A选项" name="problem[a]" placeholder="A选项" value={{problem.a}} >
                 </div><!-- /input-group -->
@@ -133,7 +133,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="input-group ">
                   <span class="input-group-addon">
-                    <input type="radio" aria-label="A" name="choice-group">
+                    <input type="radio" aria-label="B" name="problem[answer]" value="B">
                   </span>
                   <input class="form-control" type="text" aria-label="B选项" name="problem[b]" placeholder="B选项" value={{problem.b}} >
                 </div><!-- /input-group -->
@@ -143,7 +143,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="input-group ">
                   <span class="input-group-addon">
-                    <input type="radio" aria-label="A" name="choice-group">
+                    <input type="radio" aria-label="C" name="problem[answer]" value="C">
                   </span>
                   <input class="form-control" type="text" aria-label="C选项" name="problem[c]" placeholder="C选项" value={{problem.c}} >
                 </div><!-- /input-group -->
@@ -153,7 +153,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="input-group ">
                   <span class="input-group-addon">
-                    <input type="radio" aria-label="A" name="choice-group">
+                    <input type="radio" aria-label="D" name="problem[answer]" value="D">
                   </span>
                   <input class="form-control" type="text" aria-label="D选项" name="problem[d]" placeholder="D选项" value={{problem.d}} >
                 </div><!-- /input-group -->
@@ -179,7 +179,7 @@
        <div class="form-group ">
          <label for="inputAnswer" class="col-md-2 control-label">参考答案</label>
          <div class="col-md-8">
-          <input id="inputAnswer" class="form-control" type="text" name="problem[answer]" placeholder="{{problem.answer}}" value={{problem.answer}} >
+          <input id="inputAnswer" class="form-control" type="text"  placeholder="{{problem.answer}}" value={{problem.answer}} >
           </div>
        </div>
         <div class="form-group ">

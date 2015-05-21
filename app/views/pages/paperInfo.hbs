@@ -1,12 +1,12 @@
 {{!-- exam.hbs --}}
 {{!< ../layout}}
 <style>
-  #paperInfo ul{ font-size: 1.1em;    margin-left: 40px;}
-  #paperInfo h2 {text-align:center;}
+  #paper-info ul{ font-size: 1.1em;    margin-left: 40px;}
+  #paper-info h2 {text-align:center;}
    ul.warning {
     color: #38B5E8;
   }
-  #paperInfo .row.col-md-12 {
+  #paper-info .row.col-md-12 {
     margin: 30px auto;
     text-align:center;
   }
@@ -14,33 +14,8 @@
     font-size: 1.2em;
   }
 </style>
-<script>
-  // $(document).ready(function() {
-  //   $('#start-exam').click(function(event) {
-  //     console.log('it works');
-      // $.ajax({
-      //   url: 'exam/start',
-      //   type: 'GET',
-      //   dataType: 'json'
-      //   // data: {param1: 'value1'},
-      // })
-      // .done(function(response) {
-      //   data = response.data;
-      //   console.log("success");
-      //   $('#examing').html(data);
-      // })
-      // .fail(function() {
-      //   console.log("error");
-      // })
-      // .always(function() {
-      //   console.log("complete");
-      // });
 
-//     });
-// });
-</script>
-
-<div id="paperInfo">
+<div id="paper-info">
   <div class="container">
     <h2>考试须知</h2>
     <div class="row">
@@ -50,14 +25,14 @@
         <div class="panel panel-primary">
         <div class="panel-heading">电路分析期末考试A卷<span>（共X道，120分钟）</span></div>
         <div class="panel-body">
-          <ul class="paperlist">
+          <ul class="problem-list">
             <li>第一部分 <span>选择题：X道</span></li>
             <li>第二部分 <span>填空题：X道</span></li>
           </ul>
         </div>
       </div>
       </div>
-    </div>    
+    </div>
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <h3>注意事项</h3>
@@ -71,11 +46,10 @@
       </div>
     </div>
     <div class="row col-md-12">
-     
-      <a href="/std/exam/start"><button id="start-exam" class="btn btn-danger">
+
+      <a href="/std/exam/paper"><button id="start-exam" class="btn btn-danger">
      确认，开始考试</button></a>
-     
+
     </div>
   </div>
 </div>
-<div id="examing"></div>

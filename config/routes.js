@@ -45,8 +45,8 @@ module.exports = function(app) {
   // app.get('/std/:userid/wrongproblems', User.loginRequired, userAnswer.getWrongProblems);
 
   // 学生考试
-  app.get('/std/exam', User.loginRequired, User.examInfo);
-  app.get('/std/exam/start', User.loginRequired, User.examStart);
+  app.get('/std/exam/start', User.loginRequired, User.examInfo);
+  app.get('/std/exam/paper', User.loginRequired, User.examStart);
   app.post('/std/exam/check', User.loginRequired, multer(), userAnswer.save);
   app.get('/std/exam/check', User.loginRequired, userAnswer.check);
   // app.post('/std/exam/check', User.loginRequired, multer(), userAnswer.save, userAnswer.check);

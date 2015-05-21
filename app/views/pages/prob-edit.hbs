@@ -17,6 +17,7 @@
 
 <script>
   $(document).ready(function() {
+    // 题型确定
     if ($('#inputType').hasClass('选择题')) {
       $('#multiple-choice').prop('checked', 'true');
     }  else if($('#inputType').hasClass('填空题')) {
@@ -25,13 +26,33 @@
       $('#calculate').prop('checked', 'true');
     }
 
-    if ($('#inputDifficulty').hasClass('2')) {
-      $('#easy').prop('checked', 'true');
-    }  else if($('#inputDifficulty').hasClass('5')) {
-      $('#medium').prop('checked', 'true');
-    }  else {
-      $('#hard').prop('checked', 'true');
+    // 选项确定
+    var choiceVal = $('.choice-group').data('val');
+    choiceText = $('.choice-group input:radio');
+    $.each(choiceText, function(index, val) {
+       /* iterate through array or object */
+       if ($(this).val() == choiceVal) {
+        return $(this).prop('checked', 'true');
+       }
+    });
+
+    // 难度确定
+    var diffVal = $('.prob-difficulty').data('val');
+    var $diffText;
+    // console.log('diffVal:', diffVal);
+    switch (diffVal) {
+      case 2:
+        $diffText = $('#easy');
+        break;
+      case 5:
+        $diffText = $('#medium');
+        break;
+      case 8:
+        $diffText = $('#hard');
+        break;
     }
+    $diffText.prop('checked', 'true');
+
   });
 </script>
 <div class="container add-problem">
@@ -53,7 +74,7 @@
          </div>
 
          <label for="inputType" class="col-sm-1 control-label">题型</label>
-         <div id="inputType" class="{{problem.type}} col-sm-4 input-group ">
+         <div id="inputType" class="{{problem.type}} col-sm-4 input-group">
              {{!--  <div id="" class="{{problem.type}}"></div> --}}
             <label class="radio-inline control-label">
             <input type="radio" name="problem[type]" id="multiple-choice" value="选择题"
@@ -80,47 +101,64 @@
        </div>
 
       {{#if problem.a}}
-      <div class="form-group">
-      <ol>
-       <li class="col-md-12">
-        <label class="col-sm-2 control-label">A.
-        </label>
-         <div class="col-md-8">
-          <input id="" class="form-control" type="text" name="problem[a]" placeholder="{{problem.a}}" value={{problem.a}} >
-          </div>
-        </li>
-       <li class="col-md-12">
-        <label class="col-sm-2 control-label">B.
-        </label>
-         <div class="col-md-8">
-          <input id="" class="form-control" type="text" name="problem[b]" placeholder="{{problem.b}}" value={{problem.b}} >
-          </div>
-        </li>
-       <li class="col-md-12">
-        <label class="col-sm-2 control-label">C.
-        </label>
-         <div class="col-md-8">
-          <input id="" class="form-control" type="text" name="problem[c]" placeholder="{{problem.c}}" value={{problem.c}} >
-          </div>
-        </li>
-       <li class="col-md-12">
-        <label class="col-sm-2 control-label">D.
-        </label>
-         <div class="col-md-8">
-          <input id="" class="form-control" type="text" name="problem[d]" placeholder="{{problem.d}}" value={{problem.d}} >
-          </div>
-        </li>
-
-      </ol>
+      <div class="choice-group" data-val="{{problem.answer}}">
+        <div class="form-group">
+              <div class="col-md-8 col-md-offset-2">
+                  <div class="input-group ">
+                    <span class="input-group-addon">
+                      <input type="radio" aria-label="A" name="problem[answer]" value="A" >
+                    </span>
+                    <input class="form-control" type="text" aria-label="A选项" name="problem[a]" placeholder="A选项" value={{problem.a}} >
+                  </div><!-- /input-group -->
+                </div><!-- /.col-md-8 -->
+              </div><!-- /.form-group -->
+            <div class="form-group">
+              <div class="col-md-8 col-md-offset-2">
+                  <div class="input-group ">
+                    <span class="input-group-addon">
+                      <input type="radio" aria-label="B" name="problem[answer]" value="B" >
+                    </span>
+                    <input class="form-control" type="text" aria-label="B选项" name="problem[b]" placeholder="B选项" value={{problem.b}} >
+                  </div><!-- /input-group -->
+                </div><!-- /.col-md-8 -->
+              </div><!-- /.form-group -->
+            <div class="form-group">
+              <div class="col-md-8 col-md-offset-2">
+                  <div class="input-group ">
+                    <span class="input-group-addon">
+                      <input type="radio" aria-label="C" name="problem[answer]" value="C" >
+                    </span>
+                    <input class="form-control" type="text" aria-label="C选项" name="problem[c]" placeholder="C选项" value={{problem.c}} >
+                  </div><!-- /input-group -->
+                </div><!-- /.col-md-8 -->
+              </div><!-- /.form-group -->
+            <div class="form-group">
+              <div class="col-md-8 col-md-offset-2">
+                  <div class="input-group ">
+                    <span class="input-group-addon">
+                      <input type="radio" aria-label="D" name="problem[answer]" value="D" >
+                    </span>
+                    <input class="form-control" type="text" aria-label="D选项" name="problem[d]" placeholder="D选项" value={{problem.d}} >
+                  </div><!-- /input-group -->
+             </div><!-- /.col-md-8 -->
+          </div><!-- /.form-group -->
       </div>
       {{/if}}
 
-       {{> upload}}
-
+     {{#if problem.image.path}}
+      <div class="form-group">
+        <label for="inputPic" class="col-md-2 control-label">原题图</label>
+        <div class="col-md-8">
+          <img src="{{problem.image.path}}" alt="图呢？">
+        </div>
+      </div>
+      {{/if}}
+      {{> upload}}
        <hr>
+
        <div class="form-group ">
-         <label for="inputDifficulty" class="col-sm-2 control-label">难度</label>
-           <div id="inputDifficulty" class="{{problem.difficulty}} col-sm-10">
+         <label for="prob-difficulty" class="col-sm-2 control-label">难度</label>
+           <div class="prob-difficulty col-sm-10" data-val="{{problem.difficulty}}">
               <label class="radio-inline control-label">
                 <input type="radio" name="problem[difficulty]" id="easy" value="2" >容易
               </label>
@@ -135,7 +173,7 @@
        <div class="form-group ">
          <label for="inputAnswer" class="col-sm-2 control-label">参考答案</label>
          <div class="col-sm-8">
-          <input id="inputAnswer" class="form-control" type="text" name="problem[answer]" placeholder="{{problem.answer}}" value={{problem.answer}} >
+          <input id="inputAnswer" class="form-control" type="text" placeholder="{{problem.answer}}" value={{problem.answer}} readonly="true">
           </div>
        </div>
         <div class="form-group ">
@@ -147,12 +185,15 @@
 
        <div class="form-group">
         <div class="col-sm-6 col-sm-offset-5">
-          <button class="btn btn-primary" type="submit">保 存</button>
-          &nbsp;&nbsp;&nbsp;
+          <button class="btn btn-success" type="submit">保 存</button>
+          &nbsp;&nbsp;
+          <a href="/admin/problem/preview/{{problem._id}}" role="button" class="btn btn-primary">取消修改</a>
+          &nbsp;&nbsp;
+          <a href="/admin/problemBank/list" role="button" class="btn btn-info">题库列表</a>
         </div>
        </div>
        {{!-- {{debug problem}} --}}
      </form>
-  </div>
+    </div>
 </div>
 
