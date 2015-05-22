@@ -16,31 +16,8 @@
     border: 1px solid #AFC6DA;
   }
 </style>
-{{!-- <script src="/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script> --}}
 
-<script>
-  $(document).ready(function() {
-    $('#inputType').click(function(event) {
-      var target = event.target;
-      // console.log(target);
-      var id = target.id;
-      // console.log(id);
-      switch (id) {
-        case 'multiple-choice':
-          $('#probs-choice').show();
-          break;
-        case 'fill-in':
-          $('#probs-choice').hide();
-          break;
-        case 'calculate':
-          $('#probs-choice').hide();
-          break;
 
-      }
-    });
-
-  });
-</script>
 <div class="container add-problem">
   <div class="row">
     <div class="col-md-12">
@@ -79,47 +56,15 @@
 
         <hr>
 
-        <div class="form-group ">
-         <label for="inputTitle" class="col-md-2 control-label">题干</label>
-         <div class="col-md-8">
-          <textarea type="text" class="form-control" name="problem[title]" id="inputTitle" cols="20" rows="5">{{problem.title}}</textarea>
-         </div>
+      <div class="form-group ">
+       <label for="inputTitle" class="col-md-2 control-label">题干</label>
+       <div class="col-md-8">
+        <textarea type="text" class="form-control" name="problem[title]" id="inputTitle" cols="20" rows="5">{{problem.title}}</textarea>
        </div>
+      </div>
 
-      {{!-- <ul>
-        <li>
-         <div class="col-md-12">
-            <label class="col-md-2 control-label">A.
-            </label>
-            <div class="col-md-8">
-              <input id="" class="form-control" type="text" name="problem[a]" placeholder="A选项" value={{problem.a}} >
-            </div>
-          </div>
-        </li>
-       <li>
-        <label class="col-md-2 control-label">B.
-        </label>
-         <div class="col-md-8">
-          <input id="" class="form-control" type="text" name="problem[b]" placeholder="B选项" value={{problem.b}} >
-          </div>
-        </li>
-       <li>
-        <label class="col-md-2 control-label">C.
-        </label>
-         <div class="col-md-8">
-          <input id="" class="form-control" type="text" name="problem[c]" placeholder="C选项" value={{problem.c}} >
-          </div>
-        </li>
-       <li>
-        <label class="col-md-2 control-label">D.
-        </label>
-         <div class="col-md-8">
-          <input id="" class="form-control" type="text" name="problem[d]" placeholder="D选项" value={{problem.d}} >
-          </div>
-        </li>
-      </ul> --}}
       <div class="choice-group">
-      <div class="form-group">
+        <div class="form-group">
             <div class="col-md-8 col-md-offset-2">
                 <div class="input-group ">
                   <span class="input-group-addon">
@@ -128,37 +73,37 @@
                   <input class="form-control" type="text" aria-label="A选项" name="problem[a]" placeholder="A选项" value={{problem.a}} >
                 </div><!-- /input-group -->
               </div><!-- /.col-md-8 -->
-            </div><!-- /.form-group -->
-          <div class="form-group">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="input-group ">
-                  <span class="input-group-addon">
-                    <input type="radio" aria-label="B" name="problem[answer]" value="B">
-                  </span>
-                  <input class="form-control" type="text" aria-label="B选项" name="problem[b]" placeholder="B选项" value={{problem.b}} >
-                </div><!-- /input-group -->
-              </div><!-- /.col-md-8 -->
-            </div><!-- /.form-group -->
-          <div class="form-group">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="input-group ">
-                  <span class="input-group-addon">
-                    <input type="radio" aria-label="C" name="problem[answer]" value="C">
-                  </span>
-                  <input class="form-control" type="text" aria-label="C选项" name="problem[c]" placeholder="C选项" value={{problem.c}} >
-                </div><!-- /input-group -->
-              </div><!-- /.col-md-8 -->
-            </div><!-- /.form-group -->
-          <div class="form-group">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="input-group ">
-                  <span class="input-group-addon">
-                    <input type="radio" aria-label="D" name="problem[answer]" value="D">
-                  </span>
-                  <input class="form-control" type="text" aria-label="D选项" name="problem[d]" placeholder="D选项" value={{problem.d}} >
-                </div><!-- /input-group -->
+        </div><!-- /.form-group -->
+        <div class="form-group">
+          <div class="col-md-8 col-md-offset-2">
+              <div class="input-group ">
+                <span class="input-group-addon">
+                  <input type="radio" aria-label="B" name="problem[answer]" value="B">
+                </span>
+                <input class="form-control" type="text" aria-label="B选项" name="problem[b]" placeholder="B选项" value={{problem.b}} >
+              </div><!-- /input-group -->
             </div><!-- /.col-md-8 -->
-          </div><!-- /.form-group -->
+        </div><!-- /.form-group -->
+        <div class="form-group">
+          <div class="col-md-8 col-md-offset-2">
+              <div class="input-group ">
+                <span class="input-group-addon">
+                  <input type="radio" aria-label="C" name="problem[answer]" value="C">
+                </span>
+                <input class="form-control" type="text" aria-label="C选项" name="problem[c]" placeholder="C选项" value={{problem.c}} >
+              </div><!-- /input-group -->
+            </div><!-- /.col-md-8 -->
+        </div><!-- /.form-group -->
+        <div class="form-group">
+          <div class="col-md-8 col-md-offset-2">
+              <div class="input-group ">
+                <span class="input-group-addon">
+                  <input type="radio" aria-label="D" name="problem[answer]" value="D">
+                </span>
+                <input class="form-control" type="text" aria-label="D选项" name="problem[d]" placeholder="D选项" value={{problem.d}} >
+              </div><!-- /input-group -->
+          </div><!-- /.col-md-8 -->
+        </div><!-- /.form-group -->
       </div>
       {{> upload}}
        <hr>
@@ -188,8 +133,37 @@
           <textarea type="text" class="form-control" name="problem[analysis]" id="inputAnalysis" cols="30" rows="10">{{problem.analysis}} </textarea>
          </div>
        </div>
+{{!--
+      <div class="form-group">
+      <script id="UEcontainer" name="uecontent" type="text/plain" style="width:1024px;height:500px;">
+        初始化
+      </script>
 
+      </div>
+      // <script src="/libs/ueditor/ueditor.config.js"></script>
+      // <script src="/libs/ueditor/ueditor.all.js"></script>
+      // <script type="text/javascript" charset="utf-8" src="/libs/ueditor/kityformula-plugin/addKityFormulaDialog.js"></script>
+      // <script type="text/javascript" charset="utf-8" src="/libs/ueditor/kityformula-plugin/getKfContent.js"></script>
+      // <script type="text/javascript" charset="utf-8" src="/libs/ueditor/kityformula-plugin/defaultFilterFix.js"></script>
+      // <script>
+      //   var ue = UE.getEditor('UEcontainer', {
+      //     toolbars: [[
+      //     'fullscreen', 'source', '|',
+      //     'bold', 'italic', 'underline', '|', 'fontsize', '|', 'kityformula', 'preview'
+      //     ]]
+      //   });
+      //   ue.ready(function() {
+      //   //设置编辑器的内容
+      //   // ue.setContent('hello');
+      //   //获取html内容，返回: <p>hello</p>
+      //   var html = ue.getContent();
+      //   //获取纯文本内容，返回: hello
+      //   var txt = ue.getContentTxt();
+      //   console.log(txt);
 
+      //   });
+      // </script>
+ --}}
        <div class="form-group">
         <div class="col-md-6 col-md-offset-5">
           <button class="btn btn-success" type="submit">录 入 预 览</button>
@@ -201,3 +175,30 @@
      </div>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+    $('#inputType').click(function (event) {
+      console.log('works!');
+      var target = event.target;
+      console.log(target);
+      var id = target.id;
+      console.log(id);
+      switch (id) {
+        case 'multiple-choice':
+          $('.choice-group').show();
+          break;
+        case 'fill-in':
+          $('.choice-group').hide();
+          break;
+        case 'calculate':
+          $('.choice-group').hide();
+          break;
+        case 'problem':
+          $('.choice-group').hide();
+          break;
+
+      }
+    });
+
+  });
+
