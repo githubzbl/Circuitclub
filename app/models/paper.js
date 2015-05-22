@@ -1,10 +1,10 @@
-// models/problem.js
-
+// paper.js
 var mongoose = require('mongoose');
 var Image = require('./image');
-// var ObjectId = Schema.Types.ObjectId
+var Problem = require('./problem');
+var ObjectId = Schema.Types.ObjectId
 
-var ProblemSchema = new mongoose.Schema({
+var PaperSchema = new mongoose.Schema({
   index: { type: Number},   // 编号
   chapter: Number,          // 章节
   difficulty: Number,       // 题目难度系数
@@ -66,4 +66,45 @@ ProblemSchema.statics = {
 
 var Problem = mongoose.model('Problem', ProblemSchema);
 
-module.exports = Problem;
+var CategorySchema = new Schema({
+  name: String,
+  movies: [{type: ObjectId, ref: 'Movie'}],
+  meta: {
+    createAt: {
+      type: Date,
+      default: Date.now()
+    },
+    updateAt: {
+      type: Date,
+      default: Date.now()
+    }
+  }
+})
+
+// var ObjectId = mongoose.Schema.Types.ObjectId
+CategorySchema.pre('save', function(next) {
+  if (this.isNew) {
+    this.meta.createAt = this.meta.updateAt = Date.now()
+  }
+  else {
+    this.meta.updateAt = Date.now()
+  }
+
+  next()
+})
+
+CategorySchema.statics = {
+  fetch: function(cb) {
+    return this
+      .find({})
+      .sort('meta.updateAt')
+      .exec(cb)
+  },
+  findById: function(id, cb) {
+    return this
+      .findOne({_id: id})
+      .exec(cb)
+  }
+}
+
+module.exports = Paper;

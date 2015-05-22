@@ -1,10 +1,28 @@
 var mongoose = require('mongoose');
 var Problem = require('../models/problem');
+var Paper = require('../models/paper');
 var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
 var join = path.join;
 
+exports.findAns = function (req, res) {
+ Problem.find( function (err, problems) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      var arr = [];
+      _.each(problems, function (prob, key) {
+        var ans = prob.answer;
+        return arr.push(ans);
+      });
+      res.json(arr);
+      console.log('arr:', arr);
+    }
+  });
+  // body...
+}
 
 exports.new = function (req, res) {
   var problem = {
@@ -117,38 +135,18 @@ exports.save = function (req, res) {
 };
 exports.list = function (req, res) {
   var user = req.session.user;
-  var data = req.query;
-  console.log('data.sort', req.query.sort);
-  /***TODO
-    列表试题正确排序
-  **/
-  if (data.sort) {
-    console.log('data', data)
-    res.send(data);
-    // Problem.fetch(function (err, problems) {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     res.render({
-    //       user: user,
-    //       problems: problems
-    //     });
-    //   }
-    // });
-  } else {
-    Problem.find( function (err, problems) {
-      if (err) {
-        console.log(err);
-      }
-      else {
-        res.render('prob-list',{
-          title: '题目列表',
-          user: user,
-          problems: problems
-        });
-      }
-    });
-  }
+  Problem.find( function (err, problems) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.render('prob-list',{
+        title: '题目列表',
+        user: user,
+        problems: problems
+      });
+    }
+  });
 };
 exports.del = function (req, res) {
   var id = req.query.id;
