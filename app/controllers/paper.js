@@ -1,45 +1,26 @@
 var mongoose = require('mongoose');
 var Problem = require('../models/problem');
+var User = require('../models/user');
+var userAnswer = require('../models/userAnswer');
 var Paper = require('../models/paper');
 var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
 var join = path.join;
 
-exports.findAns = function (req, res) {
- Problem.find( function (err, problems) {
-    if (err) {
-      console.log(err);
-    }
-    else {
-      var arr = [];
-      _.each(problems, function (prob, key) {
-        var ans = prob.answer;
-        return arr.push(ans);
-      });
-      res.json(arr);
-      console.log('arr:', arr);
-    }
-  });
-  // body...
-}
 
 exports.new = function (req, res) {
   var problem = {
-      _id:'',
-      index: '',   // 题目序号
-      type: '',     // 题目类型
-      chapter:'',   // 题目章节
-      difficulty: '',   // 题目难度系数
-      content: '',  // 题目内容
-      image: {},
-      answer: ''    // 题目答案
-    };
+    _id:'',
+    index: '',   // 试卷序号
+    name: '',
+    problems: [] // 相关试题
+  };
 
   res.render('admin-addprob', {
     title: '题目录入',
     user: req.session.user,
-    problem: problem
+    problems: problems
   });
 };
 
