@@ -65,7 +65,7 @@ module.exports = function(app) {
   app.get('/admin/problem/edit/:id', Problem.edit);
   app.get('/admin/problemBank/list', Problem.list);
   app.delete('/admin/problemBank/list', Problem.del);
-  app.post('/admin/problemBank/list', Problem.list);
+  app.post('/admin/problemBank/list', Problem.getList);
 
   // 试卷管理
   app.get('/admin/paperBank/list', Problem.list);

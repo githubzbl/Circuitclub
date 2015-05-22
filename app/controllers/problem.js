@@ -117,38 +117,54 @@ exports.save = function (req, res) {
 };
 exports.list = function (req, res) {
   var user = req.session.user;
-  var data = req.query;
-  console.log('data.sort', req.query.sort);
-  /***TODO
-    列表试题正确排序
-  **/
-  if (data.sort) {
-    console.log('data', data)
-    res.send(data);
-    // Problem.fetch(function (err, problems) {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     res.render({
-    //       user: user,
-    //       problems: problems
-    //     });
-    //   }
-    // });
-  } else {
-    Problem.find( function (err, problems) {
-      if (err) {
-        console.log(err);
-      }
-      else {
-        res.render('prob-list',{
-          title: '题目列表',
-          user: user,
-          problems: problems
+  Problem.fetch(function (err, problems) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.render('prob-list',{
+        title: '题目列表',
+        user: user,
+        problems: problems
+      });
+    }
+  });
+}
+
+
+exports.getList = function (req, res) {
+  var user = req.session.user;
+  var data = req.body;
+  var type = req.body.type;
+  var sort = req.body.sort;
+  var diff = req.body.diff;
+  console.log('data', data);
+  console.log('sort', sort);
+  console.log('type', type);
+  console.log('diff', diff);
+  Problem
+    .find()
+    .exec(function (err, _problems) {
+      var problems = _problems;
+      if (type && (type !== 'all')) {
+        problems = _.filter(_problems, function(index) {
+          return index.type === type;
         });
       }
+      if (sort === 'up') {
+        problems.reverse();
+      }
+      if (diff && (diff !== 'all')) {
+        problems = _.filter(_problems, function(index) {
+          return index.difficulty === diff;
+        });
+      }
+      res.render('prob-info', {
+        user: user,
+        problems: problems
+      });
+      // res.json(JSON.stringify(userAnsArr));
     });
-  }
 };
 exports.del = function (req, res) {
   var id = req.query.id;

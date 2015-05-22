@@ -2,11 +2,12 @@
 {{!-- 后台列表的每道题tr --}}
 
 {{#each problems}}
-  <tr class="prob-id-{{_id}}">
+  <tr class="prob-id-{{_id}} per-prob">
     <td>{{this.index}}</td>
     <td>{{this.chapter}}</td>
     <td>{{this.type}}</td>
     <td>{{this.title}}</td>
+    <td class="difficulty" data-id="{{this.difficulty}}"></td>
     <td>{{moment this.meta.updateAt format="YYYY-MM-DD"}}</td>
     <td><a href="/admin/problem/preview/{{_id}}"><button class="btn btn-primary">查看</button></a> </td>
     <td><a href="/admin/problem/edit/{{_id}}"><button class="btn btn-info">编辑</button></a> </td>

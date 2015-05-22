@@ -128,20 +128,6 @@ exports.getProblems = function (req, res) {
 
     });
 
-  // if (id) {
-  // // userAnswer
-  // //   .find({user: userId})
-  // //   .populate('problem')
-  // //   .exec(function (err, userAnsArr) {
-  // //       res.json(JSON.stringify(userAnsArr));
-  // //   });
-  //   userAnswer
-  //     .find({_id: id})
-  //     .populate('problem')
-  //     .exec(function (err, userAnswer) {
-  //       res.json(JSON.stringify(userAnswer));
-  //     })
-  // }
 };
 
 exports.getTypeProblems = function (req, res) {
@@ -207,20 +193,6 @@ exports.getTypeProblems = function (req, res) {
         // res.json(JSON.stringify(userAnsArr));
       });
 
-    // userAnswer
-    //   .find({user: userId})
-    //   .populate('problem')
-    //   .exec(function (err, _userAnsArr) {
-    //     var userAnsArr = _.filter(_userAnsArr, function(index) {
-    //      return index.problem.type == type;
-    //     });
-
-    //     res.render('std-answer', {
-    //       user: user,
-    //       userAnsArr: userAnsArr
-    //     });
-    //     // res.json(JSON.stringify(userAnsArr));
-    //   });
 
 };
 
