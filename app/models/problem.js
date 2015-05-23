@@ -2,11 +2,16 @@
 
 var mongoose = require('mongoose');
 var Image = require('./image');
-// var ObjectId = Schema.Types.ObjectId
+var Schema = mongoose.Schema;
+var ObjectId = Schema.Types.ObjectId;
 
-var ProblemSchema = new mongoose.Schema({
+var ProblemSchema = new Schema({
   index: { type: Number},   // 编号
   chapter: Number,          // 章节
+  paper: {                  // 所属试卷
+    type: ObjectId,
+    ref: 'Paper'
+  },
   difficulty: Number,       // 题目难度系数
   type: String,             // 题目类型
   title: { type:String, trim: true},  // 题干

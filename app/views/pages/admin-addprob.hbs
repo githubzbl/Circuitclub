@@ -4,11 +4,6 @@
   .add-problem {
     font-size: 1.1em;
   }
-  .choice-editor {
-
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
   ol, ul{
     list-style-type: none;
   }
@@ -28,13 +23,18 @@
 
        <div class="form-group  ">
          <label for="inputIndex" class="col-md-1 col-md-offset-1 control-label">编号</label>
-         <div class="col-md-2">
+         <div class="col-md-1">
           <input id="inputIndex" class="form-control" type="text" placeholder="{{problem.index}}" name="problem[index]"
           value={{problem.index}}>
          </div>
+         <label for="inputPaper" class="col-md-1 control-label">所属试卷</label>
+         <div class="col-md-1">
+          <input id="inputPaper" class="form-control" type="text" placeholder="{{problem.paper}}" name="problem[paper]"
+          value={{problem.paper}}>
+         </div>
 
          <label for="inputChapter" class="col-md-1 control-label">章节</label>
-         <div class="col-md-2">
+         <div class="col-md-1">
           <input id="inputChapter" class="form-control" type="text"name="problem[chapter]" placeholder="{{problem.chapter}}" value={{problem.chapter}}>
          </div>
 

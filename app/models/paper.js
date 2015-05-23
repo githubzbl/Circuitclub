@@ -7,8 +7,8 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId
 
 var PaperSchema = new Schema({
-  index: { type: Number},   // 编号
-  name: {type: String},     // 试卷名
+  name: String,     // 试卷名
+  brief: String,    // 试卷概述
   problems: [{type: ObjectId, ref: 'Problem'}], // 试卷相关的问题
   meta: {
     createAt: {

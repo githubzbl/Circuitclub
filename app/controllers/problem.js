@@ -12,6 +12,7 @@ exports.new = function (req, res) {
       index: '',   // 题目序号
       type: '',     // 题目类型
       chapter:'',   // 题目章节
+      paper: '',    // 题目所属的试卷
       difficulty: '',   // 题目难度系数
       content: '',  // 题目内容
       image: {},
@@ -122,8 +123,8 @@ exports.list = function (req, res) {
       console.log(err);
     }
     else {
-      res.render('prob-list',{
-        title: '题目列表',
+      res.render('admin-problist',{
+        title: '题库',
         user: user,
         problems: problems
       });
@@ -142,10 +143,23 @@ exports.getList = function (req, res) {
   console.log('sort', sort);
   console.log('type', type);
   console.log('diff', diff);
+
+  /***TODO
+    排序可以使用mongoose sort('-meta.updateAt')
+    查询特定类型也可以 find({type: type})
+    这样话对于大规模数据来说可能更好？
+    但是就要写多个查询语句
+    不知是一次查询后台所有数据后台处理好
+    还是使用数据库的查询后台只是用于传输数据好
+  ****/
+
   Problem
     .find()
     .exec(function (err, _problems) {
       var problems = _problems;
+      if (err) {
+        console.log(err);
+      }
       if (type && (type !== 'all')) {
         problems = _.filter(_problems, function(index) {
           return index.type === type;
@@ -163,7 +177,7 @@ exports.getList = function (req, res) {
         user: user,
         problems: problems
       });
-      // res.json(JSON.stringify(userAnsArr));
+      // res.json(JSON.stringify(problems));
     });
 };
 exports.del = function (req, res) {
