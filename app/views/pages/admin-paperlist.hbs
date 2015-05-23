@@ -1,2 +1,66 @@
 {{!-- admin-paperlist.hbs --}}
 {{!< ../layout}}
+<style>
+  .paperName {
+    font-size: 1.2em;
+  }
+  .updateAt {
+    margin-bottom: 0;
+  }
+  ol, ul{
+    list-style-type: none;
+  }
+  .newPaper {
+    margin-bottom: 20px;
+  }
+</style>
+
+<div class="container ">
+  <div class="row">
+  {{!-- <h4 class="heading">我的试卷</h4> --}}
+  <div class="col-md-12 text-right">
+    <div class="col-md-4 col-md-offset-8">
+      <div class="btn-group newPaper">
+        <a href="/admin/paper/new" role="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp; 添加试卷</a>
+      </div>
+    </div>
+  </div>
+    <div class="col-md-12">
+
+      <div class="paper-list">
+        {{#each papers}}
+        <div class="col-md-4">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <a href="#">
+                <span class="paperName">
+                {{this.name}}
+                </span>
+              </a>
+              &nbsp;&nbsp;&nbsp;
+              <span class="dropdown">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                  <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#" >查看</a> </li>
+                  <li class="divider"></li>
+                  <li><a href="#" >删除</a> </li>
+                </ul>
+              </span>
+
+              <h6 class="updateAt">
+                更新于  {{moment this.meta.updateAt format="YYYY-MM-DD HH:mm"}}
+              </h6>
+            </div>
+            <div class="panel-body">
+              <p>{{this.brief}}</p>
+              <p>已参考人数：</p>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>

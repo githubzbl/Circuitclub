@@ -4,6 +4,7 @@ var Home = require('../app/controllers/home');
 var User = require('../app/controllers/user');
 var Admin = require('../app/controllers/admin');
 var Problem = require('../app/controllers/problem');
+var Paper = require('../app/controllers/paper');
 var userAnswer = require('../app/controllers/userAnswer');
 var Image = require('../app/controllers/image');
 var multer = require('multer');
@@ -41,8 +42,6 @@ module.exports = function(app) {
   // 考试记录
   app.get('/std/myproblems/bank', User.loginRequired, userAnswer.getProblems);
   app.post('/std/myproblems', User.loginRequired, userAnswer.getTypeProblems);
-  // app.get('/std/myproblems/:id', User.loginRequired, userAnswer.getProblems);
-  // app.get('/std/:userid/wrongproblems', User.loginRequired, userAnswer.getWrongProblems);
 
   // 学生考试
   app.get('/std/exam/start', User.loginRequired, User.examInfo);
@@ -68,7 +67,9 @@ module.exports = function(app) {
   app.post('/admin/problemBank/list', Problem.getList);
 
   // 试卷管理
-  app.get('/admin/paperBank/list', Problem.list);
+  app.get('/admin/paperBank/list', Paper.list);
+  app.get('/admin/paper/new', Paper.new);
+  app.post('/admin/paper/new', multer(), Paper.save);
 
 
 
