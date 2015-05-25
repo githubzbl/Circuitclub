@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Problem = require('../models/problem');
+var Paper = require('../models/paper');
 var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
@@ -22,7 +23,8 @@ exports.new = function (req, res) {
   res.render('admin-addprob', {
     title: '题目录入',
     user: req.session.user,
-    problem: problem
+    problem: problem,
+    papers: paper
   });
 };
 
