@@ -1,7 +1,7 @@
 // models/problem.js
 
 var mongoose = require('mongoose');
-var Image = require('./image');
+// var Image = require('./image');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 

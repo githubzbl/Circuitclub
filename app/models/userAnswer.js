@@ -7,7 +7,7 @@ var AnswerSchema = new Schema({
   problem: {type: ObjectId, ref: 'Problem'},
   user: {type: ObjectId, ref: 'User'},
   content: String,  // 学生回答的内容
-  status: Boolean,
+  status: Boolean,  // 是否回答正确
   meta: {
     createAt: {
       type: Date,
