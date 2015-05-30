@@ -9,8 +9,6 @@ var userAnswer = require('../app/controllers/userAnswer');
 var Image = require('../app/controllers/image');
 var multer = require('multer');
 
-// var multipart = require('connect-multiparty');
-// var multipartMiddleware = multipart();
 
 module.exports = function(app) {
 
@@ -25,8 +23,6 @@ module.exports = function(app) {
   app.get('/', Home.index);
 
   // 注册登录
-  // app.post('/user/signup', User.signup);
-  // app.post('/user/login', User.login);
   app.post('/signup', User.signup);
   app.post('/login', User.login);
   app.get('/login', User.showSignin)

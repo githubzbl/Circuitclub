@@ -6,16 +6,12 @@ var express   = require('express'),
  bodyParser   = require('body-parser'),
        moment = require('moment'),
     session   = require('express-session'),   // session 支持
- RedisStore   = require('connect-redis')(session);
-
- var hbs = require('express-hbs');
-
+ RedisStore   = require('connect-redis')(session),
+          hbs = require('express-hbs');
 
 var mongoose  = require('mongoose');
 mongoose.connect('mongodb://localhost/exam');
 
-// var routes = require('./routes/index');
-// var users = require('./routes/users');
 
 var app = express();
 

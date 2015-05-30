@@ -8,12 +8,8 @@ var ObjectId = Schema.Types.ObjectId;
 var ProblemSchema = new Schema({
   index: { type: Number},   // 编号
   chapter: Number,          // 章节
-  paper: {                  // 所属试卷
-    type: ObjectId,
-    ref: 'Paper'
-  },
-  difficulty: Number,       // 题目难度系数
-  type: String,             // 题目类型
+  difficulty: Number,       // 难度系数
+  type: String,             // 题型
   title: { type:String, trim: true},  // 题干
   a: { type:String, trim: true},  //选项A
   b: { type:String, trim: true},  //选项B
@@ -29,6 +25,7 @@ var ProblemSchema = new Schema({
   },          // 题目图片
   answer: String,   // 题目答案
   analysis: String, // 解析
+  paper: [{type: ObjectId, ref: 'Paper'}],  //所属试卷
 
   meta: {
     createAt: {

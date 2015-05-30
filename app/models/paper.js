@@ -10,7 +10,7 @@ var PaperSchema = new Schema({
   name: String,     // 试卷名
   brief: String,    // 试卷概述
   time: Number,     // 考试时间
-  problems: [{type: ObjectId, ref: 'Problem'}], // 试卷相关的问题
+  problems: [{type: ObjectId, ref: 'Problem'}], // 试卷包含的试题
   meta: {
     createAt: {
       type: Date,
