@@ -18,7 +18,7 @@ var AnswerSchema = new Schema({
       default: Date.now()
     }
   }
-})
+});
 
 // var ObjectId = mongoose.Schema.Types.ObjectId
 AnswerSchema.pre('save', function(next) {
