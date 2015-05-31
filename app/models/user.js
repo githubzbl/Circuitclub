@@ -26,13 +26,8 @@ var UserSchema = new Schema({
     type: String,
     default: 'std'
   },
-  // question: {
-  //   type: ObjectId,
-  //   ref: 'Question'
-  // },
   myProblems: [],    // 做过的题目
   myPaper: [Schema.ObjectId],   // 做过的考卷
-
   meta: {
     createAt: {
       type: Date,
