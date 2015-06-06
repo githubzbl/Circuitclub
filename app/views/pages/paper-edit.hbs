@@ -1,0 +1,63 @@
+{{!-- paper-edit.hbs --}}
+{{!< ../layout}}
+<style>
+  .add-paper {
+    font-size: 1.1em;
+  }
+  .add-paper label {
+    font-weight: normal;
+    font-size: 1.2em;
+  }
+  ol, ul{
+    list-style-type: none;
+  }
+  .form-control {
+    border: 1px solid #AFC6DA;
+  }
+</style>
+
+<div class="container add-paper">
+  <div class="row">
+  <div class="col-md-12 text-center">
+    <h3 class="heading">编 辑 试 卷</h3>
+    <hr>
+  </div>
+    <div class="col-md-12">
+
+      <form action="/admin/paper/new" method="POST" class="form-horizontal" enctype="multipart/form-data">
+        {{#if paper._id}}
+         <input type="hidden" name="paper[_id]" value="{{paper._id}}">
+        {{/if}}
+
+        <div class="form-group ">
+          <label for="inputName" class="col-md-2 control-label">试卷名称</label>
+          <div class="col-md-8">
+          <textarea type="text" class="form-control" name="paper[name]" id="inputName" cols="20" rows="2">{{paper.name}}</textarea>
+          </div>
+        </div>
+        <div class="form-group ">
+          <label for="inputBrief" class="col-md-2 control-label">试卷描述</label>
+          <div class="col-md-8">
+          <textarea type="text" class="form-control" name="paper[brief]" id="inputBrief" cols="20" rows="5">{{paper.brief}}</textarea>
+          </div>
+        </div>
+        <div class="form-group ">
+          <label for="inputTime" class="col-md-2 control-label">考试时间</label>
+          <div class="col-md-2">
+              <input type="text" class="form-control" name="paper[time]" id="inputTime" value="{{paper.time}}" placeholder="120">
+          </div>
+          <span>请填入数字，以分钟计算</span>
+        </div>
+        <hr>
+
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-10">
+            <button class="btn btn-success" type="submit">保存修改</button>
+            <a href="/admin/paperBank/list" class="btn btn-primary" role="button">返回列表
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

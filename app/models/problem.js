@@ -22,7 +22,7 @@ var ProblemSchema = new Schema({
       // default: this.index + '-image' // 对应的题目名称
     },
     path: String     // 存储路径
-  },          // 题目图片
+  },
   answer: String,   // 题目答案
   analysis: String, // 解析
   paper: [{type: ObjectId, ref: 'Paper'}],  //所属试卷

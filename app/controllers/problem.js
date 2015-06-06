@@ -8,6 +8,7 @@ var join = path.join;
 
 
 exports.new = function (req, res) {
+  var user = req.session.user;
   var problem = {
       _id:'',
       index: '',   // 题目序号
@@ -18,14 +19,22 @@ exports.new = function (req, res) {
       content: '',  // 题目内容
       image: {},
       answer: ''    // 题目答案
-    };
 
-  res.render('admin-addprob', {
-    title: '题目录入',
-    user: req.session.user,
-    problem: problem,
-    papers: paper
+    };
+  Paper.find( function (err, papers) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.render('admin-addprob',{
+        title: '添加试题',
+        user: user,
+        papers: papers,
+        problem: problem
+      });
+    }
   });
+
 };
 
 exports.preview = function (req, res) {

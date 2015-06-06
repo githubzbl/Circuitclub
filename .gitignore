@@ -7,7 +7,7 @@ public/images/
 public/libs/jquery/
 public/libs/bootstrap/
 
-new-exam.sublime-project
-new-exam.sublime-workspace
+*.sublime-project
+*.sublime-workspace
 
 毕设/

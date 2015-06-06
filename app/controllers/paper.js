@@ -73,7 +73,7 @@ exports.save = function (req, res) {
   var _paper;
   paperObj = _.extend(paperObj, _paper);
 
-  // 更新题目
+  // 更新Paper
   if (id) {
     Paper.findById(id, function(err, paper) {
       if(err) {
