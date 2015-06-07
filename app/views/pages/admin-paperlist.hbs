@@ -32,7 +32,7 @@
         <div class="col-md-4">
           <div class="panel panel-info">
             <div class="panel-heading">
-              <a href="/admin/paper/edit/{{this._id}}">
+              <a href="/admin/paper/detail/{{this._id}}">
                 <span class="paperName">
                 {{this.name}}
                 </span>
@@ -43,7 +43,9 @@
                   <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="/admin/paper/edit/{{this._id}}" >查看</a> </li>
+                  <li><a href="/admin/paper/detail/{{this._id}}" >查看</a> </li>
+                  <li class="divider"></li>
+                  <li><a href="/admin/paper/edit/{{this._id}}" >编辑</a> </li>
                   <li class="divider"></li>
                   <li><a href="#" >删除</a> </li>
                 </ul>

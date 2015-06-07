@@ -67,6 +67,7 @@ module.exports = function(app) {
   app.get('/admin/paper/new', Paper.new);
   app.post('/admin/paper/new', multer(), Paper.save);
   app.get('/admin/paper/edit/:id', Paper.edit);
+  app.get('/admin/paper/detail/:id', Paper.detail);
 
 
 

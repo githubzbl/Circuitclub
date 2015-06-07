@@ -13,6 +13,16 @@ body {
 	SimSun, sans-serif;
 }
 /****
+  Color
+*****/
+.text-muted {
+  color: #777;
+}
+.text-muted-more {
+  color: #AAB2BD;
+}
+
+/****
 	Home Page
 *****/
 #wrapper {

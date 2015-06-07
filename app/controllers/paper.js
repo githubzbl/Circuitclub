@@ -25,7 +25,7 @@ exports.new = function (req, res) {
   });
 };
 
-exports.preview = function (req, res) {
+exports.detail = function (req, res) {
   var id = req.params.id;
   var user = req.session.user;
   Paper.findById(id, function(err, paper) {
@@ -37,7 +37,7 @@ exports.preview = function (req, res) {
       });
     }
 
-    res.render('paper-preview', {
+    res.render('paper-detail', {
       title: '试卷',
       user: user,
       paper: paper
@@ -130,6 +130,7 @@ exports.list = function (req, res) {
     }
   });
 };
+
 exports.del = function (req, res) {
   var id = req.query.id;
   if (id) {

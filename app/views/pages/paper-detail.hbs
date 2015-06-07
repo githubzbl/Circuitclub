@@ -1,0 +1,21 @@
+{{!-- paper-detail.hbs --}}
+{{!< ../layout}}
+
+
+<div class="container">
+  <div class="row">
+  {{#paper}}
+    <div class="col-md-12 text-center">
+      <h3 class="heading">{{name}}</h3>
+      <h5 class="updateAt text-muted">
+        更新于  {{moment this.meta.updateAt format="YYYY-MM-DD HH:mm"}}
+      </h5>
+      {{!-- {{brief}} --}}
+      <hr>
+    </div>
+    <div class="col-md-12">
+
+    </div>
+  {{/paper}}
+  </div>
+</div>

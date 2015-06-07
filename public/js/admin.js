@@ -24,7 +24,7 @@ $(function() {
 		var tr = $('.prob-id-' + id);
 
 		$('#delModal button.del').click(function(event) {
-			$('#delModal').hide('slow');
+			$('#delModal').hide();
 			$.ajax({
 				type: 'DELETE',
 				url: '/admin/problemBank/list?id='+ id
