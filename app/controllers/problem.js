@@ -2,25 +2,13 @@ var mongoose = require('mongoose');
 var Problem = require('../models/problem');
 var Paper = require('../models/paper');
 var _ = require('lodash');
-var fs = require('fs');
 var path = require('path');
 var join = path.join;
 
 
 exports.new = function (req, res) {
   var user = req.session.user;
-  // var problem = {
-  //     _id:'',
-  //     index: '',   // 题目序号
-  //     type: '',     // 题目类型
-  //     chapter:'',   // 题目章节
-  //     paper: '',    // 题目所属的试卷
-  //     difficulty: '',   // 题目难度系数
-  //     content: '',  // 题目内容
-  //     image: {},
-  //     answer: ''    // 题目答案
 
-  //   };
   Paper.find( function (err, papers) {
     if (err) {
       console.log(err);
@@ -102,6 +90,7 @@ exports.save = function (req, res) {
         }
         if (paperId) {
           Paper.findById(paperId, function (err, paper) {
+
             paper.problems.push(problem._id);
             paper.save(function (err, paper) {
               res.redirect('/admin/problem/preview/' + problem._id);

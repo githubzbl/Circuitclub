@@ -15,7 +15,8 @@ exports.index = function (req, res) {
       res.render('index', {
         title: '电路分析',
         user: req.session.user,
-        papers: papers
+        papers: papers,
+        message: req.flash('info')
       });
-    })
+    });
 };

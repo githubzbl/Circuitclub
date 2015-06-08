@@ -1,8 +1,13 @@
 {{!-- error.hbs --}}
+{{!-- 全局错误页面 --}}
+
 {{!< ../layout}}
 
-{{#contentFor 'error-container'}}
-  <h1>{{ message }}</h1>
+{{#if message}}
+  <h3>{{ message }}</h>
+  {{#if error}}
   <h2>{{ error.status }}</h2>
   <pre>{{ error.stack}}</pre>
-{{/contentFor}}
+  {{/if}}
+{{/if}}
+

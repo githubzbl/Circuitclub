@@ -8,15 +8,16 @@ var express   = require('express'),
           url = require('url'),
     session   = require('express-session'),   // session 支持
  RedisStore   = require('connect-redis')(session),
+        flash = require('connect-flash'),
           hbs = require('express-hbs');
 
-var env = require('./env.js');
-var rediscloudURL = process.env.REDISCLOUD_URL;
+var config = require('./config.js');
+var rediscloudURL = process.config.REDISCLOUD_URL;
 var redisURL = rediscloudURL ? url.parse(rediscloudURL) : '';
+// console.log('redisURL', redisURL)
 
-console.log('redisURL', redisURL)
 var mongoose  = require('mongoose');
-mongoose.connect(env.mongodb.url);
+mongoose.connect(config.mongodb.url);
 
 var app = express();
 module.exports = app;
@@ -57,12 +58,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 // TODO  heroku部署时候修改 session store
 app.use(session({
-  secret: env.sessionSecret,
+  secret: config.sessionSecret,
   store: new RedisStore,
   resave: false,
   saveUninitialized: true
 }));
-
+app.use(flash());
 
 require('./config/routes')(app);
 
@@ -82,7 +83,6 @@ app.use(function(req, res, next) {
 
 // error handlers
 if (app.get('env') === 'development') {
-
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
@@ -94,7 +94,7 @@ if (app.get('env') === 'development') {
     // mongoose.set('debug', true);
 
 } else {
-  console.log('production env.');
+  console.log('production config.');
   app.enable('trust proxy');
   app.enable('view cache');
 }
@@ -110,7 +110,12 @@ app.use(function(err, req, res, next) {
 });
 
 
-app.set('port', process.env.PORT || env.port.local);
+app.set('port', process.env.PORT || config.port.local);
+// app.set('env', 'produnction');
+
+// console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
+
+
 var debug = require('debug')('new-exam');
 var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);

@@ -78,7 +78,6 @@ exports.save = function (req, res) {
         if(err) {
           console.log(err);
         }
-        // res.redirect('/admin/paper/preview/' + paper.id);
         res.redirect('/admin/paperBank/list');
       });
     });
@@ -89,11 +88,11 @@ exports.save = function (req, res) {
           console.log(err);
         }
         res.redirect('/admin/paperBank/list');
-        // res.redirect('/admin/paper/preview/' + paper._id);
       });
 
     }
 };
+
 exports.list = function (req, res) {
   var user = req.session.user;
   // Paper

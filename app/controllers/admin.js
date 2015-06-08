@@ -13,12 +13,14 @@ exports.index = function (req, res) {
 
 exports.adminRequired = function(req, res, next) {
   var user = req.session.user;
-
-  if (user.role !== 'admin') {
-    return res.redirect('/signin');
+  if (user && user.role === 'admin') {
+      next();
+  } else {
+    req.flash('info', '非法操作!');
+    res.redirect('/');
   }
-  next();
 };
+
 exports.delUser = function (req, res) {
   var id = req.query.id;
   if (id) {
@@ -26,6 +28,7 @@ exports.delUser = function (req, res) {
       if (err) {
         console.log(err);
       }  else {
+        req.flash('info', '成功删除');
         res.json({success: 1});
       }
     });

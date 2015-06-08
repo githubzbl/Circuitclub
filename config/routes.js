@@ -16,7 +16,7 @@ module.exports = function(app) {
   app.use(function(req, res, next) {
     var _user = req.session.user;
     app.locals.user = _user;
-    next()
+    next();
   });
 
   // 主页Index
@@ -49,26 +49,26 @@ module.exports = function(app) {
 
   /*** 管理员模块 ***/
   // 管理员控制面板
-  app.get('/admin', Admin.index);
+  app.get('/admin/home', Admin.adminRequired, Admin.index);
   // 学生用户管理
-  app.get('/admin/userlist', User.list);
-  app.delete('/admin/userlist', Admin.delUser);
+  app.get('/admin/userlist', Admin.adminRequired, User.list);
+  app.delete('/admin/userlist', Admin.adminRequired, Admin.delUser);
   // 习题管理
-  app.get('/admin/problem/new', Problem.new);
-  app.post('/admin/problem/new', multer({ dest: './public/images/'}), Problem.save);
-  app.get('/admin/problem/preview/:id', Problem.preview);
-  app.get('/admin/problem/edit/:id', Problem.edit);
-  app.get('/admin/problemBank/list', Problem.list);
-  app.delete('/admin/problemBank/list', Problem.del);
-  app.post('/admin/problemBank/list', Problem.getList);
+  app.get('/admin/problem/new', Admin.adminRequired, Problem.new);
+  app.post('/admin/problem/new', Admin.adminRequired, multer({ dest: './public/images/'}), Problem.save);
+  app.get('/admin/problem/preview/:id', Admin.adminRequired, Problem.preview);
+  app.get('/admin/problem/edit/:id', Admin.adminRequired, Problem.edit);
+  app.get('/admin/problemBank/list', Admin.adminRequired, Problem.list);
+  app.delete('/admin/problemBank/list', Admin.adminRequired, Problem.del);
+  app.post('/admin/problemBank/list', Admin.adminRequired, Problem.getList);
 
   // 试卷管理
-  app.get('/admin/paperBank/list', Paper.list);
-  app.delete('/admin/paperBank/list', Paper.del);
-  app.get('/admin/paper/new', Paper.new);
-  app.post('/admin/paper/new', multer(), Paper.save);
-  app.get('/admin/paper/edit/:id', Paper.edit);
-  app.get('/admin/paper/detail/:id', Paper.detail);
+  app.get('/admin/paperBank/list', Admin.adminRequired, Paper.list);
+  app.delete('/admin/paperBank/list', Admin.adminRequired, Paper.del);
+  app.get('/admin/paper/new', Admin.adminRequired, Paper.new);
+  app.post('/admin/paper/new', Admin.adminRequired, multer(), Paper.save);
+  app.get('/admin/paper/edit/:id', Admin.adminRequired, Paper.edit);
+  app.get('/admin/paper/detail/:id', Admin.adminRequired, Paper.detail);
 
 
 

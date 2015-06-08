@@ -8,23 +8,26 @@ exports.loginRequired = function(req, res, next) {
   var user = req.session.user;
 
   if (!user) {
-    return res.redirect('/login');
+    req.flash('info', '请登录');
+    return res.redirect('/');
+  } else {
+    next();
   }
-
-  next()
 };
 
 exports.showSignup = function(req, res) {
   res.render('signup', {
-    title: '注册'
-  })
-}
+    title: '注册',
+    message: req.flash('info')
+  });
+};
 
 exports.showSignin = function(req, res) {
   res.render('login', {
-    title: '登录'
-  })
-}
+    title: '登录',
+    message: req.flash('info')
+  });
+};
 
 // Ajax signup
 exports.signup = function(req, res) {
@@ -51,7 +54,7 @@ exports.signup = function(req, res) {
       }
   });
   // console.log('body: ' + JSON.stringify(req.body));
-}
+};
 
 // login 登录
 exports.login = function(req, res) {
@@ -72,6 +75,7 @@ exports.login = function(req, res) {
           req.session.user = user;
           console.log('session:', req.session);
           return res.json({ success: 1 });
+          // return res.redirect('/');
         } else {
           return res.json({ err: 2 });  // 密码错误
         }
@@ -85,7 +89,7 @@ exports.login = function(req, res) {
 // logout
 exports.logout =  function(req, res) {
   delete req.session.user
-
+  req.flash('info', '成功退出！');
   res.redirect('/')
 }
 

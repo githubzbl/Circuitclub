@@ -1,4 +1,5 @@
 $(function() {
+
 	var diffDisplay = function () {
    $('.per-prob').each(function(index, el) {
        var $diff = $(this).find('.difficulty');
@@ -77,7 +78,7 @@ $(function() {
           console.log("success");
           $('.prob-list').html(data);
           diffDisplay();
-
+          MathJax.Hub.Typeset();
         })
         .fail(function() {
           console.log("error");
