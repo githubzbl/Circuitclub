@@ -4,22 +4,11 @@
   .add-problem {
     font-size: 1.2em;
   }
-  ol, ul{
-    list-style-type: none;
-  }
+
   .form-control {
     border: 1px solid #AFC6DA;
   }
-  select#inputPaper {
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    border: 1px solid #AFC6DA;
-    padding:0 12px;
-    cursor: pointer;
-    position: relative;
-  }
-  select::-ms-expand { display: none; }
+
 </style>
 
 
@@ -112,46 +101,29 @@
         </div><!-- /.form-group -->
       </div>
       {{> upload}}
-       <hr>
-       <div class="form-group ">
-         <label for="inputDifficulty" class="col-md-2 control-label">难度</label>
-           <div id="inputDifficulty" class="col-md-3">
-              <label class="radio-inline control-label">
-                <input type="radio" name="problem[difficulty]" id="easy" value="2" checked>容易
-              </label>
-              <label class="radio-inline control-label">
-                <input type="radio" name="problem[difficulty]" id="medium" value="5" >中等
-              </label>
-              <label class="radio-inline control-label">
-                <input type="radio" name="problem[difficulty]" id="hard" value="8" >困难
-              </label>
-           </div>
-         <label for="inputPaper" class="col-md-2 control-label">所属试卷</label>
-        <div class="col-md-5">
-          <select name="problem[paper]" id="inputPaper">
-          {{#each papers}}
-            <option value="{{this._id}}" >{{this.name}}</option>
-          {{/each}}
-          </select>
-        </div>
-
+      <hr>
+      <div class="form-group ">
+          <label for="inputDifficulty" class="col-md-2 control-label">难度</label>
+          <div id="inputDifficulty" class="col-md-3">
+            <label class="radio-inline control-label">
+              <input type="radio" name="problem[difficulty]" id="easy" value="2" checked>容易
+            </label>
+            <label class="radio-inline control-label">
+              <input type="radio" name="problem[difficulty]" id="medium" value="5" >中等
+            </label>
+            <label class="radio-inline control-label">
+              <input type="radio" name="problem[difficulty]" id="hard" value="8" >困难
+            </label>
+          </div>
+          <label for="inputPaper" class="col-md-2 control-label">所属试卷</label>
+          <div class="col-md-5">
+            <select name="problem[paper]" id="inputPaper">
+            {{#each papers}}
+              <option value="{{this._id}}" >{{this.name}}</option>
+            {{/each}}
+            </select>
+          </div>
       </div> {{!-- 一行结尾 --}}
-
-
-{{!--             <div class="btn-group">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <span class="selected">所属试卷</span>
-                 <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-              {{#each papers}}
-                <li>
-                  <a value="{{this._id}}" name="problem[paper]">{{this.name}}</a>
-                </li>
-                <li class="divider"></li>
-              {{/each}}
-              </ul>
-            </div> --}}
 
 
        <div class="form-group ">

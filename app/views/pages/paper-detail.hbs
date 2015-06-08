@@ -1,5 +1,10 @@
 {{!-- paper-detail.hbs --}}
 {{!< ../layout}}
+<style>
+/*  .per-prob {
+    border-bottom: 1px dashed #DAE7F2;
+  }*/
+</style>
 
 
 <div class="container">
@@ -14,7 +19,51 @@
       <hr>
     </div>
     <div class="col-md-12">
+{{#each problems}}
 
+<article class="{{this.status}} panel panel-info per-prob prob-id-{{_id}}" data-id="{{_id}}" data-difficulty="{{this.difficulty}}" data-probtype="{{this.type}}">
+<input type="hidden" name="this" value="{{_id}}">
+  <section class="prob-info panel-heading">
+    <label for="">编号 &nbsp;&nbsp;<span class="prob-index">{{this.index}}</span> &nbsp;&nbsp; </label>
+    <label class="prob-type" for=""> &nbsp;&nbsp;&nbsp;[&nbsp;{{this.type}}&nbsp;] &nbsp;</label>
+     <label for="time"> <i class="fa fa-clock-o" style="font-size: 1em;"></i> {{moment this.meta.updateAt format="YYYY-MM-DD"}}</label>&nbsp;&nbsp;&nbsp;
+      <i class="fa fa-question-circle" style="font-size: 1em;"></i>&nbsp;&nbsp;<label for="difficulty" class="difficulty" data-id="{{this.difficulty}}"></label>
+    <div class="prob-title">{{this.title}}</div>
+
+    {{#if this.a}}
+      <dt>选项</dt>
+      <dd>A. {{this.a}}</dd>
+      <dd>B. {{this.b}}</dd>
+      <dd>C. {{this.c}}</dd>
+      <dd>D. {{this.d}}</dd>
+    {{/if}}
+     <div class="prob-content">{{this.content}}</div>
+   {{#if this.image.path}}
+    <div class="prob-img">
+       <dt> <span class="prob-index">{{this.index}}</span> 题图</dt>
+       <dd><img src="{{this.image.path}}" alt="{{this.index}}图">
+       </dd>
+    </div>
+    {{/if}}
+
+  </section>
+
+  <section class="ans-info panel-body" >
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="input-group ans-content">
+          <span class="input-group-addon">参考答案：</span>
+          <input type="text" class="form-control" placeholder="{{this.answer}}" name="answer" value="{{this.answer}}" readonly>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+    <div class="row prob-detail">
+      <p class="analysis">{{this.analysis}}</p>
+    </div>
+  </section>
+  <hr>
+</article>
+{{/each}}
     </div>
   {{/paper}}
   </div>

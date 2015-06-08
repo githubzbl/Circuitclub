@@ -64,6 +64,7 @@ module.exports = function(app) {
 
   // 试卷管理
   app.get('/admin/paperBank/list', Paper.list);
+  app.delete('/admin/paperBank/list', Paper.del);
   app.get('/admin/paper/new', Paper.new);
   app.post('/admin/paper/new', multer(), Paper.save);
   app.get('/admin/paper/edit/:id', Paper.edit);

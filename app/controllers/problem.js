@@ -9,18 +9,18 @@ var join = path.join;
 
 exports.new = function (req, res) {
   var user = req.session.user;
-  var problem = {
-      _id:'',
-      index: '',   // 题目序号
-      type: '',     // 题目类型
-      chapter:'',   // 题目章节
-      paper: '',    // 题目所属的试卷
-      difficulty: '',   // 题目难度系数
-      content: '',  // 题目内容
-      image: {},
-      answer: ''    // 题目答案
+  // var problem = {
+  //     _id:'',
+  //     index: '',   // 题目序号
+  //     type: '',     // 题目类型
+  //     chapter:'',   // 题目章节
+  //     paper: '',    // 题目所属的试卷
+  //     difficulty: '',   // 题目难度系数
+  //     content: '',  // 题目内容
+  //     image: {},
+  //     answer: ''    // 题目答案
 
-    };
+  //   };
   Paper.find( function (err, papers) {
     if (err) {
       console.log(err);
@@ -30,7 +30,7 @@ exports.new = function (req, res) {
         title: '添加试题',
         user: user,
         papers: papers,
-        problem: problem
+        problem: {}
       });
     }
   });
@@ -40,46 +40,32 @@ exports.new = function (req, res) {
 exports.preview = function (req, res) {
   var id = req.params.id;
   var user = req.session.user;
-  Problem.findById(id, function(err, problem) {
-    if (err) {
-      console.log(err);
-      res.render('error', {
-      message: err.message,
-      error: err
-      });
-    }
-    // if (problem) {
+  Problem
+    .findOne({_id: id})
+    .populate('paper','name')
+    .exec(function (err, problem) {
+      if (err) {
+        console.log(err);
+      }
       res.render('prob-preview', {
         title: '题目预览',
         user: user,
         problem: problem
       });
-    // } else {
-    //  res.redirect('/');
-    // }
   });
 }
 
 exports.edit = function (req, res) {
   var id = req.params.id;
   var user = req.session.user;
-  Problem.findById(id, function(err, problem) {
-    if (err) {
-      console.log(err);
-      res.render('error', {
-      message: err.message,
-      error: err
-      });
-    }
-    // if (problem) {
+  Problem.findById(id, function (err, problem) {
+    Paper.find({}, function (err, papers) {
       res.render('prob-edit', {
         title: '编辑题目',
-        user: user,
+        papers: papers,
         problem: problem
       });
-    // } else {
-    //  res.redirect('/');
-    // }
+    });
   });
 };
 
@@ -89,6 +75,8 @@ exports.save = function (req, res) {
   var image = req.files.image;
   var id = req.body.problem._id;
   var problemObj = req.body.problem;
+  var paperId = problemObj.paper;
+
   var _problem;
   if (image) {
     _problem = {
@@ -112,19 +100,32 @@ exports.save = function (req, res) {
         if(err) {
           console.log(err);
         }
-        res.redirect('/admin/problem/preview/' + problem.id);
+        if (paperId) {
+          Paper.findById(paperId, function (err, paper) {
+            paper.problems.push(problem._id);
+            paper.save(function (err, paper) {
+              res.redirect('/admin/problem/preview/' + problem._id);
+            });
+          });
+        }
       });
     });
   } else {
+      console.log('paperId', paperId);
       _problem = new Problem(problemObj);
       _problem.save(function(err, problem) {
         if(err) {
           console.log(err);
         }
-
-        res.redirect('/admin/problem/preview/' + problem._id);
+        if (paperId) {
+          Paper.findById(paperId, function (err, paper) {
+            paper.problems.push(problem._id);
+            paper.save(function (err, paper) {
+              res.redirect('/admin/problem/preview/' + problem._id);
+            });
+          });
+        }
       });
-
     }
 };
 exports.list = function (req, res) {

@@ -27,7 +27,7 @@ exports.save = function (req, res, next) {
     });
     // console.log('answer', answer);
   });
-  // next();
+
   res.render('exam-submit', {
     title: '提交成功',
     user: req.session.user
@@ -73,7 +73,6 @@ exports.saveCheck = function (req, res) {
         title: 'Check Answer',
         userAnsArr: userAnsArr
       });
-
     });
 };
 

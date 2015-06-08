@@ -28,22 +28,15 @@ exports.new = function (req, res) {
 exports.detail = function (req, res) {
   var id = req.params.id;
   var user = req.session.user;
-  Paper.findById(id, function(err, paper) {
-    if (err) {
-      console.log(err);
-      res.render('error', {
-      message: err.message,
-      error: err
+  Paper
+    .findOne({_id: id})
+    .populate('problems')
+    .exec(function (err, paper) {
+      res.render('paper-detail', {
+        title: '试卷详情',
+        paper: paper,
       });
-    }
-
-    res.render('paper-detail', {
-      title: '试卷',
-      user: user,
-      paper: paper
     });
-
-  });
 }
 
 exports.edit = function (req, res) {

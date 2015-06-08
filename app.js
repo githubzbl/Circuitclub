@@ -5,18 +5,23 @@ var express   = require('express'),
  cookieParser = require('cookie-parser'),
  bodyParser   = require('body-parser'),
        moment = require('moment'),
+          url = require('url'),
     session   = require('express-session'),   // session 支持
  RedisStore   = require('connect-redis')(session),
           hbs = require('express-hbs');
 
-var mongoose  = require('mongoose');
-mongoose.connect('mongodb://localhost/exam');
+var env = require('./env.js');
+var rediscloudURL = process.env.REDISCLOUD_URL;
+var redisURL = rediscloudURL ? url.parse(rediscloudURL) : '';
 
+console.log('redisURL', redisURL)
+var mongoose  = require('mongoose');
+mongoose.connect(env.mongodb.url);
 
 var app = express();
+module.exports = app;
 
-// view engine setup
-// express-hbs
+
 // Use `.hbs` for extensions and find partials in `views/partials`.
 app.engine('hbs', hbs.express4({
   partialsDir: __dirname + '/app/views/partials'
@@ -36,23 +41,23 @@ hbs.registerHelper("debug", function(optionalValue) {
 hbs.registerHelper('moment', function(context, block) {
   if (moment) {
     var f = block.hash.format || "MMM DD, YYYY hh:mm:ss A";
-    return moment(context).format(f); //had to remove Date(context)
+    return moment(context).format(f);
   } else{
-    return context;   //  moment plugin not available. return data as is.
+    return context;
   };
 });
 
 // 存储题目图片的目录
 app.set('images', path.join(__dirname, '/public/images'));
 
-// uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));  // 开发环境
 app.use(bodyParser.json({limit: '1mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+// TODO  heroku部署时候修改 session store
 app.use(session({
-  secret: 'uestc ee',
+  secret: env.sessionSecret,
   store: new RedisStore,
   resave: false,
   saveUninitialized: true
@@ -76,9 +81,6 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-
-// development error handler
-// will print stacktrace
 if (app.get('env') === 'development') {
 
     app.use(function(err, req, res, next) {
@@ -108,5 +110,10 @@ app.use(function(err, req, res, next) {
 });
 
 
+app.set('port', process.env.PORT || env.port.local);
+var debug = require('debug')('new-exam');
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+console.log('\033[90m  Server listening on port ' + server.address().port +'\033[39m');
 
-module.exports = app;

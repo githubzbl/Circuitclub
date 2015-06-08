@@ -10,18 +10,3 @@ var server = app.listen(app.get('port'), function() {
 });
 console.log('\033[90m  Server listening on port '	+ server.address().port +'\033[39m');
 
-// socket.io bind to app
-// var io = sio.listen(server);
-// io.sockets.on('connection', function (socket) {
-//   console.log('someone connected');
-//   socket.on('join', function (name) {
-//   	console.log( name + ' join');
-//   	socket.nickname = name;
-//   	socket.broadcast.emit('announcement', name +  ' joined the chat.');
-//   });
-//   socket.on('text', function (msg) {
-//   	socket.broadcast.emit('text', socket.nickname, msg);
-
-//   })
-
-// });
