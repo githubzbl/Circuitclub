@@ -14,7 +14,6 @@ exports.loginRequired = function(req, res, next) {
   next()
 };
 
-// signup
 exports.showSignup = function(req, res) {
   res.render('signup', {
     title: '注册'
@@ -27,6 +26,7 @@ exports.showSignin = function(req, res) {
   })
 }
 
+// Ajax signup
 exports.signup = function(req, res) {
   var data = req.body;
   console.log(data);
@@ -37,13 +37,16 @@ exports.signup = function(req, res) {
       return res.json({ err: 1 });    // 用户名已被占用
     } else {
         user = new User(data);
-        user.save(function (err, user) {
-        if (err) {
-          console.log(err);
+        if (data.username === 'admin') {
+          user.role = 'admin';
         }
-        req.session.user = user;
-        console.log('session:', req.session);
-        res.json({success: 1});  // 注册成功
+        user.save(function (err, user) {
+          if (err) {
+            console.log(err);
+          }
+          req.session.user = user;
+          console.log('session:', req.session);
+          res.json({success: 1});
         });
       }
   });
@@ -67,9 +70,8 @@ exports.login = function(req, res) {
 
         if (isMatch) {
           req.session.user = user;
-          // req.session.logged_in = true;
           console.log('session:', req.session);
-          return res.json({ success: 1 });  // 登录成功
+          return res.json({ success: 1 });
         } else {
           return res.json({ err: 2 });  // 密码错误
         }
@@ -83,10 +85,10 @@ exports.login = function(req, res) {
 // logout
 exports.logout =  function(req, res) {
   delete req.session.user
-  //delete app.locals.user
 
   res.redirect('/')
 }
+
 //  学生主页
 exports.index = function (req, res) {
   var user = req.session.user;

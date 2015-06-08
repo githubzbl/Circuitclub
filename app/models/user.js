@@ -83,6 +83,6 @@ UserSchema.statics = {
       .exec(cb);
   }
 };
-var User = mongoose.model('User', UserSchema); // 注册模型
+var User = mongoose.model('User', UserSchema);
 
 module.exports = User;

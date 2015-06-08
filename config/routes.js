@@ -36,7 +36,7 @@ module.exports = function(app) {
   app.get('/std/profile', User.loginRequired, User.profile);
   app.post('/std/profile', User.loginRequired, multer(), User.setProfile);
   // 考试记录
-  app.get('/std/myproblems/bank', User.loginRequired, userAnswer.getProblems);
+  app.get('/std/problemBank/list', User.loginRequired, userAnswer.getProblems);
   app.post('/std/myproblems', User.loginRequired, userAnswer.getTypeProblems);
 
   // 学生考试

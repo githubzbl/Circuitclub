@@ -14,7 +14,7 @@ exports.index = function (req, res) {
 exports.adminRequired = function(req, res, next) {
   var user = req.session.user;
 
-  if (user.role === 'std') {
+  if (user.role !== 'admin') {
     return res.redirect('/signin');
   }
   next();
