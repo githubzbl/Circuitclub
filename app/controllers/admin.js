@@ -5,7 +5,7 @@ var _ = require('lodash');
 
 exports.index = function (req, res) {
   var user = req.session.user;
-  return res.render('admin', {
+  return res.render('admin2', {
     title: '管理员控制面板',
     user: user
   });

@@ -25,7 +25,7 @@ var ProblemSchema = new Schema({
   },
   answer: String,   // 题目答案
   analysis: String, // 解析
-  paper: [{type: ObjectId, ref: 'Paper'}],  //所属试卷
+  paper: {type: ObjectId, ref: 'Paper'},  //所属试卷
 
   meta: {
     createAt: {

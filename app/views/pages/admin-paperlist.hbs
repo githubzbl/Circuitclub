@@ -15,7 +15,7 @@
   }
   .per-paper {
     width: 100%;
-    height: 270px;
+    height: 300px;
     overflow: hidden;
   }
 </style>
@@ -105,10 +105,10 @@ myModalLabel" aria-hidden="true" class="modal fade">
         })
       .done(function(results) {
         if (results.success === 1) {
-        if (tr.length > 0) {
-        tr.remove();
+          if (tr.length > 0) {
+          tr.remove();
+          }
         }
-      }
       });
     });
   });

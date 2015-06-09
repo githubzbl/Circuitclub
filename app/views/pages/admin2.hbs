@@ -1,0 +1,42 @@
+{{!-- admin2.hbs --}}
+
+{{!< ../layout}}
+<main class="container" style="margin-top: 100px;">
+  <div class="row">
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail"><img src="../libs/images/lianxi.png" alt="试题管理"/>
+        <div class="caption">
+          <h3>试题管理</h3>
+          <p>请选择</p>
+          <p><a id="exam" href="/admin/problemBank/list" role="button" class="btn btn-primary">题库管理</a>
+          &nbsp;
+          &nbsp;
+          <a href="/admin/problem/new" role="button" class="btn btn-default">添加试题</a></p>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">{{!-- <img src="../libs/images/zaixiankaoshi.png" alt="用户管理"/> --}}
+      <i class="fa fa-users" style="font-size:160px; color:#286090;padding: 20px 60px;"></i>
+        <div class="caption">
+          <h3>学生管理</h3>
+          <p>请选择</p>
+          <p>
+          <a href="/admin/userlist" role="button" class="btn btn-default">列表查看</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail"><img src="../libs/images/rengongyuejuan.png" alt="试卷管理"/>
+        <div class="caption">
+          <h3>试卷管理</h3>
+          <p>请选择</p>
+          <a href="/admin/paperBank/list" role="button" class="btn btn-primary">试卷管理</a>
+          <a href="/admin/paper/new" role="button" class="btn btn-default">添加试卷</a></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

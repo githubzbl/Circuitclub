@@ -11,7 +11,6 @@ var join = path.join;
 
 exports.new = function (req, res) {
   var paper = {
-    _id:'',
     name: '',    // 试卷名
     brief: '',   // 试卷概述
     time: '',    // 考试时间

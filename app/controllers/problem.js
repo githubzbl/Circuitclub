@@ -89,9 +89,13 @@ exports.save = function (req, res) {
           console.log(err);
         }
         if (paperId) {
+          console.log('paperId', paperId);
           Paper.findById(paperId, function (err, paper) {
-
-            paper.problems.push(problem._id);
+            var _problems = _.uniq(paper.problems);
+            if (_problems.indexOf(problem._id) === -1) {
+              _problems.push(problem._id);
+            }
+            paper.problems = _problems;
             paper.save(function (err, paper) {
               res.redirect('/admin/problem/preview/' + problem._id);
             });
@@ -100,7 +104,7 @@ exports.save = function (req, res) {
       });
     });
   } else {
-      console.log('paperId', paperId);
+
       _problem = new Problem(problemObj);
       _problem.save(function(err, problem) {
         if(err) {
@@ -188,7 +192,13 @@ exports.del = function (req, res) {
       if (err) {
         console.log(err);
       }  else {
-        res.json({success: 1});
+        var paperId = problem.paper;
+        Paper
+          .findOne({_id: paperId})
+          .exec(function (err, paper) {
+            paper.problems = _.without(paper.problems, id);
+            res.json({success: 1});
+          });
       }
     });
   }

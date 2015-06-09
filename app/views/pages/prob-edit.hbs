@@ -136,7 +136,7 @@
             </label>
           </div>
        </div>
-       <div class="form-group ">
+       <div class="form-group ansGroup">
          <label for="inputAnswer" class="col-sm-2 control-label">参考答案</label>
          <div class="col-sm-8">
           <textarea type="text" class="form-control" id="inputAnswer" name="problem[answer]"  cols="20" rows="2">{{problem.answer}}</textarea>
@@ -200,5 +200,30 @@
     }
     $diffText.prop('checked', 'true');
 
+    $('#inputType').click(function (event) {
+      var target = event.target;
+      // console.log(target);
+      var id = target.id;
+      // console.log(id);
+      switch (id) {
+        case 'multiple-choice':
+          $('.choice-group').show();
+          $('.ansGroup').hide();
+          break;
+        case 'fill-in':
+          $('.choice-group').hide();
+          $('.ansGroup').show();
+          break;
+        case 'calculate':
+          $('.choice-group').hide();
+          $('.ansGroup').show();
+          break;
+        case 'problem':
+          $('.choice-group').hide();
+          $('.ansGroup').show();
+          break;
+
+      }
+    });
   });
 </script>
